@@ -1,25 +1,40 @@
+import Image from 'next/image';
 import Link from 'next/link';
-import { FaHamburger } from 'react-icons/fa';
+import { FaBars } from 'react-icons/fa';
 
 export default function Navbar() {
 	return (
-		<div className="w-full flex justify-center  shadow-lg  ">
+		<nav className="w-full flex justify-center  bg-base-100 fixed z-20">
 			<div className="navbar py-2 bg-base-100 max-w-6xl">
-				<div className="navbar-start ">
-					<div className="flex-none lg:hidden">
+				<div className="md:navbar-start w-full">
+					<div className="lg:hidden fixed left-0 dropdown dropdown-bottom">
 						<label
-							htmlFor="my-drawer-3"
-							className="btn btn-square btn-ghost">
-							<FaHamburger className="h-5 inline-block w-5" />
+							tabIndex={0}
+							role="button"
+							className="btn btn-square btn-ghost ">
+							<FaBars size={19} />
 						</label>
+						<ul
+							tabIndex={0}
+							className="menu dropdown-content rounded-b-lg bg-base-100 z-[20] w-52 p-2">
+							<li className="mr-2 border-b-2">
+								<Link href="/pricing">Planos</Link>
+							</li>
+							<li className="mr-2">
+								<Link href="/contact-us">Contato</Link>
+							</li>
+						</ul>
 					</div>
 
-					<div className="md:flex-1 flex-none px-2 mx-2">
+					<div className="md:flex-1 mx-auto px-2">
 						<Link href="/">
 							<span className="font-bold text-xl">
-								<img
-									className="mask inline-block mr-3 mask-circle w-12"
+								<Image
+									width={300}
+									height={300}
+									className="mask hidden md:inline-block mr-3 mask-circle w-12"
 									src="/logo.jpeg"
+									alt="Logo"
 								/>
 							</span>
 							<span className="font-bold text-xl">Vitrine virtual</span>
@@ -46,6 +61,6 @@ export default function Navbar() {
 					</Link>
 				</div>
 			</div>
-		</div>
+		</nav>
 	);
 }

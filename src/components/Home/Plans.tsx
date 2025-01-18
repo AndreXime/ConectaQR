@@ -7,12 +7,13 @@ const advancePointers = [
 	'Todos os beneficios do plano gratis',
 	'Prioridade no suporte da equipe tecnica',
 	'Prioridade na sugestão de novas funcionalidades para plataforma',
+	'Ajudar a manter a plataforma',
 ];
 
 export default function PricingPlans() {
 	return (
 		<>
-			<div className="w-full py-24 px-4 content-center justify-center">
+			<section className="w-full py-24 px-4 content-center justify-center">
 				<h2 className="text-3xl  text-center font-bold">Planos de assinatura disponiveis</h2>
 				<div className="flex flex-col lg:flex-row lg:justify-center mt-2 w-full gap-8">
 					<div className="card w-1/4 mt-6 bg-base-100 shadow-xl hover:shadow-2xl">
@@ -63,7 +64,7 @@ export default function PricingPlans() {
 						</div>
 					</div>
 				</div>
-			</div>
+			</section>
 		</>
 	);
 }

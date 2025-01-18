@@ -14,7 +14,7 @@ const generationStepData = [
 export default function GenerationStep() {
 	return (
 		<>
-			<div className="grid place-items-center bg-slate-50 w-full ">
+			<section className="grid place-items-center bg-slate-50 w-full ">
 				<div className="max-w-6xl w-full py-24 px-4 content-center justify-center">
 					<h2 className="text-3xl  text-center font-bold">Tenha sua página em passos simples</h2>
 					<div className="grid mt-24 md:grid-cols-3 grid-cols-1 gap-8">
@@ -37,7 +37,7 @@ export default function GenerationStep() {
 						})}
 					</div>
 				</div>
-			</div>
+			</section>
 		</>
 	);
 }
