@@ -19,3 +19,7 @@ npm install
 npm run build
 npm start
 ```
+
+## Detalhes tecnicos
+
+Está usando tailwind com daisyui, nextjs com typescript e em breve vai desenvolvido o backend uma preview das [tabelas do banco de dados](https://drawsql.app/teams/nenhuma-5/diagrams/project-connectqr)
