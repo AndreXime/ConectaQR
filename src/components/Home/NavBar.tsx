@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { FaBars } from 'react-icons/fa';
 
@@ -18,17 +17,32 @@ export default function Navbar() {
 							tabIndex={0}
 							className="menu dropdown-content rounded-b-lg bg-base-100 z-[20] w-52 p-2">
 							<li className="mr-2 border-b-2">
-								<Link href="/pricing">Planos</Link>
+								<Link
+									className="btn btn-ghost"
+									href="/pricing">
+									Planos
+								</Link>
 							</li>
 							<li className="mr-2">
-								<Link href="/contact-us">Contato</Link>
+								<Link
+									className="btn btn-ghost"
+									href="/contact-us">
+									Contato
+								</Link>
+							</li>
+							<li className="mr-2 border-b-2">
+								<Link
+									className="btn btn-ghost"
+									href="/pricing">
+									Empresas
+								</Link>
 							</li>
 						</ul>
 					</div>
 
 					<div className="md:flex-1 mx-auto px-2">
 						<Link href="/">
-							<span className="font-bold text-xl">
+							{/*<span className="font-bold text-xl">
 								<Image
 									width={300}
 									height={300}
@@ -36,8 +50,8 @@ export default function Navbar() {
 									src="/logo.jpeg"
 									alt="Logo"
 								/>
-							</span>
-							<span className="font-bold text-xl">Vitrine virtual</span>
+							</span>*/}
+							<span className="font-bold text-xl">ConectaQR</span>
 						</Link>
 					</div>
 				</div>
@@ -45,19 +59,34 @@ export default function Navbar() {
 				<div className="navbar-center hidden lg:flex">
 					<ul className="menu menu-horizontal custom-menu">
 						<li className="mr-2">
-							<Link href="/pricing">Planos</Link>
+							<Link
+								className="btn btn-ghost"
+								href="/pricing">
+								Planos
+							</Link>
 						</li>
 						<li className="mr-2">
-							<Link href="/contact-us">Contato</Link>
+							<Link
+								className="btn btn-ghost"
+								href="/contact-us">
+								Contato
+							</Link>
+						</li>
+						<li className="mr-2">
+							<Link
+								className="btn btn-ghost"
+								href="/pricing">
+								Empresas
+							</Link>
 						</li>
 					</ul>
 				</div>
 				<div className="navbar-end hidden lg:flex">
-					<button className="btn btn-sm text-xs mr-4 normal-case md:btn-ghost ">Fazer login</button>
 					<Link href="/start-designing">
-						<button className="btn md:mt-0 mt-4 btn-block btn-sm text-xs btn-outline normal-case hover:text-white hover:btn-primary">
-							Se cadastrar
-						</button>
+						<button className="btn text-xs mr-4 normal-case btn-secondary btn-outline">Fazer login</button>
+					</Link>
+					<Link href="/start-designing">
+						<button className="btn btn-primary mt-0 btn-block text-xs btn-outline normal-case ">Se cadastrar</button>
 					</Link>
 				</div>
 			</div>

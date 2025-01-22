@@ -4,10 +4,10 @@ import { FaFacebookF, FaTwitter, FaInstagram } from 'react-icons/fa';
 export default function Footer() {
 	return (
 		<div className="bg-slate-100 flex justify-center">
-			<footer className="footer pt-10 pb-24 px-4 max-w-6xl  text-base-content">
-				<div>
-					<p className="font-bold text-2xl">Vitrine virtual</p>
-					<p className="">Copyright © 2023 - All right reserved</p>
+			<footer className="footer footer-horizontal  pt-10 pb-24 px-4 max-w-6xl text-base-content">
+				<div className="">
+					<p className="font-bold text-2xl">ConectaQR</p>
+					<p className="">Copyright © 2025 - All right reserved</p>
 				</div>
 				<div>
 					<span className="footer-title">Informações</span>

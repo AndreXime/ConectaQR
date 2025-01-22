@@ -6,9 +6,17 @@ export default {
 		'./src/components/**/*.{js,ts,jsx,tsx,mdx}',
 		'./src/app/**/*.{js,ts,jsx,tsx,mdx}',
 	],
-	theme: {},
-	plugins: [require('daisyui')],
-	daisyui: {
-		themes: ['light', 'dark'], // Defina temas que podem ser usados
+	theme: {
+		extend: {
+			keyframes: {
+				fadeIn: {
+					'0%': { opacity: '0' },
+					'100%': { opacity: '1' },
+				},
+			},
+			animation: {
+				fadeIn: 'fadeIn 1.5s ease-in-out',
+			},
+		},
 	},
 } satisfies Config;
