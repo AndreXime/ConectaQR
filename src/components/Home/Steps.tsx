@@ -14,7 +14,7 @@ const generationStepData = [
 export default function GenerationStep() {
 	return (
 		<>
-			<section className="grid place-items-center bg-slate-50 w-full ">
+			<section className="grid place-items-center bg-base-100 w-full ">
 				<div className="max-w-6xl w-full py-24 px-4 content-center justify-center">
 					<h2 className="text-3xl  text-center font-bold">Tenha sua página em passos simples</h2>
 					<div className="grid mt-24 md:grid-cols-3 grid-cols-1 gap-8">
@@ -22,14 +22,14 @@ export default function GenerationStep() {
 							return (
 								<div
 									key={k}
-									className="card w-full bg-base-100 shadow-xl hover:shadow-2xl">
+									className="card w-full bg-base-300 shadow-xl hover:shadow-2xl">
 									<div className="grid -mt-4 place-items-center">
 										<div className="w-8 h-8  rounded-full  bg-amber-500 text-slate-100 flex font-bold justify-center items-center">
 											<p>{k + 1}</p>
 										</div>
 									</div>
 									<div className="card-body  items-center text-center">
-										<p className="text-primary">{i.icon}</p>
+										<p className="text-accent">{i.icon}</p>
 										<p className="mt-2"> {i.description}</p>
 									</div>
 								</div>

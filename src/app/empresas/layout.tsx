@@ -2,8 +2,8 @@ import '@/styles/globals.css';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-	title: 'ConnectQR',
-	description: 'Uma plataforma para você expor seus produtos ao clientes em sua loja agilizando a decisão de compra',
+	title: 'ConnectQR - Empresas',
+	description: 'Todas as empresas parceiras que estão presentes na nossa plataforma',
 	keywords: ['Conectar', 'Produtos', 'Vitrine', 'Lojas', 'Vendas', 'Empresas'],
 };
 

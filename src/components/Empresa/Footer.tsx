@@ -5,7 +5,10 @@ export default function Footer() {
 	const [temaAtual, setTemaAtual] = useState('Não encontrado');
 
 	useEffect(() => {
-		const tema = document.documentElement.getAttribute('data-theme') || 'Não encontrado';
+		const tema =
+			document.documentElement.getAttribute('data-theme') ||
+			document.getElementById('root')?.getAttribute('data-theme') ||
+			'Padrão do navegador';
 		setTemaAtual(tema);
 	}, []);
 

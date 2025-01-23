@@ -1,8 +1,4 @@
-import Footer from '@/components/Home/Footer';
-import Hero from '@/components/Home/Hero';
-import Navbar from '@/components/Home/NavBar';
-import Plans from '@/components/Home/Plans';
-import Steps from '@/components/Home/Steps';
+import { Footer, Hero, Navbar, Plans, Steps } from '@/components/Home';
 
 export default function Home() {
 	return (

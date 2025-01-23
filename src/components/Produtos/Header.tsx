@@ -9,7 +9,7 @@ export default function Heade({ EmpresaName }: HeaderProps) {
 				<input
 					type="text"
 					placeholder="Pesquisar produtos..."
-					className="input input-bordered max-w-xs"
+					className="input input-bordered w-1/2"
 				/>
 			</div>
 		</nav>

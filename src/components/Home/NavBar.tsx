@@ -3,20 +3,20 @@ import { FaBars } from 'react-icons/fa';
 
 export default function Navbar() {
 	return (
-		<nav className="w-full flex justify-center  bg-base-100 fixed z-20">
+		<nav className="w-full flex justify-center bg-base-100 fixed z-20">
 			<div className="navbar py-2 bg-base-100 max-w-6xl">
-				<div className="md:navbar-start w-full">
-					<div className="lg:hidden fixed left-0 dropdown dropdown-bottom">
+				<div className="md:navbar-start w-full flex items-center justify-between ">
+					<div className="lg:hidden dropdown dropdown-bottom">
 						<label
 							tabIndex={0}
 							role="button"
-							className="btn btn-square btn-ghost ">
+							className="btn btn-square btn-ghost">
 							<FaBars size={19} />
 						</label>
 						<ul
 							tabIndex={0}
-							className="menu dropdown-content rounded-b-lg bg-base-100 z-[20] w-52 p-2">
-							<li className="mr-2 border-b-2">
+							className="menu dropdown-content rounded-b-lg bg-base-100 z-[20] w-52 mt-3.25">
+							<li className="mr-2">
 								<Link
 									className="btn btn-ghost"
 									href="/pricing">
@@ -30,7 +30,7 @@ export default function Navbar() {
 									Contato
 								</Link>
 							</li>
-							<li className="mr-2 border-b-2">
+							<li className="mr-2">
 								<Link
 									className="btn btn-ghost"
 									href="/pricing">
@@ -40,7 +40,7 @@ export default function Navbar() {
 						</ul>
 					</div>
 
-					<div className="md:flex-1 mx-auto px-2">
+					<div className="md:flex-1 lg:block">
 						<Link href="/">
 							{/*<span className="font-bold text-xl">
 								<Image
@@ -54,6 +54,7 @@ export default function Navbar() {
 							<span className="font-bold text-xl">ConectaQR</span>
 						</Link>
 					</div>
+					<button className="lg:hidden btn btn-primary">Acessar</button>
 				</div>
 
 				<div className="navbar-center hidden lg:flex">

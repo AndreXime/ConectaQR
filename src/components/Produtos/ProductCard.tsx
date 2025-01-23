@@ -21,7 +21,7 @@ export default function ProductCard({ name, image, price, categorias }: ProductC
 				<div className="mt-5 px-4 pb-4 pt-0">
 					<h6 className="font-semibold text-xl leading-8 text-black">{name}</h6>
 					<h6 className="font-semibold text-xl leading-8 text-indigo-600">{price}</h6>
-					<div className="font-semibold text-sm leading-6 flex justify-start gap-4">{categorias.join(', ')}</div>
+					<div className="font-semibold text-sm leading-6 flex justify-start gap-4">Tags: {categorias.join(', ')}</div>
 				</div>
 			</div>
 		</div>

@@ -3,14 +3,14 @@ import Link from 'next/link';
 
 export default function hero() {
 	return (
-		<header className="hero py-10 bg-gradient-to-t from-blue-500 to-purple-700 pt-10 h-screen">
+		<header className="hero py-10 bg-gradient-to-t from-blue-500 to-purple-700 h-screen">
 			<div className="hero-content md:px-0 px-4 max-w-6xl flex-col lg:flex-row-reverse">
 				<Image
 					width={800}
 					height={800}
 					alt="Imagem de um vitrine"
-					src="https://images.unsplash.com/photo-1671975412006-f0c68d9c7006?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-					className="hidden md:block md:max-w-sm h-80 object-cover rounded-lg shadow-2xl"
+					src={'/hero.jpeg'}
+					className="hidden lg:block md:max-w-sm h-80 object-cover rounded-lg shadow-2xl"
 				/>
 				<div className="w-full lg:w-1/2">
 					<h1 className="text-4xl text-slate-100 font-bold md:leading-none leading-tight md:mt-0 mt-10">

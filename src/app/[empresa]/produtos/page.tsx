@@ -6,13 +6,19 @@ import { notFound, usePathname } from 'next/navigation';
 export default function Page() {
 	const nomeEmpresa = usePathname().split('/')[1];
 
-	const categorias = { sa: 'Saudavel', li: 'Limpeza', al: 'Alimento', hi: 'Higiene', cm: 'Comestico' };
-
-	const products = [
-		{ name: 'Almoço PF', image: '/produto1.jpeg', price: 'R$ 100,00', categorias: [categorias.al, categorias.sa] },
-		{ name: 'Kit de limpeza', image: '/produto2.jpeg', price: 'R$ 150,00', categorias: [categorias.li] },
-		{ name: 'Kit skincare', image: '/produto3.jpeg', price: 'R$ 200,00', categorias: [categorias.hi] },
-		{ name: 'Laço', image: '/produto4.jpeg', price: 'R$ 200,00', categorias: [categorias.cm] },
+	const categorias = {
+		Sau: 'Saudavel',
+		Lim: 'Limpeza',
+		Ali: 'Alimento',
+		Hig: 'Higiene',
+		Com: 'Comestico',
+		Con: 'Construção',
+	};
+	const produtos = [
+		{ name: 'Almoço PF', image: '/produto1.jpeg', price: 'R$ 100,00', categorias: [categorias.Ali, categorias.Sau] },
+		{ name: 'Kit de limpeza', image: '/produto2.jpeg', price: 'R$ 150,00', categorias: [categorias.Lim] },
+		{ name: 'Kit skincare', image: '/produto3.jpeg', price: 'R$ 200,00', categorias: [categorias.Hig] },
+		{ name: 'Laço', image: '/produto4.jpeg', price: 'R$ 200,00', categorias: [categorias.Com] },
 	];
 
 	// Retorna um erro 404 caso o produto não seja encontrado
@@ -21,13 +27,16 @@ export default function Page() {
 	}
 
 	return (
-		<div className="flex flex-col min-h-screen">
+		<div
+			data-theme={'corporate'}
+			className="flex flex-col min-h-screen">
 			<Header EmpresaName={nomeEmpresa} />
 			<main className="flex-grow container mx-auto p-4">
-				<div className="flex justify-evenly">
+				<h1 className="text-2xl font-bold text-center my-3">Categorias</h1>
+				<div className="grid grid-cols-6 gap-4 mb-5 justify-center">
 					{Object.values(categorias).map((value) => (
 						<button
-							className="btn btn-outline btn-primary"
+							className="btn btn-primary col-span-3 lg:col-span-1"
 							key={value}>
 							{value}
 						</button>
@@ -35,7 +44,7 @@ export default function Page() {
 				</div>
 				<h1 className="text-3xl font-bold text-center my-8">Produtos Disponíveis</h1>
 				<div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
-					{products.map((product, index) => (
+					{produtos.map((product, index) => (
 						<ProductCard
 							key={index}
 							name={product.name}
