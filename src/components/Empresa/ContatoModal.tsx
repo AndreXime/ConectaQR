@@ -8,7 +8,7 @@ const Component = ({ Message }: Props) => {
 	return (
 		<>
 			<button
-				className={`btn btn-primary font-bold text-lg mb-2 ${Message ? ' ' : 'btn-disabled'}`}
+				className={`btn btn-primary font-bold text-lg ${Message ? ' ' : 'btn-disabled'}  w-1/2`}
 				onClick={() => (document.getElementById('my_modal_1')! as HTMLDialogElement).showModal()}>
 				<FaPhoneAlt /> Contato
 			</button>
@@ -17,11 +17,11 @@ const Component = ({ Message }: Props) => {
 				className="modal">
 				<div className="modal-box">
 					<h3 className="font-bold text-lg text-center">Informações de contato</h3>
-					<p className="py-4">
+					<div className="py-4">
 						{Message.map((value, index) => (
 							<p key={index}>{value}</p>
 						))}
-					</p>
+					</div>
 					<div className="modal-action">
 						<form method="dialog">
 							<button className="btn">Fechar</button>

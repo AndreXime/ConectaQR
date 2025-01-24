@@ -9,13 +9,13 @@ type HeaderProps = {
 export default function Header({ EmpresaName, Icon, Tab }: HeaderProps) {
 	return (
 		<nav className="bg-base-300 p-3 shadow">
-			<div className="container mx-auto flex justify-center items-center">
+			<div className="container mx-auto flex relative justify-center items-center">
 				<Link
 					className={`${Icon ? '' : 'hidden'}`}
 					href={`/${EmpresaName}`}>
 					<FaHome
 						size={25}
-						className="fixed top-5 left-5"
+						className="absolute left-0 top-2 "
 					/>
 				</Link>
 				<Link

@@ -10,31 +10,38 @@ export default function Navbar() {
 						<label
 							tabIndex={0}
 							role="button"
-							className="btn btn-square btn-ghost">
+							className="btn btn-ghost btn-circle">
 							<FaBars size={19} />
 						</label>
 						<ul
 							tabIndex={0}
-							className="menu dropdown-content rounded-b-lg bg-base-100 z-[20] w-52 mt-3.25">
-							<li className="mr-2">
+							className="menu dropdown-content rounded-box bg-base-100 z-[20] w-52 mt-3">
+							<li>
 								<Link
-									className="btn btn-ghost"
-									href="/pricing">
+									className="btn btn-accent btn-ghost btn-outline mb-2"
+									href="/">
 									Planos
 								</Link>
 							</li>
-							<li className="mr-2">
+							<li>
 								<Link
-									className="btn btn-ghost"
-									href="/contact-us">
+									className="btn btn-accent btn-ghost btn-outline"
+									href="/">
 									Contato
 								</Link>
 							</li>
-							<li className="mr-2">
+							<li>
 								<Link
-									className="btn btn-ghost"
-									href="/pricing">
+									className="btn btn-accent btn-ghost btn-outline my-2"
+									href="/">
 									Empresas
+								</Link>
+							</li>
+							<li>
+								<Link
+									className="btn btn-accent btn-ghost btn-outline"
+									href="/">
+									Área da empresa
 								</Link>
 							</li>
 						</ul>
@@ -84,10 +91,10 @@ export default function Navbar() {
 				</div>
 				<div className="navbar-end hidden lg:flex">
 					<Link href="/start-designing">
-						<button className="btn text-xs mr-4 normal-case btn-secondary btn-outline">Fazer login</button>
+						<button className="btn btn-secondary text-xs mr-4">Fazer login</button>
 					</Link>
 					<Link href="/start-designing">
-						<button className="btn btn-primary mt-0 btn-block text-xs btn-outline normal-case ">Se cadastrar</button>
+						<button className="btn btn-primary text-xs">Se cadastrar</button>
 					</Link>
 				</div>
 			</div>

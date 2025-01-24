@@ -1,27 +1,33 @@
 'use client';
 import { Footer, Header } from '@/components/Empresa';
-import { notFound, usePathname } from 'next/navigation';
 import { QRCodeCanvas } from 'qrcode.react';
 import { useEffect, useState } from 'react';
 import { FaDownload } from 'react-icons/fa';
 
+type PropsQR = {
+	nomeEmpresa: string;
+	QRcodes: { title: string; link: string }[];
+};
+
 const Page = () => {
-	const [QRCodes, setQRCodes] = useState<{ title: string; link: string }[]>([]);
-	const nomeEmpresa = usePathname()?.split('/')[1];
+	const [{ nomeEmpresa, QRcodes }, setData] = useState<PropsQR>({
+		nomeEmpresa: '',
+		QRcodes: [{ title: '', link: '' }],
+	});
 
 	useEffect(() => {
-		if (typeof window !== 'undefined') {
-			const { origin } = window.location;
-			setQRCodes([
-				{ title: 'Tela inicial', link: `${origin}/${nomeEmpresa}` },
-				{ title: 'Produtos', link: `${origin}/${nomeEmpresa}/produtos` },
-			]);
-		}
-	}, [nomeEmpresa]);
+		const origin = typeof window !== 'undefined' ? window.location.origin : '';
+		const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
+		const nomeEmpresa = pathname.split('/')[1] || '';
+		const link = `https://${origin}/${nomeEmpresa}`;
 
-	if (!nomeEmpresa) {
-		return notFound();
-	}
+		const QRcodes = [
+			{ title: 'Tela inicial', link: link },
+			{ title: 'Produtos', link: `${link}/produtos` },
+		];
+
+		setData({ nomeEmpresa: nomeEmpresa, QRcodes: QRcodes });
+	}, []);
 
 	const downloadQRCode = (canvas: HTMLCanvasElement, title: string) => {
 		if (canvas) {
@@ -44,7 +50,7 @@ const Page = () => {
 				Tab={' - QRCodes'}
 			/>
 			<main className="flex-grow container my-8 mx-auto flex flex-col lg:flex-row items-center justify-center gap-12">
-				{QRCodes.map((value, index) => (
+				{QRcodes.map((value, index) => (
 					<div key={index}>
 						<h2 className="text-center text-3xl font-bold mb-3">{value.title}</h2>
 						<QRCodeCanvas
