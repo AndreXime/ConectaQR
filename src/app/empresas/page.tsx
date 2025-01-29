@@ -1,7 +1,11 @@
 import Link from 'next/link';
+type Empresa = {
+	name: string;
+	description: string;
+};
 
-export default function CompaniesPage() {
-	const companies = [
+async function getCompanies(): Promise<Empresa[]> {
+	return [
 		{ name: 'TechNova', description: 'Inovação tecnológica para soluções empresariais.' },
 		{ name: 'GreenSprout', description: 'Soluções sustentáveis para um futuro mais verde.' },
 		{ name: 'CaféVibe', description: 'Cafeteria especializada em grãos premium e experiências únicas.' },
@@ -9,11 +13,16 @@ export default function CompaniesPage() {
 		{ name: 'FitWell', description: 'Equipamentos de fitness modernos e eficientes para todos.' },
 		{ name: 'EcoFleet', description: 'Frota elétrica e sustentável para transporte corporativo.' },
 	];
+}
+
+export default async function CompaniesPage() {
+	const Empresas = await getCompanies();
+
 	return (
 		<div className="min-h-screen bg-base-300 p-6">
 			<h1 className="text-3xl font-bold text-center mb-8 brightness-100">Lista de empresas presentes na ConectaQR</h1>
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 m-5">
-				{companies.map((company, index) => (
+				{Empresas.map((company, index) => (
 					<div
 						key={index}
 						className="card w-full bg-base-100 shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-all">

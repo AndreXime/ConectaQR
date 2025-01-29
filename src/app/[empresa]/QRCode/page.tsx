@@ -1,43 +1,19 @@
-'use client';
 import { Footer, Header } from '@/components/Empresa';
-import { QRCodeCanvas } from 'qrcode.react';
-import { useEffect, useState } from 'react';
-import { FaDownload } from 'react-icons/fa';
+import QRCodeDownload from '@/components/Empresa/QRCode';
 
 type PropsQR = {
-	nomeEmpresa: string;
-	QRcodes: { title: string; link: string }[];
+	title: string;
+	link: string;
 };
 
-const Page = () => {
-	const [{ nomeEmpresa, QRcodes }, setData] = useState<PropsQR>({
-		nomeEmpresa: '',
-		QRcodes: [{ title: '', link: '' }],
-	});
+export default async function Page({ params }: { params: Promise<{ empresa: string }> }) {
+	const nomeEmpresa = (await params).empresa;
+	const baseURL = `https://${process.env.NEXT_PUBLIC_DOMAIN || 'meusite.com'}/${nomeEmpresa}`;
 
-	useEffect(() => {
-		const origin = typeof window !== 'undefined' ? window.location.origin : '';
-		const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
-		const nomeEmpresa = pathname.split('/')[1] || '';
-		const link = `https://${origin}/${nomeEmpresa}`;
-
-		const QRcodes = [
-			{ title: 'Tela inicial', link: link },
-			{ title: 'Produtos', link: `${link}/produtos` },
-		];
-
-		setData({ nomeEmpresa: nomeEmpresa, QRcodes: QRcodes });
-	}, []);
-
-	const downloadQRCode = (canvas: HTMLCanvasElement, title: string) => {
-		if (canvas) {
-			const url = canvas.toDataURL('image/png'); // Converte para URL base64
-			const a = document.createElement('a');
-			a.href = url;
-			a.download = `ConnectQR-${title}-${nomeEmpresa}.png`;
-			a.click();
-		}
-	};
+	const QRcodes: PropsQR[] = [
+		{ title: 'Tela inicial', link: baseURL },
+		{ title: 'Produtos', link: `${baseURL}/produtos` },
+	];
 
 	return (
 		<div
@@ -51,29 +27,15 @@ const Page = () => {
 			/>
 			<main className="flex-grow container my-8 mx-auto flex flex-col lg:flex-row items-center justify-center gap-12">
 				{QRcodes.map((value, index) => (
-					<div key={index}>
-						<h2 className="text-center text-3xl font-bold mb-3">{value.title}</h2>
-						<QRCodeCanvas
-							id={`qrcode-${index}`}
-							value={value.link}
-							size={250}
-						/>
-						<button
-							onClick={() => {
-								const canvas = document.getElementById(`qrcode-${index}`) as HTMLCanvasElement;
-								if (canvas) {
-									downloadQRCode(canvas, value.title);
-								}
-							}}
-							className="btn btn-primary mt-4 w-full">
-							<FaDownload /> Baixar QRCode {value.title}
-						</button>
-					</div>
+					<QRCodeDownload
+						key={index}
+						link={value.link}
+						title={value.title}
+						nomeEmpresa={nomeEmpresa}
+					/>
 				))}
 			</main>
 			<Footer />
 		</div>
 	);
-};
-
-export default Page;
+}

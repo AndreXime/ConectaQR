@@ -8,25 +8,30 @@ export default function hero() {
 				<Image
 					width={800}
 					height={800}
-					alt="Imagem de um vitrine"
-					src={'/hero.jpeg'}
-					className="hidden lg:block md:max-w-sm h-80 object-cover rounded-lg shadow-2xl"
+					priority={false}
+					alt="Imagem do hero, uma pessoa olhando o celular dentro do supermercado"
+					src={'/hero1.jpg'}
+					className="hidden lg:block md:max-w-sm h-100 object-cover rounded-lg shadow-2xl"
 				/>
-				<div className="w-full lg:w-1/2">
+				<div className="w-full lg:w-1/2 md:h-100">
 					<h1 className="text-4xl text-slate-100 font-bold md:leading-none leading-tight md:mt-0 mt-10">
-						Tenha sua propria pagina de produtos em minutos!
+						Crie sua própria página e exponha seus produtos em minutos!
 					</h1>
 					<p className="py-2 text-xl text-slate-100 mt-4 pr-12">
-						Use nossa plataforma totalmente gratis modernizar seu negocio e facilitar seus clientes saberem de você.
+						Modernize seu negócio de forma gratuita! Com nossa plataforma, você cria sua vitrine online em poucos
+						cliques e facilita o acesso dos seus clientes aos seus produtos.
 					</p>
 					<Link href="/start-designing">
-						<button className="btn text-lg mt-4 mb-6 px-12 btn-accent normal-case">Começe agora</button>
+						<button className="btn text-lg mt-4 mb-6 px-12 btn-success normal-case">Começe agora</button>
 					</Link>
 					<h2 className="py-2 text-2xl font-semibold text-slate-100 mt-4 pr-12">
-						Procurando uma empresa já cadastrada?
+						Quer encontrar uma empresa parceira?
 					</h2>
+					<p className="py-2 text-xl text-slate-100 pr-12">
+						Explore as empresas já cadastradas e aproveite para conhecer tudo o que nossa plataforma oferece.{' '}
+					</p>
 					<Link href="/empresas">
-						<button className="btn text-lg mt-4 px-12 btn-accent normal-case">Procure aqui</button>
+						<button className="btn text-lg mt-4 px-12 btn-warning normal-case"> Buscar empresas </button>
 					</Link>
 				</div>
 			</div>
