@@ -21,7 +21,7 @@ export default function hero() {
 						Modernize seu negócio de forma gratuita! Com nossa plataforma, você cria sua vitrine online em poucos
 						cliques e facilita o acesso dos seus clientes aos seus produtos.
 					</p>
-					<Link href="/start-designing">
+					<Link href="/acesso">
 						<button className="btn text-lg mt-4 mb-6 px-12 btn-warning normal-case">Começe agora</button>
 					</Link>
 					<h2 className="py-2 text-2xl font-semibold text-slate-100 mt-4 pr-12">
