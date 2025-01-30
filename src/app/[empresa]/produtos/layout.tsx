@@ -10,9 +10,5 @@ export async function generateMetadata({ params }: { params: Promise<{ empresa: 
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-	return (
-		<html>
-			<body>{children}</body>
-		</html>
-	);
+	return <html>{children}</html>;
 }

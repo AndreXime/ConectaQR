@@ -5,7 +5,6 @@ type ProdutoType = {
 	name: string;
 	image: string;
 	price: string;
-	categorias: string[];
 };
 
 type PropsType = {
@@ -17,24 +16,14 @@ async function getProps(): Promise<PropsType> {
 	const categorias = ['Saudavel', 'Limpeza', 'Alimentação', 'Higiene', 'Comestico', 'Construção'];
 
 	const produtos = [
-		{ name: 'Sopa Detox', image: '/produto1.jpeg', price: 'R$ 40,00', categorias: ['Saudavel', 'Alimentação'] },
-		{ name: 'Desinfetante Floral', image: '/produto2.jpeg', price: 'R$ 15,00', categorias: ['Limpeza'] },
-		{
-			name: 'Creme Facial Anti-Idade',
-			image: '/produto3.jpeg',
-			price: 'R$ 120,00',
-			categorias: ['Higiene', 'Comestico'],
-		},
-		{ name: 'Lixa de Unha Profissional', image: '/produto4.jpeg', price: 'R$ 25,00', categorias: ['Comestico'] },
-		{ name: 'Martelo de Carpinteiro', image: '/produto1.jpeg', price: 'R$ 30,00', categorias: ['Construção'] },
-		{
-			name: 'Creme para Hidratação Profunda',
-			image: '/produto4.jpeg',
-			price: 'R$ 45,00',
-			categorias: ['Higiene', 'Comestico'],
-		},
-		{ name: 'Café Orgânico', image: '/produto2.jpeg', price: 'R$ 18,00', categorias: ['Saudavel', 'Alimentação'] },
-		{ name: 'Kit de Vassoura e Rodo', image: '/produto3.jpeg', price: 'R$ 80,00', categorias: ['Limpeza'] },
+		{ name: 'Sopa Detox', image: '/produto1.jpeg', price: 'R$ 40,00' },
+		{ name: 'Desinfetante Floral', image: '/produto2.jpeg', price: 'R$ 15,00' },
+		{ name: 'Creme Facial Anti-Idade', image: '/produto3.jpeg', price: 'R$ 120,00' },
+		{ name: 'Lixa de Unha Profissional', image: '/produto4.jpeg', price: 'R$ 25,00' },
+		{ name: '12345678901234567 12345678901234567', image: '/produto1.jpeg', price: '34 caracteres' },
+		{ name: 'Creme para Hidratação Profunda', image: '/produto4.jpeg', price: 'R$ 45,00' },
+		{ name: 'Café Orgânico', image: '/produto2.jpeg', price: 'R$ 18,00' },
+		{ name: 'Kit de Vassoura e Rodo', image: '/produto3.jpeg', price: 'R$ 80,00' },
 	];
 
 	return { produtos, categorias };
@@ -45,28 +34,31 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 
 	const { produtos, categorias } = await getProps();
 
-	// Retorna um erro 404 caso o produto não seja encontrado
-	if (!nomeEmpresa) {
+	if (!produtos) {
 		return notFound();
 	}
 
 	return (
-		<div
+		<body
 			data-theme={'retro'}
 			className="flex flex-col min-h-screen">
 			<Header
 				Categorias={categorias}
 				EmpresaName={nomeEmpresa}>
 				<main className="flex-grow container mx-auto p-4">
-					<h1 className="text-3xl font-bold text-center my-8">Produtos Disponíveis</h1>
-					<div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+					<div className="join flex justify-center">
+						<button className="join-item btn">«</button>
+						<button className="join-item btn">Pagina 1</button>
+						<button className="join-item btn">»</button>
+					</div>
+					<h1 className="text-3xl font-bold text-center my-6">Principais produtos</h1>
+					<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
 						{produtos.map((product, index) => (
 							<ProductCard
 								key={index}
 								name={product.name}
 								image={product.image}
 								price={product.price}
-								categorias={product.categorias}
 							/>
 						))}
 					</div>
@@ -76,6 +68,6 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 					Telefone={'40028922'}
 				/>
 			</Header>
-		</div>
+		</body>
 	);
 }

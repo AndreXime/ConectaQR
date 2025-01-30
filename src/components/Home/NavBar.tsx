@@ -3,7 +3,7 @@ import { FaBars } from 'react-icons/fa';
 
 export default function Navbar() {
 	return (
-		<nav className="w-full flex justify-center bg-base-100 fixed z-20">
+		<nav className="w-full flex justify-center bg-base-100 absolute">
 			<div className="navbar py-2 bg-base-100 max-w-6xl">
 				<div className="md:navbar-start w-full flex items-center justify-between ">
 					<div className="lg:hidden dropdown dropdown-bottom">

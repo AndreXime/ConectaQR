@@ -28,21 +28,20 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 	const info = await getCompanyInfo((await params).empresa);
 
 	return (
-		<div
-			id="root"
+		<body
 			data-theme={info.tema}
 			className="flex flex-col min-h-screen bg-base-100">
 			<Header
 				Icon={false}
 				EmpresaName={info.nomeEmpresa}
 			/>
-			<main className="flex-grow grid grid-cols-3 mt-8 mx-2 lg:mx-52">
-				<div className="flex flex-col col-span-3">
+			<main className="flex-grow flex-col mt-8 mx-2 lg:mx-52">
+				<div className="flex flex-col">
 					<h2 className="text-center text-lg">{info.desc}</h2>
 				</div>
-				<div className="flex flex-col items-center gap-4 col-span-3">
+				<div className="flex flex-col items-center gap-4 mt-15">
 					<Link
-						className="btn btn-primary font-bold text-lg  w-1/2"
+						className="btn btn-primary font-bold text-lg w-1/2"
 						href={`/${info.nomeEmpresa}/produtos`}>
 						<FaShoppingCart />
 						Visitar produtos
@@ -66,6 +65,6 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 				</div>
 			</main>
 			<Footer />
-		</div>
+		</body>
 	);
 }

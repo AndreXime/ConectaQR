@@ -18,7 +18,7 @@ export default function Header({ EmpresaName, children, Categorias }: HeaderProp
 				<nav className="navbar flex bg-base-300 w-full p-3 shadow relative justify-center">
 					<label
 						htmlFor="my-drawer"
-						className="btn btn-square btn-ghost left-2 top-5 absolute md:hidden">
+						className="btn btn-square btn-ghost left-3 absolute md:hidden">
 						<FaBars size={20} />
 					</label>
 
@@ -34,7 +34,7 @@ export default function Header({ EmpresaName, children, Categorias }: HeaderProp
 						</label>
 					</div>
 				</nav>
-				<div className="md:hidden bg-base-200 w-full px-5">
+				<div className="md:hidden bg-base-300 w-full px-5">
 					<label className="input input-bordered gap-2 w-full my-2">
 						<input
 							type="text"
@@ -43,8 +43,8 @@ export default function Header({ EmpresaName, children, Categorias }: HeaderProp
 						<FaSearch />
 					</label>
 				</div>
-				<div className="hidden bg-base-200 flex-row md:flex items-center px-10">
-					<h1 className="text-xl font-bold text-left my-4 mx-4">Categorias</h1>
+				<div className="hidden bg-base-200 flex-row md:flex items-center ">
+					<h1 className="text-xl font-bold text-left my-4 ml-8 mr-3">Categorias</h1>
 					<div className="justify-center gap-2">
 						{Categorias.map((value) => (
 							<button

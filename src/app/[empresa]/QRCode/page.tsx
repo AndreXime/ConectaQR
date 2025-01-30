@@ -16,8 +16,7 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 	];
 
 	return (
-		<div
-			id="root"
+		<body
 			data-theme={'retro'}
 			className="flex flex-col min-h-screen">
 			<Header
@@ -36,6 +35,6 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 				))}
 			</main>
 			<Footer />
-		</div>
+		</body>
 	);
 }
