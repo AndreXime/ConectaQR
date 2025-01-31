@@ -10,7 +10,7 @@ export default function hero() {
 					height={800}
 					priority={false}
 					alt="Imagem do hero, uma pessoa olhando o celular dentro do supermercado"
-					src={'/hero1.jpg'}
+					src={'/assets/hero.jpg'}
 					className="hidden lg:block md:max-w-sm h-100 object-cover rounded-lg shadow-2xl"
 				/>
 				<div className="w-full lg:w-1/2 md:h-100">

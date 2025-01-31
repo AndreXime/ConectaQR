@@ -16,14 +16,14 @@ async function getProps(): Promise<PropsType> {
 	const categorias = ['Saudavel', 'Limpeza', 'Alimentação', 'Higiene', 'Comestico', 'Construção'];
 
 	const produtos = [
-		{ name: 'Sopa Detox', image: '/produto1.jpeg', price: 'R$ 40,00' },
-		{ name: 'Desinfetante Floral', image: '/produto2.jpeg', price: 'R$ 15,00' },
-		{ name: 'Creme Facial Anti-Idade', image: '/produto3.jpeg', price: 'R$ 120,00' },
-		{ name: 'Lixa de Unha Profissional', image: '/produto4.jpeg', price: 'R$ 25,00' },
-		{ name: '12345678901234567 12345678901234567', image: '/produto1.jpeg', price: '34 caracteres' },
-		{ name: 'Creme para Hidratação Profunda', image: '/produto4.jpeg', price: 'R$ 45,00' },
-		{ name: 'Café Orgânico', image: '/produto2.jpeg', price: 'R$ 18,00' },
-		{ name: 'Kit de Vassoura e Rodo', image: '/produto3.jpeg', price: 'R$ 80,00' },
+		{ name: 'Sopa Detox', image: '/produtos/produto1.jpeg', price: 'R$ 40,00' },
+		{ name: 'Desinfetante Floral', image: '/produtos/produto2.jpeg', price: 'R$ 15,00' },
+		{ name: 'Creme Facial Anti-Idade', image: '/produtos/produto3.jpeg', price: 'R$ 120,00' },
+		{ name: 'Lixa de Unha Profissional', image: '/produtos/produto4.jpeg', price: 'R$ 25,00' },
+		{ name: '12345678901234567 12345678901234567', image: '/produtos/produto1.jpeg', price: '34 caracteres' },
+		{ name: 'Creme para Hidratação Profunda', image: '/produtos/produto4.jpeg', price: 'R$ 45,00' },
+		{ name: 'Café Orgânico', image: '/produtos/produto2.jpeg', price: 'R$ 18,00' },
+		{ name: 'Kit de Vassoura e Rodo', image: '/produtos/produto3.jpeg', price: 'R$ 80,00' },
 	];
 
 	return { produtos, categorias };

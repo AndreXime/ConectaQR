@@ -10,6 +10,7 @@ export default function Navbar() {
 						<label
 							tabIndex={0}
 							role="button"
+							aria-label="Abrir menu movel"
 							className="btn btn-ghost btn-circle">
 							<FaBars size={19} />
 						</label>

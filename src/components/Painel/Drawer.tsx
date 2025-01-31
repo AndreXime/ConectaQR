@@ -24,14 +24,29 @@ export default function Drawer({ children, setTab }: DrawerProps) {
 							<FaBars size={20} />
 						</label>
 					</div>
-					<div className="mx-2 flex-1 px-2 text-center md:text-left font-semibold">ConnectQR - Painel</div>
+					<div className="mx-2 flex-1 px-2 text-center md:text-left font-semibold">ConnectQR</div>
 					<div className="hidden flex-none lg:block">
 						<ul className="menu menu-horizontal">
 							<li>
-								<button onClick={() => setTab('Resumo')}>Resumo</button>
+								<button
+									className="btn btn-ghost btn-outline mx-2"
+									onClick={() => setTab('Inicio')}>
+									Visão geral
+								</button>
 							</li>
 							<li>
-								<button onClick={() => setTab('Produtos')}>Produtos</button>
+								<button
+									className="btn btn-ghost btn-outline"
+									onClick={() => setTab('Editar')}>
+									Editar perfil
+								</button>
+							</li>
+							<li>
+								<button
+									className="btn btn-ghost btn-outline mx-2"
+									onClick={() => setTab('Produtos')}>
+									Gerenciar Produtos
+								</button>
 							</li>
 						</ul>
 					</div>
@@ -44,11 +59,27 @@ export default function Drawer({ children, setTab }: DrawerProps) {
 					aria-label="close sidebar"
 					className="drawer-overlay"></label>
 				<ul className="menu bg-base-200 min-h-full w-60 p-4">
+					<h1 className="text-lg font-semibold text-center mb-3">Painel</h1>
 					<li>
-						<button onClick={() => setTab('Resumo')}>Resumo</button>
+						<button
+							className="btn btn-ghost btn-outline mb-2"
+							onClick={() => setTab('Inicio')}>
+							Visão geral
+						</button>
 					</li>
 					<li>
-						<button onClick={() => setTab('Produtos')}>Produtos</button>
+						<button
+							className="btn btn-ghost btn-outline mb-2"
+							onClick={() => setTab('Editar')}>
+							Editar perfil
+						</button>
+					</li>
+					<li>
+						<button
+							className="btn btn-ghost btn-outline mb-2"
+							onClick={() => setTab('Produtos')}>
+							Gerenciar Produtos
+						</button>
 					</li>
 				</ul>
 			</div>
