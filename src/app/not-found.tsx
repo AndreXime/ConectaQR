@@ -7,6 +7,7 @@ export default function app() {
 			<h1 className="text-3xl text-center mt-2 mb-5">Oops! Parece que você encontrou um canto secreto do site.</h1>
 			<Link
 				className="btn btn-primary btn-lg"
+				role="Button"
 				href={'/'}>
 				Voltar para tela inicial
 			</Link>

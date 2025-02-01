@@ -6,6 +6,7 @@ export default function App() {
 	const [Tab, setTab] = useState('Inicio');
 	const [InfoData, setInfoData] = useState({ nome: '', desc: '', tema: '', qtdProdutos: '', categorias: [''] });
 	const [ProdutosData, setProdutosData] = useState([{ nome: '', preco: '', categorias: '', imagem: '' }]);
+	const [Categorias, setCategorias] = useState(['']);
 
 	useEffect(() => {
 		setInfoData({
@@ -19,7 +20,12 @@ export default function App() {
 			{ nome: 'Laço gorgurão', imagem: '/produtos/produto1.jpeg', preco: '15', categorias: 'Laços' },
 			{ nome: 'Vela decoradas', imagem: '/produtos/produto2.jpeg', preco: '25', categorias: 'Velas' },
 		]);
+		setCategorias(['Laços', 'Velas', 'Terços']);
 	}, []);
+
+	useEffect(() => {
+		document.documentElement.setAttribute('data-theme', InfoData.tema);
+	}, [InfoData]);
 
 	return (
 		<div className="min-h-screen">
@@ -35,6 +41,7 @@ export default function App() {
 					{Tab === 'Produtos' && (
 						<Produtos
 							Data={ProdutosData}
+							Categorias={Categorias}
 							setData={setProdutosData}
 						/>
 					)}

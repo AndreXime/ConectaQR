@@ -16,7 +16,7 @@ export default function Drawer({ children, setTab }: DrawerProps) {
 			/>
 			<div className="drawer-content flex flex-col">
 				<div className="navbar bg-base-300 w-full relative">
-					<div className="flex-none lg:hidden absolute left-5">
+					<div className="flex-none md:hidden absolute left-5">
 						<label
 							htmlFor="my-drawer-3"
 							aria-label="open sidebar"
@@ -25,7 +25,7 @@ export default function Drawer({ children, setTab }: DrawerProps) {
 						</label>
 					</div>
 					<div className="mx-2 flex-1 px-2 text-center md:text-left font-semibold">ConnectQR</div>
-					<div className="hidden flex-none lg:block">
+					<div className="hidden flex-none md:block">
 						<ul className="menu menu-horizontal">
 							<li>
 								<button

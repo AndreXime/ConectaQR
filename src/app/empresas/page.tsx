@@ -19,7 +19,7 @@ export default async function CompaniesPage() {
 	const Empresas = await getCompanies();
 
 	return (
-		<body className="min-h-screen bg-base-300 p-6">
+		<div className="min-h-screen bg-base-300 p-6">
 			<h1 className="text-3xl font-bold text-center mb-8 brightness-100">Lista de empresas presentes na ConectaQR</h1>
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 m-5">
 				{Empresas.map((company, index) => (
@@ -27,7 +27,7 @@ export default async function CompaniesPage() {
 						key={index}
 						className="card w-full bg-base-100 shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-all">
 						<div className="card-body">
-							<h2 className="card-title text-xl font-semibold">{company.name}</h2>
+							<h3 className="card-title text-xl font-semibold">{company.name}</h3>
 							<p className="text-base-content">{company.description}</p>
 							<div className="card-actions justify-end">
 								<Link
@@ -40,6 +40,6 @@ export default async function CompaniesPage() {
 					</div>
 				))}
 			</div>
-		</body>
+		</div>
 	);
 }

@@ -11,17 +11,99 @@ type ProdutoType = {
 
 type Props = {
 	Data: ProdutoType[];
+	Categorias: string[];
 	setData: Dispatch<SetStateAction<ProdutoType[]>>;
 };
 
-export default function Produtos({ Data, setData }: Props) {
+export default function Produtos({ Data, setData, Categorias }: Props) {
 	return (
 		<div>
-			<div className="overflow-x-auto">
-				<table className="table table-zebra">
+			<div className="collapse collapse-arrow bg-base-200 border border-base-300 mb-8">
+				<input type="checkbox" />
+				<div className="collapse-title font-semibold">Adicionar categorias</div>
+				<div className="collapse-content flex flex-col md:flex-row gap-4 mx-2">
+					<label className="floating-label">
+						<span>Categorias</span>
+						<input
+							type="text"
+							className="input w-full"
+						/>
+					</label>
+
+					<button
+						onClick={() => {
+							setData((prevData) => ({ ...prevData, nome: 'Teste' }));
+						}}
+						className="btn btn-success">
+						<FaSave /> Salvar
+					</button>
+					<div className="flex gap-5 items-center">
+						{Categorias.map((value) => (
+							<p
+								className="badge-md badge"
+								key={value}>
+								{value}
+							</p>
+						))}
+					</div>
+				</div>
+			</div>
+			<div className="collapse collapse-arrow bg-base-200 border border-base-300 mb-8">
+				<input type="checkbox" />
+				<div className="collapse-title font-semibold">Adicionar produto</div>
+				<div className="collapse-content flex flex-col md:flex-row gap-4 mx-2">
+					<label
+						htmlFor="fileUpload"
+						className="btn btn-outline">
+						<FaUpload /> Envie uma foto
+						<input
+							id="fileUpload"
+							type="file"
+							className="hidden"
+						/>
+					</label>
+
+					<label className="floating-label flex-grow-1">
+						<span>Nome do produto</span>
+						<input
+							type="text"
+							className="input w-full"
+						/>
+					</label>
+
+					<label className="floating-label flex-grow-1">
+						<span>Preço</span>
+						<input
+							type="number"
+							className="input w-full"
+						/>
+					</label>
+
+					<label className="floating-label flex-grow-1">
+						<span>Categoria</span>
+						<select
+							defaultValue="Selecione tags"
+							className="select">
+							<option disabled>Selecione categoria</option>
+							{Categorias.map((value) => (
+								<option key={value}>{value}</option>
+							))}
+						</select>
+					</label>
+
+					<button
+						onClick={() => {
+							setData((prevData) => ({ ...prevData, nome: 'Teste' }));
+						}}
+						className="btn btn-success">
+						<FaSave /> Salvar
+					</button>
+				</div>
+			</div>
+			<div className="overflow-x-auto w-full">
+				<table className="table table-zebra min-w-max">
 					<thead>
 						<tr>
-							<th></th>
 							<th>Imagem</th>
 							<th>Nome</th>
 							<th>Preco</th>
@@ -30,51 +112,8 @@ export default function Produtos({ Data, setData }: Props) {
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<th></th>
-							<td>
-								<input
-									id="fileUpload"
-									type="file"
-									className="hidden"
-								/>
-								<label
-									htmlFor="fileUpload"
-									className=" px-4 py-2 rounded-lg btn btn-outline">
-									<FaUpload />
-								</label>
-							</td>
-							<td>
-								<input
-									type="text"
-									className="input"
-								/>
-							</td>
-							<td>
-								<input
-									type="number"
-									className="input"
-								/>
-							</td>
-							<td>
-								<input
-									type="text"
-									className="input"
-								/>
-							</td>
-							<th>
-								<button
-									onClick={() => {
-										setData((prevData) => ({ ...prevData, nome: 'Teste' }));
-									}}
-									className="btn btn-ghost btn-success">
-									<FaSave size={18} />
-								</button>
-							</th>
-						</tr>
 						{Data.map((value, index) => (
 							<tr key={index}>
-								<th>{index}</th>
 								<td className="avatar flex items-center">
 									<div className="mask mask-squircle h-12 w-12">
 										<Image

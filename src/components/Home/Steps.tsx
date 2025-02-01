@@ -29,7 +29,7 @@ export default function GenerationStep() {
 										</div>
 									</div>
 									<div className="card-body  items-center text-center">
-										<p className="text-accent">{i.icon}</p>
+										<p className="text-primary">{i.icon}</p>
 										<p className="mt-2"> {i.description}</p>
 									</div>
 								</div>

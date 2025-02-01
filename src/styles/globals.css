@@ -1,4 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@font-face {
+	font-family: 'Roboto';
+	src: url('/fonts/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
+	font-weight: 100 900; /* Faixa de pesos disponível */
+	font-stretch: 75% 100%; /* Define a variação de largura */
+	font-style: normal;
+}
+
 @import 'tailwindcss';
 @plugin "daisyui" {
 	themes: light --default, dracula --prefersdark;

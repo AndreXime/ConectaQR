@@ -5,13 +5,13 @@ export default function Navbar() {
 	return (
 		<nav className="w-full flex justify-center bg-base-100 absolute">
 			<div className="navbar py-2 bg-base-100 max-w-6xl">
-				<div className="md:navbar-start w-full flex items-center justify-between ">
-					<div className="lg:hidden dropdown dropdown-bottom">
+				<div className="md:navbar-start w-full flex items-center justify-center relative ">
+					<div className="lg:hidden dropdown dropdown-bottom absolute left-0">
 						<label
 							tabIndex={0}
-							role="button"
+							role="Abrir nav"
 							aria-label="Abrir menu movel"
-							className="btn btn-ghost btn-circle">
+							className="btn btn-ghost btn-circle ">
 							<FaBars size={19} />
 						</label>
 						<ul
@@ -19,28 +19,28 @@ export default function Navbar() {
 							className="menu dropdown-content rounded-box bg-base-100 z-[20] w-52 mt-3">
 							<li>
 								<Link
-									className="btn btn-accent btn-ghost btn-outline mb-2"
+									className="btn btn-accent btn-ghost  mb-2"
 									href="/">
 									Planos
 								</Link>
 							</li>
 							<li>
 								<Link
-									className="btn btn-accent btn-ghost btn-outline"
+									className="btn btn-accent btn-ghost "
 									href="/">
 									Contato
 								</Link>
 							</li>
 							<li>
 								<Link
-									className="btn btn-accent btn-ghost btn-outline my-2"
+									className="btn btn-accent btn-ghost  my-2"
 									href="/">
 									Empresas
 								</Link>
 							</li>
 							<li>
 								<Link
-									className="btn btn-accent btn-ghost btn-outline"
+									className="btn btn-accent btn-ghost "
 									href="/">
 									Área da empresa
 								</Link>
@@ -62,7 +62,6 @@ export default function Navbar() {
 							<span className="font-bold text-xl">ConectaQR</span>
 						</Link>
 					</div>
-					<button className="lg:hidden btn btn-primary">Acessar</button>
 				</div>
 
 				<div className="navbar-center hidden lg:flex">
@@ -90,14 +89,7 @@ export default function Navbar() {
 						</li>
 					</ul>
 				</div>
-				<div className="navbar-end hidden lg:flex">
-					<Link href="/start-designing">
-						<button className="btn btn-secondary text-xs mr-4">Fazer login</button>
-					</Link>
-					<Link href="/start-designing">
-						<button className="btn btn-primary text-xs">Se cadastrar</button>
-					</Link>
-				</div>
+				<div className="navbar-end hidden lg:flex"></div>
 			</div>
 		</nav>
 	);

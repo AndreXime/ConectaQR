@@ -2,13 +2,13 @@ import '@/styles/globals.css';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-	title: 'ConnectQR - Acesso',
-	description: 'Pagina de login do ConnectQR',
+	title: 'ConnectQR - Painel',
+	description: 'Area da empresa configurar sua loja no ConnectQR',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html data-theme={'light'}>
+		<html lang="pt-BR">
 			<body>{children}</body>
 		</html>
 	);
