@@ -1,25 +1,25 @@
 import type { Response, Request } from "express";
 import { Router } from "express";
 
-import Empresa from "./controllers/empresaControllers.js";
-import Produto from "./controllers/produtoControllers.js";
-
-import validateInput from "./middlewares/validateInput.js";
-import { verifyAuth } from "./middlewares/JWT.js";
+import { Empresa, Produto, Publicas } from "@/controllers/index.js";
+import { validateInput, verifyAuth } from "./middlewares/index.js";
 
 const router = Router();
 
-router.get("/empresa", Empresa.getAllEmpresas);
-router.post("/empresa", validateInput("Empresa"), Empresa.createEmpresas);
-router.delete("/empresa/:id", verifyAuth, Empresa.deleteEmpresa);
-router.patch("/empresa/:id", verifyAuth, Empresa.updateEmpresa);
-router.get("/empresa/:id", Empresa.getEmpresasByName);
+/* Rotas que precisam de autenticação */
+router.post("/empresa/login", validateInput("EmpresaLogin"), Empresa.loginEmpresa);
+router.post("/empresa/registro", validateInput("EmpresaRegistrar"), Empresa.createEmpresa);
+router.patch("/empresa", verifyAuth, validateInput("EmpresaLogin"), Empresa.updateEmpresa);
+router.delete("/empresa", verifyAuth, Empresa.deleteEmpresa);
 
-router.get("/produto", Produto.getAllProduto);
-router.post("/produto", Produto.createProduto);
-router.post("/produto/:categoria", Produto.getProdutoByCategoria);
-router.delete("/produto/:id", Produto.deleteProduto);
-router.patch("/produto/:id", Produto.updateProduto);
+router.post("/produto", verifyAuth, validateInput("Produtos"), Produto.createProduto);
+router.patch("/produto/:id", verifyAuth, validateInput("Produtos"), Produto.updateProduto);
+router.delete("/produto/:id", verifyAuth, Produto.deleteProduto);
+
+/* Informações publicas */
+router.get("/empresa", Publicas.getAllEmpresas);
+router.get("/empresa/:nome", Publicas.getEmpresasByName);
+router.get("/produto/:empresa", Publicas.getProdutos);
 
 router.all("/", async (req: Request, res: Response) => {
   res.status(200).json({ message: "Pong" });

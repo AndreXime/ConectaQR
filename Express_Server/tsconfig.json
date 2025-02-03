@@ -4,15 +4,15 @@
     "module": "NodeNext",
     "moduleResolution": "nodenext",
     "strict": true,
-    "useUnknownInCatchVariables":false,
+    "useUnknownInCatchVariables": false,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "outDir": "./dist",
     "rootDir": "./src",
     "paths": {
-      "*": ["/node_modules/@types"] // Inclui o diretório de tipos
+      "@/*": ["./src/*"]
     }
   },
-  "include": ["src/*", "src/**/*.ts", "src/@types/*.d.ts", "swaggerSetup.cjs"],
+  "include": ["src/*.ts", "src/**/*.ts"],
   "exclude": ["node_modules"]
 }

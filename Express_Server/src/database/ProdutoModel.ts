@@ -15,6 +15,9 @@ class Funcionario extends Model<InferAttributes<Funcionario>, InferCreationAttri
   declare preco: string;
 
   @Column({ type: DataType.STRING, allowNull: false })
+  declare imagem: string;
+
+  @Column({ type: DataType.STRING, allowNull: false })
   declare categorias: string;
 
   @Column({ type: DataType.UUID, allowNull: false })

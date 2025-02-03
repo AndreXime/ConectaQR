@@ -1,53 +1,72 @@
 import type { Request, Response, NextFunction } from "express";
-import Joi from "joi";
 
-type SchemaNomes = "Empresa" | "Produtos";
+type SchemaNomes = "EmpresaRegistrar" | "Produtos" | "EmpresaLogin";
+
+type ValidationFunction = (data: Record<string, unknown>) => string[];
+
+type SchemaType = Record<string, ValidationFunction>;
 
 export default function validateInput(schemaNome: SchemaNomes) {
   return (req: Request, res: Response, next: NextFunction): void => {
     const schema = schemas[schemaNome];
-    const { error } = schema.validate(req.body, { abortEarly: false });
-
-    if (error) {
-      const errorsAll = error.details.map((detail) => detail.message);
-      res.status(400).json({
-        message: errorsAll
-      });
+    const errors = schema(req.body);
+    if (errors.length > 0) {
+      res.status(400).json({ message: errors });
       return;
     }
-
     next();
   };
 }
 
-const messagensComuns = {
-  "string.base": "O campo {#label} deve ser um texto.",
-  "string.email": "O campo 'email' deve ser um e-mail válido.",
-  "string.min": "O campo '{#label}' deve ter no mínimo {#limit} caracteres.",
-  "any.required": "O campo '{#label}' é obrigatório.",
-  "string.empty": "O campo '{#label}' não pode estar vazio."
+const validateString = (field: string, value: string | unknown, minLength = 1): string[] => {
+  if (typeof value !== "string") {
+    return [`O campo '${field}' deve ser um texto.`];
+  } else if (value.trim().length < minLength) {
+    return [`O campo '${field}' deve ter no mínimo ${minLength} caracteres.`];
+  }
+  return [];
 };
 
-// String comuns são Obrigatorias e tem messagens comuns
-const stringComum = (customMessages = {}) =>
-  Joi.string()
-    .required()
-    .messages({ ...messagensComuns, ...customMessages });
+const validateEmail = (field: string, value: string | unknown): string[] => {
+  const errors = validateString(field, value, 1);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (typeof value === "string" && !emailRegex.test(value.trim())) {
+    errors.push(`O campo '${field}' deve ser um e-mail válido.`);
+  }
+  return errors;
+};
 
-const numeroComum = (customMessages = {}) =>
-  Joi.number()
-    .required()
-    .messages({ ...messagensComuns, ...customMessages });
+const validateNumber = (field: string, value: number | unknown): string[] => {
+  if (typeof value !== "number" || isNaN(value)) {
+    return [`O campo '${field}' deve ser um número válido.`];
+  }
+  return [];
+};
 
-const schemas = {
-  Empresa: Joi.object({
-    email: stringComum({ "string.email": "O campo 'email' deve ser um e-mail válido." }).email(),
-    senha: stringComum({ "string.min": "O campo 'senha' deve ter no mínimo 6 caracteres." }).min(6),
-    nome: stringComum({ "string.min": "O campo 'senha' deve ter no mínimo 6 caracteres." }).min(6)
-  }),
-  Produtos: Joi.object({
-    nome: stringComum({ "string.email": "O campo 'email' deve ser um e-mail válido." }).email(),
-    preco: numeroComum(),
-    categorias: stringComum()
-  })
+const validateExtraFields = (data: object, allowedFields: string[]): string[] => {
+  return Object.keys(data)
+    .filter((key) => !allowedFields.includes(key))
+    .map((key) => `O campo '${key}' não é permitido.`);
+};
+
+const schemas: SchemaType = {
+  EmpresaRegistrar: (data) => [
+    ...validateExtraFields(data, ["email", "senha", "nome", "descricao"]),
+    ...validateEmail("email", data.email),
+    ...validateString("senha", data.senha, 6),
+    ...validateString("nome", data.nome, 6),
+    ...validateString("descricao", data.descricao, 20)
+  ],
+  EmpresaLogin: (data) => [
+    ...validateExtraFields(data, ["email", "senha"]),
+    ...validateEmail("email", data.email),
+    ...validateString("senha", data.senha, 6)
+  ],
+  Produtos: (data) => [
+    ...validateExtraFields(data, ["nome", "preco", "categorias", "imagem"]),
+    ...validateString("nome", data.nome, 6),
+    ...validateNumber("preco", data.preco),
+    ...validateString("categorias", data.categorias, 6),
+    ...validateString("imagem", data.imagem, 6)
+  ]
 };
