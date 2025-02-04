@@ -47,7 +47,7 @@ export default function PricingPlans() {
 							<h2 className="card-title text-xl text-center">Doador </h2>
 							<h2 className="font-bold mt-4 text-4xl text-center inline-block">
 								R$ 10
-								<span className="text-xs align-middle font-light">/mês</span>
+								<span className="text-xs align-middle font-light">/unico</span>
 							</h2>
 							<button className="btn btn-sm mt-8 btn-primary normal-case w-full">Torna-se doador</button>
 							<ul className="text-left mt-4">

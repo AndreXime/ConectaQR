@@ -35,13 +35,13 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 				Icon={false}
 				EmpresaName={info.nomeEmpresa}
 			/>
-			<main className="flex-grow flex-col mt-8 mx-2 lg:mx-52">
+			<main className="flex-grow flex-col my-8 mx-2 lg:mx-52">
 				<div className="flex flex-col">
 					<h2 className="text-center text-lg">{info.desc}</h2>
 				</div>
 				<div className="flex flex-col items-center gap-4 mt-15">
 					<Link
-						className="btn btn-primary font-bold text-lg w-1/2"
+						className="btn btn-primary font-bold text-lg w-full lg:w-1/2"
 						href={`/${info.nomeEmpresa}/produtos`}>
 						<FaShoppingCart />
 						Visitar produtos
@@ -51,19 +51,20 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 
 					<Link
 						href={`/${info.nomeEmpresa}/QRCode`}
-						className="btn btn-primary font-bold text-lg w-1/2">
+						className="btn btn-primary font-bold text-lg  w-full lg:w-1/2">
 						<FaQrcode /> QR Code
 					</Link>
 					<Link
 						target="_blank"
 						rel="noopener noreferrer"
 						href={info.maps}
-						className={`btn btn-primary font-bold text-lg ${info.maps ? ' ' : 'btn-disabled'} w-1/2`}>
+						className={`btn btn-primary font-bold text-lg ${info.maps ? ' ' : 'btn-disabled'}  w-full lg:w-1/2`}>
 						<FaMapMarkerAlt />
 						Google Maps
 					</Link>
 				</div>
 			</main>
+
 			<Footer />
 		</body>
 	);

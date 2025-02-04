@@ -1,13 +1,14 @@
-import { Footer, Hero, Navbar, Plans, Steps } from '@/components/Home';
+import { Footer, Hero, Drawer, Plans, Steps } from '@/components/Home';
 
 export default function Home() {
 	return (
 		<>
-			<Navbar />
-			<Hero />
-			<Steps />
-			<Plans />
-			<Footer />
+			<Drawer absolute>
+				<Hero />
+				<Steps />
+				<Plans />
+				<Footer />
+			</Drawer>
 		</>
 	);
 }

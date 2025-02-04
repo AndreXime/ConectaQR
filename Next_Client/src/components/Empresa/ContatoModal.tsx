@@ -8,7 +8,7 @@ const Component = ({ Message }: Props) => {
 	return (
 		<>
 			<button
-				className={`btn btn-primary font-bold text-lg ${Message ? ' ' : 'btn-disabled'}  w-1/2`}
+				className={`btn btn-primary font-bold text-lg ${Message ? ' ' : 'btn-disabled'}  w-full lg:w-1/2`}
 				onClick={() => (document.getElementById('my_modal_1')! as HTMLDialogElement).showModal()}>
 				<FaPhoneAlt /> Contato
 			</button>

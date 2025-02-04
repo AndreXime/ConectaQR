@@ -46,12 +46,12 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 				Categorias={categorias}
 				EmpresaName={nomeEmpresa}>
 				<main className="flex-grow container mx-auto p-4">
-					<div className="join flex justify-center">
+					<h1 className="text-3xl font-bold text-center my-5">Principais produtos</h1>
+					<div className="join flex justify-center mb-5">
 						<button className="join-item btn">«</button>
 						<button className="join-item btn">Pagina 1</button>
 						<button className="join-item btn">»</button>
 					</div>
-					<h1 className="text-3xl font-bold text-center my-6">Principais produtos</h1>
 					<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
 						{produtos.map((product, index) => (
 							<ProductCard

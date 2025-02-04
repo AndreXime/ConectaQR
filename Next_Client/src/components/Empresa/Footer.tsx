@@ -8,7 +8,7 @@ export default function Footer() {
 		const tema =
 			document.documentElement.getAttribute('data-theme') ||
 			document.getElementById('root')?.getAttribute('data-theme') ||
-			'Padrão do navegador';
+			'Não foi possivel determinar';
 		setTemaAtual(tema);
 	}, []);
 
