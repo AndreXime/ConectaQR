@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { FaBars } from 'react-icons/fa';
+import ThemeSwitcher from '../common/themeSwitcher';
+
 interface props {
 	children: ReactNode;
 	absolute?: boolean;
@@ -16,7 +18,7 @@ export default function Navbar({ children, absolute }: props) {
 			<div className="drawer-content flex flex-col">
 				{/* Navbar */}
 				<div className={`navbar bg-base-100 w-full ${absolute && 'absolute'}`}>
-					<div className="flex-none lg:hidden absolute">
+					<div className="lg:hidden absolute">
 						<label
 							htmlFor="my-drawer-3"
 							aria-label="open sidebar"
@@ -24,14 +26,21 @@ export default function Navbar({ children, absolute }: props) {
 							<FaBars size={20} />
 						</label>
 					</div>
-					<div className="mx-2 flex-1 px-2 text-xl font-bold text-center lg:text-left">ConectaQR</div>
+					<Link
+						href={'/'}
+						className="mx-2 flex-1 px-2 text-xl font-bold text-center lg:text-left items-center">
+						ConectaQR
+					</Link>
 					<div className="hidden flex-none lg:block">
 						<ul className="menu menu-horizontal">
+							<li>
+								<ThemeSwitcher />
+							</li>
 							<div className="divider divider-horizontal"></div>
 							<li>
 								<Link
 									className="btn btn-primary btn-ghost "
-									href="/">
+									href="/empresas">
 									Empresas parceiras
 								</Link>
 							</li>
@@ -40,15 +49,15 @@ export default function Navbar({ children, absolute }: props) {
 							<li>
 								<Link
 									className="btn btn-primary btn-ghost "
-									href="/">
-									Área da empresa
+									href="/acesso">
+									Painel da empresa
 								</Link>
 							</li>
 							<div className="divider divider-horizontal"></div>
 							<li>
 								<Link
 									className="btn btn-primary btn-ghost "
-									href="/">
+									href="/feedback">
 									Feedback
 								</Link>
 							</li>
@@ -56,7 +65,7 @@ export default function Navbar({ children, absolute }: props) {
 							<li>
 								<Link
 									className="btn btn-primary btn-ghost"
-									href="/">
+									href="/termos">
 									Termos de uso
 								</Link>
 							</li>
@@ -66,40 +75,43 @@ export default function Navbar({ children, absolute }: props) {
 				{children}
 			</div>
 			{/* Navbar mobile */}
-			<div className="drawer-side">
+			<div className="drawer-side z-50">
 				<label
 					htmlFor="my-drawer-3"
 					aria-label="close sidebar"
 					className="drawer-overlay"></label>
-				<ul className="menu bg-base-200 min-h-full w-60 p-4">
+				<ul className="menu bg-base-200 min-h-full w-60 p-4 z-50">
 					<li className="text-lg font-bold text-center my-4">Links do site</li>
 					<li>
 						<Link
 							className="btn btn-primary btn-soft my-3"
-							href="/">
+							href="/empresas">
 							Empresas parceiras
 						</Link>
 					</li>
 					<li>
 						<Link
 							className="btn btn-primary btn-soft"
-							href="/">
-							Área da empresa
+							href="/acesso">
+							Painel da empresa
 						</Link>
 					</li>
 					<li>
 						<Link
 							className="btn btn-primary btn-soft my-3"
-							href="/">
+							href="/feedback">
 							Feedback
 						</Link>
 					</li>
 					<li>
 						<Link
 							className="btn btn-primary btn-soft"
-							href="/">
+							href="/termos">
 							Termos de uso
 						</Link>
+					</li>
+					<li>
+						<ThemeSwitcher className="btn-outline mt-3" />
 					</li>
 				</ul>
 			</div>

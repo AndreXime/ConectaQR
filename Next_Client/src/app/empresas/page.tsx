@@ -37,11 +37,11 @@ export default async function CompaniesPage() {
 							key={index}
 							className="card w-full bg-base-100 shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-all">
 							<div className="card-body">
-								<h3 className="card-title text-xl font-semibold">{company.name}</h3>
-								<p className="text-base-content">{company.description}</p>
-								<div className="card-actions justify-end">
+								<h3 className="card-title text-xl font-semibold justify-center">{company.name}</h3>
+								<p className="text-base-content my-2 text-center">{company.description}</p>
+								<div className="card-actions justify-center">
 									<Link
-										className="btn btn-primary"
+										className="btn btn-primary btn-wide"
 										href={`/${company.name}`}>
 										Visitar
 									</Link>
