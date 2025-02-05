@@ -3,14 +3,14 @@ type DataType = {
 	desc: string;
 	tema: string;
 	qtdProdutos: string;
-	categorias: string[];
 };
 
 type Props = {
 	Data: DataType;
+	qtdCategorias: number;
 };
 
-export default function Resumo({ Data }: Props) {
+export default function Resumo({ Data, qtdCategorias }: Props) {
 	return (
 		<section className="flex flex-col gap-5">
 			<h2 className="text-2xl text-center font-semibold mb-2"> Visão geral da sua loja </h2>
@@ -33,7 +33,7 @@ export default function Resumo({ Data }: Props) {
 
 				<div className="stat place-items-center">
 					<div className="stat-title">Categorias registradas</div>
-					<div className="stat-value">{Data.categorias.length}</div>
+					<div className="stat-value">{qtdCategorias}</div>
 				</div>
 
 				<div className="stat place-items-center">

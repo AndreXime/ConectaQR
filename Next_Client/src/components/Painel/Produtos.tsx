@@ -13,6 +13,7 @@ type Props = {
 	Data: ProdutoType[];
 	Categorias: string[];
 	setData: Dispatch<SetStateAction<ProdutoType[]>>;
+	setCategorias: Dispatch<SetStateAction<string[]>>;
 };
 
 export default function Produtos({ Data, setData, Categorias }: Props) {
@@ -21,26 +22,26 @@ export default function Produtos({ Data, setData, Categorias }: Props) {
 			<div className="collapse collapse-arrow bg-base-200 border border-base-300 mb-8">
 				<input type="checkbox" />
 				<div className="collapse-title font-semibold">Adicionar categorias</div>
-				<div className="collapse-content flex flex-col md:flex-row gap-4 mx-2">
-					<label className="floating-label">
-						<span>Categorias</span>
-						<input
-							type="text"
-							className="input w-full"
-						/>
-					</label>
+				<div className="collapse-content grid grid-cols-1 gap-4 mx-1">
+					<form className="flex flex-col md:flex-row gap-4">
+						<label className="floating-label">
+							<span>Categorias</span>
+							<input
+								name="categoria"
+								type="text"
+								className="input w-full"
+							/>
+						</label>
 
-					<button
-						onClick={() => {
-							setData((prevData) => ({ ...prevData, nome: 'Teste' }));
-						}}
-						className="btn btn-success">
-						<FaSave /> Salvar
-					</button>
-					<div className="flex gap-5 items-center">
+						<button className="btn btn-success">
+							<FaSave /> Salvar
+						</button>
+					</form>
+
+					<div className="flex flex-row flex-wrap gap-4">
 						{Categorias.map((value) => (
 							<p
-								className="badge-md badge"
+								className="badge badge-warning"
 								key={value}>
 								{value}
 							</p>

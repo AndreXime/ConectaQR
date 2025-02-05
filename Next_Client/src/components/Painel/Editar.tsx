@@ -5,14 +5,13 @@ type DataType = {
 	desc: string;
 	tema: string;
 	qtdProdutos: string;
-	categorias: string[];
 };
 
 type Props = {
 	Data: DataType;
-	setData: Dispatch<SetStateAction<DataType>>;
+	setInfo: Dispatch<SetStateAction<DataType>>;
 };
-export default function Editar({ Data, setData }: Props) {
+export default function Editar({ Data, setInfo }: Props) {
 	const themes = [
 		'light',
 		'dark',
@@ -57,7 +56,7 @@ export default function Editar({ Data, setData }: Props) {
 		const formData = new FormData(e.target as HTMLFormElement);
 		const tema = formData.get('temas') as string | null;
 
-		if (tema) setData((prevData) => ({ ...prevData, tema: tema }));
+		if (tema) setInfo((prevData) => ({ ...prevData, tema: tema }));
 	};
 
 	return (
@@ -117,9 +116,6 @@ export default function Editar({ Data, setData }: Props) {
 							))}
 						</div>
 						<button
-							onClick={() => {
-								setData((prevData) => ({ ...prevData, tema: '' }));
-							}}
 							type="submit"
 							className="btn btn-primary mt-5 w-full">
 							Salvar todas alterações
