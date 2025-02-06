@@ -22,16 +22,18 @@ export default async function CompaniesPage() {
 
 	return (
 		<Drawer>
-			<div className="min-h-screen bg-base-300">
+			<div className="min-h-screen bg-base-200">
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 m-3">
-					<h1 className="text-2xl font-bold text-center col-span-full pt-5"> Empresas na ConectaQR</h1>
-					<label className="input input-bordered gap-2 w-full my-2 col-span-full">
-						<input
-							type="text"
-							placeholder="Pesquisar empresas..."
-						/>
-						<FaSearch />
-					</label>
+					<h1 className="text-2xl font-bold text-center col-span-full pt-5">
+						Empresas na ConectaQR
+						<label className="input input-bordered gap-2 w-full my-4 col-span-full">
+							<input
+								type="text"
+								placeholder="Pesquisar empresas..."
+							/>
+							<FaSearch />
+						</label>
+					</h1>
 					{Empresas.map((company, index) => (
 						<div
 							key={index}

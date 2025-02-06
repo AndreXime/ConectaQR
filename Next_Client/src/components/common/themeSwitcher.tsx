@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FaMoon, FaSun } from 'react-icons/fa';
 
 type Props = {
@@ -7,26 +7,21 @@ type Props = {
 };
 
 export default function ThemeSwitcher({ className }: Props) {
-	const [theme, setTheme] = useState('light');
-
-	useEffect(() => {
-		const savedTheme = localStorage.getItem('theme') || 'light';
-		setTheme(savedTheme);
-		document.documentElement.setAttribute('data-theme', savedTheme);
-	}, []);
+	const padrao = { light: 'bumblebee', dark: 'dark' };
+	const [theme, setTheme] = useState(padrao.light);
 
 	const toggleTheme = () => {
-		const newTheme = theme === 'light' ? 'dark' : 'light';
-		setTheme(newTheme);
+		const newTheme = theme === padrao.light ? padrao.dark : padrao.light;
+		document.cookie = `tema=${newTheme}; path=/; max-age=31536000`;
 		document.documentElement.setAttribute('data-theme', newTheme);
-		localStorage.setItem('theme', newTheme);
+		setTheme(newTheme);
 	};
 
 	return (
 		<button
 			onClick={toggleTheme}
 			className={`btn btn-ghost ${className}`}>
-			{theme === 'light' ? <FaMoon size={20} /> : <FaSun size={20} />}
+			{theme === padrao.dark ? <FaMoon size={20} /> : <FaSun size={20} />}
 		</button>
 	);
 }

@@ -1,7 +1,7 @@
 import type { Response, Request } from "express";
 import { Router } from "express";
 
-import { Empresa, Produto, Publicas } from "@/controllers/index.js";
+import { Empresa, Produto, Publicas } from "./controllers/index.js";
 import { validateInput, verifyAuth } from "./middlewares/index.js";
 
 const router = Router();

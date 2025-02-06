@@ -1,7 +1,6 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import routes from "./routes.js";
-import { testConnection } from "./database/databaseModels.js";
 import middlewareTempo from "./middlewares/tempoRequest.js";
 
 const app = express();
@@ -11,8 +10,6 @@ app.use(middlewareTempo); // Mede o tempo de que o servidor demora em cada requi
 app.use(cookieParser()); // Para pode usar cookies entre o client e o server
 app.use(express.json()); // Para entender requisições JSON
 app.use(express.urlencoded({ extended: true })); // Para entender dados de formulários
-
-testConnection(); // Inicia e testa a conexao com o banco de dados
 
 app.use("/", routes);
 

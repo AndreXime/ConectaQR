@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { FaBars, FaSearch } from 'react-icons/fa';
 
@@ -22,7 +23,9 @@ export default function Header({ EmpresaName, children, Categorias }: HeaderProp
 						<FaBars size={20} />
 					</label>
 
-					<h1 className="md:text-left text-center md:ml-4 text-2xl font-bold">{EmpresaName}</h1>
+					<Link href={`/${EmpresaName}`}>
+						<h1 className="md:text-left text-center md:ml-4 text-2xl font-bold">{EmpresaName}</h1>
+					</Link>
 
 					<div className="hidden md:flex md:flex-1 md:justify-end">
 						<label className="input input-bordered flex items-center gap-2 w-1/2">

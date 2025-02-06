@@ -1,31 +1,35 @@
 import { Header, Footer, ContatoButton } from '@/components/Empresa';
 import { FaMapMarkerAlt, FaShoppingCart, FaQrcode } from 'react-icons/fa';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 type InfoType = {
 	desc: string;
 	maps: string;
-	contato: string[];
+	contato: string;
 	tema: string;
 	nomeEmpresa: string;
 };
 
-async function getCompanyInfo(nomeEmpresa: string): Promise<InfoType> {
-	return {
-		nomeEmpresa,
-		desc: `A ${nomeEmpresa} é uma empresa inovadora que se especializa em fornecer soluções tecnológicas de ponta para
-        empresas de diversos setores. Com uma equipe altamente qualificada e uma abordagem voltada para o futuro, a
-        ${nomeEmpresa} desenvolve softwares personalizados, plataformas de automação e sistemas de inteligência
-        artificial, sempre com o objetivo de otimizar processos, melhorar a eficiência operacional e proporcionar
-        vantagens competitivas para seus clientes.`,
-		maps: 'https://maps.app.goo.gl/hyTt2t8uPFMkcQ3B7',
-		contato: ['Nossa loja está na endereço tal', 'Telefone tal'],
-		tema: 'retro',
-	};
+async function getCompanyInfo(nomeEmpresa: string): Promise<InfoType | null> {
+	try {
+		const response = await fetch(`${process.env.API_SERVER_URL}/empresa/${nomeEmpresa}`, { method: 'get' });
+		if (!response.ok) {
+			throw Error;
+		} else {
+			return await response.json();
+		}
+	} catch {
+		return null;
+	}
 }
 
 export default async function Page({ params }: { params: Promise<{ empresa: string }> }) {
 	const info = await getCompanyInfo((await params).empresa);
+
+	if (!info) {
+		notFound();
+	}
 
 	return (
 		<body

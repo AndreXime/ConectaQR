@@ -1,7 +1,7 @@
 'use client';
 import { FaPhoneAlt } from 'react-icons/fa';
 type Props = {
-	Message: string[];
+	Message: string;
 };
 
 const Component = ({ Message }: Props) => {
@@ -17,11 +17,7 @@ const Component = ({ Message }: Props) => {
 				className="modal">
 				<div className="modal-box">
 					<h3 className="font-bold text-lg text-center">Informações de contato</h3>
-					<div className="py-4">
-						{Message.map((value, index) => (
-							<p key={index}>{value}</p>
-						))}
-					</div>
+					<div className="py-4">{Message}</div>
 					<div className="modal-action">
 						<form method="dialog">
 							<button className="btn">Fechar</button>

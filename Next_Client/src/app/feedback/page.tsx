@@ -59,7 +59,7 @@ export default function Feedback() {
 					</div>
 
 					{/* Formulário de Dúvida */}
-					<div className="card bg-base-100 shadow-xl p-2">
+					<div className="bg-base-100 p-2">
 						<h2 className="text-2xl font-semibold mb-4">Envie como foi sua experiencia</h2>
 
 						<form

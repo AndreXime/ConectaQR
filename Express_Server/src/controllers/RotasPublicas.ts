@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
-import { Empresa, Produto } from "../database/databaseModels.js";
-import type { FindOptions } from "sequelize";
+import { Empresa, Produtos } from "../database/models.js";
 
 const getProdutos = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -10,28 +9,28 @@ const getProdutos = async (req: Request, res: Response): Promise<void> => {
 
     const PaginaAtual = parseInt(page as string) || 1;
     if (isNaN(PaginaAtual) || PaginaAtual <= 0) {
-      res.status(400).json({ message: "Query page deve ser numero" });
+      res.status(400).json({ message: "Query page deve ser numero positivo" });
       return;
     }
 
-    const offset = (PaginaAtual - 1) * limitePorPagina;
+    const [produtos, count] = await Promise.all([
+      Produtos.findMany({
+        where: {
+          empresa: { nome: empresa },
+          ...(categoria && { categorias: categoria as string })
+        },
+        select: { nome: true, preco: true, categorias: true },
+        skip: (PaginaAtual - 1) * limitePorPagina,
+        take: limitePorPagina
+      }),
 
-    const query: Partial<FindOptions> = {
-      attributes: ["nome", "preco", "categoria"],
-      limit: limitePorPagina,
-      offset: offset,
-      include: [
-        {
-          model: Empresa,
-          attributes: [],
-          where: { nome: empresa }
+      Produtos.count({
+        where: {
+          empresa: { nome: empresa },
+          ...(categoria && { categorias: categoria as string })
         }
-      ]
-    };
-
-    if (categoria) query.where = { categoria };
-
-    const { count, rows: produtos } = await Produto.findAndCountAll(query);
+      })
+    ]);
 
     if (produtos.length === 0) {
       res.status(404).json({ message: "Nenhum produto nessa empresa" });
@@ -39,6 +38,7 @@ const getProdutos = async (req: Request, res: Response): Promise<void> => {
     }
 
     res.status(200).json({
+      message: "Produtos achados com sucesso",
       data: produtos,
       pagination: {
         PaginaAtual,
@@ -54,9 +54,14 @@ const getProdutos = async (req: Request, res: Response): Promise<void> => {
 
 const getAllEmpresas = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { count, rows } = await Empresa.findAndCountAll({ attributes: ["nome", "descricao"] });
+    const [data, total] = await Promise.all([
+      Empresa.findMany({
+        select: { nome: true, descricao: true }
+      }),
+      Empresa.count()
+    ]);
 
-    res.status(200).json({ total: count, data: rows });
+    res.status(200).json({ total: total, data: data });
   } catch {
     res.status(500).json({ message: "Erro interno no servidor" });
   }
@@ -65,12 +70,12 @@ const getAllEmpresas = async (req: Request, res: Response): Promise<void> => {
 const getEmpresasByName = async (req: Request, res: Response): Promise<void> => {
   try {
     const { nome } = req.params;
-    const empresa = await Empresa.findAll({
+    const empresa = await Empresa.findUnique({
       where: { nome },
-      attributes: ["nome", "descricao", "tema"]
+      select: { nome: true, descricao: true, tema: true }
     });
 
-    if (empresa.length === 0) {
+    if (!empresa) {
       res.status(404).json({ message: "Nenhuma empresa encontrada" });
       return;
     }
