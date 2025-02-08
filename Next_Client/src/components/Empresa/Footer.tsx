@@ -1,17 +1,4 @@
-'use client';
-import { useEffect, useState } from 'react';
-
-export default function Footer() {
-	const [temaAtual, setTemaAtual] = useState('Não encontrado');
-
-	useEffect(() => {
-		const tema =
-			document.documentElement.getAttribute('data-theme') ||
-			document.getElementById('root')?.getAttribute('data-theme') ||
-			'Não foi possivel determinar';
-		setTemaAtual(tema);
-	}, []);
-
+export default async function Footer({ temaAtual }: { temaAtual: string }) {
 	return (
 		<footer className="bg-base-300 text-base-content p-4">
 			<div className="container mx-auto text-center">

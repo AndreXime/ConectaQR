@@ -4,5 +4,6 @@ const prisma = new PrismaClient();
 
 const Empresa = prisma.empresa;
 const Produtos = prisma.produto;
+const Categoria = prisma.categoria;
 
-export { Empresa, Produtos };
+export { Empresa, Produtos, Categoria };

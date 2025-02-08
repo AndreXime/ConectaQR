@@ -1,7 +1,7 @@
 'use client';
 import { FaPhoneAlt } from 'react-icons/fa';
 type Props = {
-	Message: string;
+	Message: string | undefined;
 };
 
 const Component = ({ Message }: Props) => {

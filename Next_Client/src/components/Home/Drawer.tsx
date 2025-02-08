@@ -84,28 +84,28 @@ export default function Navbar({ children, absolute }: props) {
 					<li className="text-lg font-bold text-center my-4">Links do site</li>
 					<li>
 						<Link
-							className="btn btn-primary btn-soft my-3"
+							className="btn btn-primary  my-3"
 							href="/empresas">
 							Empresas parceiras
 						</Link>
 					</li>
 					<li>
 						<Link
-							className="btn btn-primary btn-soft"
+							className="btn btn-primary "
 							href="/acesso">
 							Painel da empresa
 						</Link>
 					</li>
 					<li>
 						<Link
-							className="btn btn-primary btn-soft my-3"
+							className="btn btn-primary  my-3"
 							href="/feedback">
 							Feedback
 						</Link>
 					</li>
 					<li>
 						<Link
-							className="btn btn-primary btn-soft"
+							className="btn btn-primary "
 							href="/termos">
 							Termos de uso
 						</Link>

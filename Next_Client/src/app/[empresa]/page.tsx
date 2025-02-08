@@ -4,16 +4,17 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 type InfoType = {
-	desc: string;
-	maps: string;
-	contato: string;
+	descricaoCurta?: string;
+	descricao?: string;
+	maps?: string;
+	contato?: string;
 	tema: string;
 	nomeEmpresa: string;
 };
 
 async function getCompanyInfo(nomeEmpresa: string): Promise<InfoType | null> {
 	try {
-		const response = await fetch(`${process.env.API_SERVER_URL}/empresa/${nomeEmpresa}`, { method: 'get' });
+		const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/empresa/${nomeEmpresa}`, { method: 'get' });
 		if (!response.ok) {
 			throw Error;
 		} else {
@@ -25,28 +26,30 @@ async function getCompanyInfo(nomeEmpresa: string): Promise<InfoType | null> {
 }
 
 export default async function Page({ params }: { params: Promise<{ empresa: string }> }) {
-	const info = await getCompanyInfo((await params).empresa);
-
+	const nomeEmpresa = (await params).empresa;
+	const info = await getCompanyInfo(nomeEmpresa);
 	if (!info) {
 		notFound();
 	}
 
 	return (
-		<body
+		<div
 			data-theme={info.tema}
 			className="flex flex-col min-h-screen bg-base-100">
 			<Header
 				Icon={false}
-				EmpresaName={info.nomeEmpresa}
+				EmpresaName={nomeEmpresa.split('-').join(' ')}
 			/>
 			<main className="flex-grow flex-col my-8 mx-2 lg:mx-52">
 				<div className="flex flex-col">
-					<h2 className="text-center text-lg">{info.desc}</h2>
+					<h2 className="text-center text-lg">
+						{info.descricao || info.descricaoCurta || 'Não foi informado nenhuma descrição'}
+					</h2>
 				</div>
 				<div className="flex flex-col items-center gap-4 mt-15">
 					<Link
 						className="btn btn-primary font-bold text-lg w-full lg:w-1/2"
-						href={`/${info.nomeEmpresa}/produtos`}>
+						href={`/${nomeEmpresa}/produtos`}>
 						<FaShoppingCart />
 						Visitar produtos
 					</Link>
@@ -54,14 +57,14 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 					<ContatoButton Message={info.contato} />
 
 					<Link
-						href={`/${info.nomeEmpresa}/QRCode`}
+						href={`/${nomeEmpresa}/QRCode?tema=${info.tema}`}
 						className="btn btn-primary font-bold text-lg  w-full lg:w-1/2">
 						<FaQrcode /> QR Code
 					</Link>
 					<Link
 						target="_blank"
 						rel="noopener noreferrer"
-						href={info.maps}
+						href={info.maps || ''}
 						className={`btn btn-primary font-bold text-lg ${info.maps ? ' ' : 'btn-disabled'}  w-full lg:w-1/2`}>
 						<FaMapMarkerAlt />
 						Google Maps
@@ -69,7 +72,7 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 				</div>
 			</main>
 
-			<Footer />
-		</body>
+			<Footer temaAtual={info.tema} />
+		</div>
 	);
 }

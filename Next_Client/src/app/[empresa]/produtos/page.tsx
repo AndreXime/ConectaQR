@@ -14,7 +14,7 @@ type PropsType = {
 };
 
 async function getProps(nomeEmpresa: string, page: string, categoria: string | null): Promise<PropsType> {
-	const URL = `${process.env.API_SERVER_URL}/produto/${nomeEmpresa}?page=${page}${
+	const URL = `${process.env.NEXT_PUBLIC_API_URL}/produto/${nomeEmpresa}?page=${page}${
 		categoria ? `&categoria=${categoria}` : ''
 	}`;
 
@@ -40,20 +40,22 @@ export default async function Page({
 	searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
 	const nomeEmpresa = (await params).empresa;
+
 	const querys = await searchParams;
 	const page = (querys?.page as string) || '1';
 	const categorias = (querys?.categoria as string) || null;
+	const tema = (await searchParams)?.tema as string;
 
 	const { message, data, pagination } = await getProps(nomeEmpresa, page, categorias);
 
 	return (
 		<div
-			data-theme={'retro'}
+			data-theme={tema}
 			className="flex flex-col min-h-screen">
 			{!data || !pagination ? (
 				<Header
-					Categorias={['']}
-					EmpresaName={nomeEmpresa}>
+					Categorias={false}
+					EmpresaName={nomeEmpresa.split('-').join(' ')}>
 					<main className="flex-grow container mx-auto p-4">
 						<h1 className="text-3xl font-bold text-center my-5">Não foi possivel encontrar nenhum produto</h1>
 						<h2 className="text-2xl font-bold text-center my-5">{message}</h2>
@@ -81,7 +83,7 @@ export default async function Page({
 							))}
 						</div>
 					</main>
-					<Footer EmpresaName={nomeEmpresa} />
+					<Footer EmpresaName={nomeEmpresa.split('-').join(' ')} />
 				</Header>
 			)}
 		</div>

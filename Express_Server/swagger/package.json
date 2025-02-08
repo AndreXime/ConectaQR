@@ -1,0 +1,25 @@
+{
+  "name": "swagger",
+  "version": "1.5.0",
+  "type": "module",
+  "main": "main.js",
+  "private": true,
+  "engines": {
+    "node": ">=21.0.0"
+  },
+  "scripts": {
+    "start": "nodemon server.js --ext js,yaml"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.2",
+    "swagger-ui-express": "^5.0.1",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

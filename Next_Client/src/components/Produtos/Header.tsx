@@ -5,7 +5,7 @@ import { FaBars, FaSearch } from 'react-icons/fa';
 type HeaderProps = {
 	EmpresaName: string;
 	children: ReactNode;
-	Categorias: string[];
+	Categorias: string[] | false;
 };
 export default function Header({ EmpresaName, children, Categorias }: HeaderProps) {
 	return (
@@ -46,18 +46,22 @@ export default function Header({ EmpresaName, children, Categorias }: HeaderProp
 						<FaSearch />
 					</label>
 				</div>
-				<div className="hidden bg-base-200 flex-row md:flex items-center ">
-					<h1 className="text-xl font-bold text-left my-4 ml-8 mr-3">Categorias</h1>
-					<div className="justify-center gap-2">
-						{Categorias.map((value) => (
-							<button
-								className="btn btn-ghost"
-								key={value}>
-								{value}
-							</button>
-						))}
+				{Categorias ? (
+					<div className="hidden bg-base-200 flex-row md:flex items-center ">
+						<h1 className="text-xl font-bold text-left my-4 ml-8 mr-3">Categorias</h1>
+						<div className="justify-center gap-2">
+							{Categorias.map((value) => (
+								<button
+									className="btn btn-ghost"
+									key={value}>
+									{value}
+								</button>
+							))}
+						</div>
 					</div>
-				</div>
+				) : (
+					<></>
+				)}
 				<div className="bg-base-100">{children}</div>
 			</div>
 			<div className="drawer-side">
@@ -65,16 +69,22 @@ export default function Header({ EmpresaName, children, Categorias }: HeaderProp
 					htmlFor="my-drawer"
 					className="drawer-overlay"></label>
 				<ul className="menu bg-base-200 min-h-full w-80 p-4">
-					<h1 className="text-2xl font-bold text-center my-5">Categorias</h1>
-					<div className="grid grid-cols-2 justify-center gap-2">
-						{Categorias.map((value) => (
-							<button
-								className="btn btn-outline mb-2 col-span-1"
-								key={value}>
-								{value}
-							</button>
-						))}
-					</div>
+					{Categorias ? (
+						<>
+							<h1 className="text-2xl font-bold text-center my-5">Categorias</h1>
+							<div className="grid grid-cols-2 justify-center gap-2">
+								{Categorias.map((value) => (
+									<button
+										className="btn btn-outline mb-2 col-span-1"
+										key={value}>
+										{value}
+									</button>
+								))}
+							</div>
+						</>
+					) : (
+						<></>
+					)}
 				</ul>
 			</div>
 		</div>

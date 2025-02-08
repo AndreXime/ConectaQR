@@ -1,0 +1,174 @@
+openapi: 3.0.0
+info:
+  title: API ConectaQR
+  description: API para a plataforma ConectaQR
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000
+    description: Servidor local
+
+paths:
+  /empresa/login:
+    post:
+      tags:
+        - Rotas publicas
+      summary: Login da empresa
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                  example: "João Silva"
+                senha:
+                  type: string
+                  example: "senha123"
+
+      responses:
+        "200":
+          description: Sucesso
+
+  /empresa/registro:
+    post:
+      tags:
+        - Rotas publicas
+      summary: Registro de empresa
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                  example: "João Silva"
+                senha:
+                  type: string
+                  example: "senha123"
+                email:
+                  type: string
+                  example: "email@email.com"
+      responses:
+        "201":
+          description: Empresa registrada com sucesso
+
+  /empresa/{nome}:
+    get:
+      tags:
+        - Rotas publicas
+      summary: Buscar empresas por nome ou retorna todas as empresas
+      parameters:
+        - name: nome
+          in: path
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Detalhes da empresa
+
+  /produto/{empresa}:
+    get:
+      tags:
+        - Rotas publicas
+      summary: Buscar produtos de uma empresa
+      parameters:
+        - name: empresa
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Lista de produtos da empresa
+
+  /empresa:
+    patch:
+      tags:
+        - Rotas privadas
+      summary: Atualizar dados da empresa
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmpresaLogin"
+      responses:
+        "200":
+          description: Empresa atualizada
+    delete:
+      tags:
+        - Rotas privadas
+      summary: Deletar empresa
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Empresa deletada
+
+  /produto:
+    post:
+      tags:
+        - Rotas privadas
+      summary: Criar produto
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+      responses:
+        "201":
+          description: Produto criado
+
+  /produto/{id}:
+    patch:
+      tags:
+        - Rotas privadas
+      summary: Atualizar produto
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+      responses:
+        "200":
+          description: Produto atualizado
+    delete:
+      tags:
+        - Rotas privadas
+      summary: Deletar produto
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Produto deletado
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

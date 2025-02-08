@@ -15,7 +15,8 @@ const middlewareTempo = (req: Request, res: Response, next: NextFunction) => {
     if (!(req.originalUrl == "/favicon.ico")) {
       const [seconds, nanoseconds] = process.hrtime(start);
       const segundosPassados = (seconds + nanoseconds / 1e9).toFixed(3);
-      const message = `Request ${req.method}  para ${req.originalUrl} demorou ${segundosPassados} segundos\n`;
+      const status = res.statusCode;
+      const message = `\n${req.method} para ${req.originalUrl}\nTempo: ${segundosPassados} segundos\nStatus: ${status}`;
       if (process.env.NODE_ENV !== "production") {
         console.log(message);
       }

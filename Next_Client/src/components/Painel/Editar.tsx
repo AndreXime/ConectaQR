@@ -1,15 +1,9 @@
 import type { Dispatch, FormEvent, SetStateAction } from 'react';
-
-type DataType = {
-	nome: string;
-	desc: string;
-	tema: string;
-	qtdProdutos: string;
-};
+import type { EmpresaCompleta } from '@/types/types';
 
 type Props = {
-	Data: DataType;
-	setInfo: Dispatch<SetStateAction<DataType>>;
+	Data: EmpresaCompleta;
+	setInfo: Dispatch<SetStateAction<EmpresaCompleta>>;
 };
 export default function Editar({ Data, setInfo }: Props) {
 	const themes = [
@@ -85,7 +79,7 @@ export default function Editar({ Data, setInfo }: Props) {
 							</div>
 							<textarea
 								className="textarea w-full max-w-xs h-32"
-								defaultValue={Data.desc}></textarea>
+								defaultValue={Data.descricao}></textarea>
 						</label>
 
 						<label className="form-control w-full max-w-xs mb-8">
@@ -94,7 +88,7 @@ export default function Editar({ Data, setInfo }: Props) {
 							</div>
 							<textarea
 								className="textarea w-full max-w-xs h-32"
-								defaultValue={Data.desc}></textarea>
+								defaultValue={Data.contato}></textarea>
 						</label>
 					</div>
 					<form

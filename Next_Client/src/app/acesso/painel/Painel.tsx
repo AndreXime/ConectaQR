@@ -1,39 +1,40 @@
 'use client';
 import { Drawer, Resumo, Produtos, Editar } from '@/components/Painel';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { PropsPage } from './page';
 
 export default function App({ initialData }: PropsPage) {
 	const [Tab, setTab] = useState('Inicio');
-	const [InfoData, setInfoData] = useState(initialData.Info);
-	const [ProdutosData, setProdutosData] = useState(initialData.Produtos);
-	const [Categorias, setCategorias] = useState(initialData.Categorias);
+	const [Empresa, setInfoData] = useState(initialData);
+	const [ProdutosData, setProdutosData] = useState(initialData.produtos);
+	const [Categorias, setCategorias] = useState(initialData.categorias);
 
-	useEffect(() => {
-		document.documentElement.setAttribute('data-theme', InfoData.tema);
-	}, [InfoData.tema]);
+	console.log(initialData);
 
 	return (
-		<div className="min-h-screen">
+		<div
+			data-theme={Empresa.tema}
+			className="min-h-screen">
 			<Drawer setTab={setTab}>
 				<main className="p-5">
 					{Tab === 'Inicio' && (
 						<Resumo
-							Data={InfoData}
+							Data={Empresa}
 							qtdCategorias={Categorias.length}
+							qtdProdutos={ProdutosData.length}
 						/>
 					)}
 					{Tab === 'Editar' && (
 						<Editar
-							Data={InfoData}
+							Data={Empresa}
 							setInfo={setInfoData}
 						/>
 					)}
 					{Tab === 'Produtos' && (
 						<Produtos
-							Data={ProdutosData}
-							Categorias={Categorias}
-							setData={setProdutosData}
+							Produtos={ProdutosData || []}
+							Categorias={Categorias || []}
+							setProdutos={setProdutosData}
 							setCategorias={setCategorias}
 						/>
 					)}

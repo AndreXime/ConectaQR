@@ -12,7 +12,7 @@ export default function Header({ EmpresaName, Icon, Tab }: HeaderProps) {
 			<div className="container mx-auto flex relative justify-center items-center">
 				<Link
 					className={`${Icon ? '' : 'hidden'}`}
-					href={`/${EmpresaName}`}>
+					href={`/${EmpresaName.replace(/-/g, ' ')}`}>
 					<FaHome
 						size={25}
 						className="absolute left-0 top-2 "
@@ -21,7 +21,7 @@ export default function Header({ EmpresaName, Icon, Tab }: HeaderProps) {
 				<Link
 					href={`/${EmpresaName}`}
 					className="btn btn-ghost">
-					<h1 className="text-center text-2xl font-extrabold">
+					<h1 className="text-center text-2xl font-extrabold capitalize">
 						{EmpresaName} {Tab}
 					</h1>
 				</Link>

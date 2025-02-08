@@ -19,7 +19,7 @@ const getProdutos = async (req: Request, res: Response): Promise<void> => {
           empresa: { nome: empresa },
           ...(categoria && { categorias: categoria as string })
         },
-        select: { nome: true, preco: true, categorias: true },
+        select: { nome: true, preco: true, categoria: true },
         skip: (PaginaAtual - 1) * limitePorPagina,
         take: limitePorPagina
       }),

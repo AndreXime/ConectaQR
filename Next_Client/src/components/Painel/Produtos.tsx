@@ -1,22 +1,16 @@
 import Image from 'next/image';
 import type { Dispatch, SetStateAction } from 'react';
 import { FaEdit, FaSave, FaTrash, FaUpload } from 'react-icons/fa';
-
-type ProdutoType = {
-	nome: string;
-	preco: string;
-	categorias: string;
-	imagem: string;
-};
+import type { Produtos, Categorias } from '@/types/types';
 
 type Props = {
-	Data: ProdutoType[];
-	Categorias: string[];
-	setData: Dispatch<SetStateAction<ProdutoType[]>>;
-	setCategorias: Dispatch<SetStateAction<string[]>>;
+	Produtos: Produtos[];
+	Categorias: Categorias[];
+	setProdutos: Dispatch<SetStateAction<Produtos[]>>;
+	setCategorias: Dispatch<SetStateAction<Categorias[]>>;
 };
 
-export default function Produtos({ Data, setData, Categorias }: Props) {
+export default function Produtos({ Produtos, setProdutos, Categorias }: Props) {
 	return (
 		<div>
 			<div className="collapse collapse-arrow bg-base-200 border border-base-300 mb-8">
@@ -42,8 +36,8 @@ export default function Produtos({ Data, setData, Categorias }: Props) {
 						{Categorias.map((value) => (
 							<p
 								className="badge badge-warning"
-								key={value}>
-								{value}
+								key={value.nome}>
+								{value.nome}
 							</p>
 						))}
 					</div>
@@ -87,14 +81,14 @@ export default function Produtos({ Data, setData, Categorias }: Props) {
 							className="select">
 							<option disabled>Selecione categoria</option>
 							{Categorias.map((value) => (
-								<option key={value}>{value}</option>
+								<option key={value.nome}>{value.nome}</option>
 							))}
 						</select>
 					</label>
 
 					<button
 						onClick={() => {
-							setData((prevData) => ({ ...prevData, nome: 'Teste' }));
+							setProdutos((prevData) => ({ ...prevData, nome: 'Teste' }));
 						}}
 						className="btn btn-success">
 						<FaSave /> Salvar
@@ -113,7 +107,7 @@ export default function Produtos({ Data, setData, Categorias }: Props) {
 						</tr>
 					</thead>
 					<tbody>
-						{Data.map((value, index) => (
+						{Produtos.map((value, index) => (
 							<tr key={index}>
 								<td className="avatar flex items-center">
 									<div className="mask mask-squircle h-12 w-12">
@@ -127,7 +121,6 @@ export default function Produtos({ Data, setData, Categorias }: Props) {
 								</td>
 								<td>{value.nome}</td>
 								<td>R$ {value.preco}</td>
-								<td>{value.categorias}</td>
 								<td>
 									<div className="flex flex-row">
 										<button className="btn btn-ghost btn-error mr-2">

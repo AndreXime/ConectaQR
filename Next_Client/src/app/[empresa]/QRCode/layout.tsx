@@ -3,9 +3,14 @@ import '@/styles/globals.css';
 export async function generateMetadata({ params }: { params: Promise<{ empresa: string }> }) {
 	const { empresa } = await params;
 
+	const capitalize = empresa
+		.split('-')
+		.map((palavra) => palavra.charAt(0).toUpperCase() + palavra.slice(1).toLowerCase())
+		.join(' ');
+
 	return {
-		title: `${empresa} - QRCode`,
-		description: `A ${empresa} é muito boa`,
+		title: `${capitalize} - QRCode`,
+		description: `A ${capitalize} é muito boa`,
 	};
 }
 

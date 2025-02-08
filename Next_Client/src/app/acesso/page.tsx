@@ -1,11 +1,12 @@
 'use client';
 
 import { Drawer } from '@/components/Home';
-import { redirect } from 'next/navigation';
 import { useState } from 'react';
 import { FaX } from 'react-icons/fa6';
+import { useRouter } from 'next/navigation';
 
 export default function Page() {
+	const router = useRouter();
 	const [Errors, setErrors] = useState({ register: [''], login: '' });
 	const [Registrando, setRegistrando] = useState(true);
 
@@ -16,11 +17,15 @@ export default function Page() {
 		const nome = String(formData.get('nome')) || '';
 		const email = String(formData.get('email')) || '';
 		const senha = String(formData.get('senha')) || '';
+		const descricaoCurta = String(formData.get('descricaoCurta')) || '';
 
-		const erros = ['', '', ''];
+		const erros = ['', '', '', ''];
 
 		if (nome.length <= 8) {
 			erros[0] = 'O nome deve ter mais de 8 caracteres.';
+		}
+		if (descricaoCurta.length <= 15) {
+			erros[3] = 'A descricao deve ter mais de 15 caracteres.';
 		}
 		if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
 			erros[1] = 'O email deve ser válido.';
@@ -29,27 +34,30 @@ export default function Page() {
 			erros[2] = 'A senha deve conter pelo menos uma letra maiúscula, uma minúscula e um número.';
 		}
 
-		if (erros[0] || erros[1] || erros[2]) {
+		if (erros[0] || erros[1] || erros[2] || erros[3]) {
 			setErrors({ register: erros, login: Errors.login });
 			return;
 		}
 
 		try {
-			const response = await fetch(`${process.env.API_SERVER_URL}/empresa/registro`, {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/empresa/registro`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ nome, email, senha }),
+				credentials: 'include',
+				body: JSON.stringify({ nome, email, senha, descricaoCurta }),
 			});
 
 			if (!response.ok) {
-				setErrors({ register: ['', '', '', 'Já existe uma conta com esses dados'], login: Errors.login });
+				console.log(await response.json());
+
+				setErrors({ register: ['', '', '', '', (await response.json()).message], login: Errors.login });
 			} else {
-				redirect('/acesso/painel');
+				router.push('/acesso/painel');
 			}
 		} catch {
-			setErrors({ register: ['', '', '', 'Erro na conexão com o servidor'], login: Errors.login });
+			setErrors({ register: ['', '', '', '', 'Erro na conexão com o servidor'], login: Errors.login });
 		}
 	};
 
@@ -57,23 +65,27 @@ export default function Page() {
 		event.preventDefault();
 
 		const formData = new FormData(event.currentTarget);
-		const email = String(formData.get('email')) || '';
-		const senha = String(formData.get('senha')) || '';
+		const email = String(formData.get('email'));
+		const senha = String(formData.get('senha'));
 
 		try {
-			const response = await fetch(`${process.env.API_SERVER_URL}/empresa/registro`, {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/empresa/login`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
+				credentials: 'include',
 				body: JSON.stringify({ email, senha }),
 			});
 
 			if (!response.ok) {
-				setErrors({ register: Errors.register, login: 'Dados inseridos são invalidos' });
+				console.log(await response.json());
+				setErrors({ register: Errors.register, login: (await response.json()).message });
+			} else {
+				router.push('/acesso/painel');
 			}
 		} catch {
-			setErrors({ register: Errors.register, login: 'Erro na conexão no servidor' });
+			setErrors({ register: Errors.register, login: `Error de conexao no servidor` });
 		}
 	};
 
@@ -111,6 +123,16 @@ export default function Page() {
 							{Errors.register[0] && <p className="fieldset-label text-error">{Errors.register[0]}</p>}
 						</fieldset>
 						<fieldset className="fieldset">
+							<legend className="fieldset-legend text-base">Descreva um pouco sobre sua empresa</legend>
+							<textarea
+								name="descricaoCurta"
+								className="input w-full textarea"
+								placeholder="Crie uma descricao breve"
+								rows={3}
+							/>
+							{Errors.register[3] && <p className="fieldset-label text-error">{Errors.register[3]}</p>}
+						</fieldset>
+						<fieldset className="fieldset">
 							<legend className="fieldset-legend text-base">Qual é o seu e-mail?</legend>
 							<input
 								name="email"
@@ -129,12 +151,12 @@ export default function Page() {
 								placeholder="Mínimo 8 caracteres, numero, minsculo e maisculo"
 							/>
 							{Errors.register[2] && <p className="fieldset-label text-error">{Errors.register[2]}</p>}
-							{Errors.register[3] && (
+							{Errors.register[4] && (
 								<div
 									role="alert"
 									className="alert alert-error mt-3">
 									<span className="flex-row flex items-center gap-3 font-bold">
-										<FaX /> {Errors.register[3]}
+										<FaX /> {Errors.register[4]}
 									</span>
 								</div>
 							)}
@@ -168,7 +190,7 @@ export default function Page() {
 						<fieldset className="fieldset">
 							<legend className="fieldset-legend text-base">Seu e-mail registrado</legend>
 							<input
-								name="emailLogin"
+								name="email"
 								type="email"
 								className="input w-full"
 								placeholder="Digite seu e-mail"
@@ -177,7 +199,7 @@ export default function Page() {
 						<fieldset className="fieldset">
 							<legend className="fieldset-legend text-base">Sua senha</legend>
 							<input
-								name="senhaLogin"
+								name="senha"
 								type="password"
 								className="input w-full"
 								placeholder="*********"

@@ -7,17 +7,18 @@ import { validateInput, verifyAuth } from "./middlewares/index.js";
 const router = Router();
 
 /* Rotas que precisam de autenticação */
-router.post("/empresa/login", validateInput("EmpresaLogin"), Empresa.loginEmpresa);
-router.post("/empresa/registro", validateInput("EmpresaRegistrar"), Empresa.createEmpresa);
-router.patch("/empresa", verifyAuth, validateInput("EmpresaLogin"), Empresa.updateEmpresa);
+router.post("/empresa/login", validateInput("LoginEmpresa"), Empresa.loginEmpresa);
+router.post("/empresa/registro", validateInput("RegistrarEmpresa"), Empresa.createEmpresa);
+router.patch("/empresa", verifyAuth, validateInput("UpdateEmpresa"), Empresa.updateEmpresa);
 router.delete("/empresa", verifyAuth, Empresa.deleteEmpresa);
+router.get("/empresa", verifyAuth, Empresa.findOwnEmpresa);
 
 router.post("/produto", verifyAuth, validateInput("Produtos"), Produto.createProduto);
 router.patch("/produto/:id", verifyAuth, validateInput("Produtos"), Produto.updateProduto);
 router.delete("/produto/:id", verifyAuth, Produto.deleteProduto);
 
 /* Informações publicas */
-router.get("/empresa", Publicas.getAllEmpresas);
+router.get("/empresas", Publicas.getAllEmpresas);
 router.get("/empresa/:nome", Publicas.getEmpresasByName);
 router.get("/produto/:empresa", Publicas.getProdutos);
 
