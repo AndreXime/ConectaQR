@@ -3,3 +3,4 @@
 *.log
 .env
 /swagger/node_modules
+/uploads

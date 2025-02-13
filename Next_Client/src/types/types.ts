@@ -5,7 +5,7 @@ type Empresa = {
 
 	descricao?: string;
 	descricaoCurta?: string;
-	tema?: string;
+	tema: string;
 	maps?: string;
 	contato?: string;
 };
@@ -16,21 +16,26 @@ type EmpresaCompleta = {
 	senha?: string;
 	descricao?: string;
 	descricaoCurta?: string;
-	tema?: string;
+	tema: string;
 	maps?: string;
-	contato?: string;
+	telefone?: string;
+	instagram?: string;
+	emailContato?: string;
 	categorias: Categorias[];
 	produtos: Produtos[];
 };
 
 type Categorias = {
+	id: string;
 	nome: string;
 };
 
 type Produtos = {
+	id: string;
 	nome: string;
 	preco: string;
-	imagem: string;
+	categoria: { nome: string };
+	imagemUrl: string;
 };
 
 export type { Empresa, Categorias, Produtos, EmpresaCompleta };

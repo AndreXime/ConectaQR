@@ -8,10 +8,10 @@
     "node": ">=21.0.0"
   },
   "scripts": {
-    "start": "node dist/server.js",
-    "preparar": "npm run check && npm run build",
-    "build": "rm -rf ./dist && tsc",
-    "check": "prettier --write ./src && eslint ./src"
+    "start": "npm run dev && node --require dotenv/config dist/server.js",
+    "dev": "npm run lint && npm run build",
+    "build": "echo Construindo build && rm -rf ./dist && tsc && echo Build concluida",
+    "lint": "echo Verificando problemas &&eslint ./src && echo Nenhum problema encontrado"
   },
   "keywords": [],
   "author": "",
@@ -23,18 +23,21 @@
     "cookie-parser": "^1.4.7",
     "express": "^5.0.0",
     "jsonwebtoken": "^9.0.2",
-    "pg": "^8.13.1"
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.13.3",
+    "sharp": "^0.33.5"
   },
   "devDependencies": {
-    "@eslint/js": "^9.19.0",
+    "@eslint/js": "^9.20.0",
     "@types/cookie-parser": "^1.4.8",
     "@types/express": "^5.0.0",
     "@types/jsonwebtoken": "^9.0.8",
-    "@types/node": "^22.13.0",
-    "eslint": "^9.19.0",
-    "prettier": "^3.4.2",
+    "@types/multer": "^1.4.12",
+    "@types/node": "^22.13.2",
+    "dotenv": "^16.4.7",
+    "eslint": "^9.20.1",
     "prisma": "^6.3.1",
     "typescript": "^5.7.3",
-    "typescript-eslint": "^8.22.0"
+    "typescript-eslint": "^8.24.0"
   }
 }

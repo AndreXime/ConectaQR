@@ -1,11 +1,17 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { FaBars, FaSearch } from 'react-icons/fa';
+import { FaBars } from 'react-icons/fa';
+import RedirectButton from './RedirectButton';
+import SearchProduto from './SearchProdut';
 
 type HeaderProps = {
 	EmpresaName: string;
 	children: ReactNode;
-	Categorias: string[] | false;
+	Categorias:
+		| {
+				nome: string;
+		  }[]
+		| undefined;
 };
 export default function Header({ EmpresaName, children, Categorias }: HeaderProps) {
 	return (
@@ -19,66 +25,47 @@ export default function Header({ EmpresaName, children, Categorias }: HeaderProp
 				<nav className="navbar flex bg-base-300 w-full p-3 shadow relative justify-center">
 					<label
 						htmlFor="my-drawer"
-						className="btn btn-square btn-ghost left-3 absolute md:hidden">
+						className="btn btn-square btn-ghost left-3 absolute md:relative md:mr-5">
 						<FaBars size={20} />
 					</label>
 
 					<Link href={`/${EmpresaName}`}>
-						<h1 className="md:text-left text-center md:ml-4 text-2xl font-bold">{EmpresaName}</h1>
+						<h1 className="md:text-left text-center md:ml-4 text-2xl font-bold capitalize">
+							{EmpresaName.split('-').join(' ')}
+						</h1>
 					</Link>
 
 					<div className="hidden md:flex md:flex-1 md:justify-end">
-						<label className="input input-bordered flex items-center gap-2 w-1/2">
-							<input
-								type="text"
-								placeholder="Pesquisar produtos..."
-							/>
-							<FaSearch />
-						</label>
+						<SearchProduto
+							className="input input-bordered flex items-center gap-2 w-1/2"
+							empresa={EmpresaName}
+						/>
 					</div>
 				</nav>
 				<div className="md:hidden bg-base-300 w-full px-5">
-					<label className="input input-bordered gap-2 w-full my-2">
-						<input
-							type="text"
-							placeholder="Pesquisar produtos..."
-						/>
-						<FaSearch />
-					</label>
+					<SearchProduto
+						className="input input-bordered gap-2 w-full my-2"
+						empresa={EmpresaName}
+					/>
 				</div>
-				{Categorias ? (
-					<div className="hidden bg-base-200 flex-row md:flex items-center ">
-						<h1 className="text-xl font-bold text-left my-4 ml-8 mr-3">Categorias</h1>
-						<div className="justify-center gap-2">
-							{Categorias.map((value) => (
-								<button
-									className="btn btn-ghost"
-									key={value}>
-									{value}
-								</button>
-							))}
-						</div>
-					</div>
-				) : (
-					<></>
-				)}
-				<div className="bg-base-100">{children}</div>
+				<div className="bg-base-200">{children}</div>
 			</div>
 			<div className="drawer-side">
 				<label
 					htmlFor="my-drawer"
 					className="drawer-overlay"></label>
-				<ul className="menu bg-base-200 min-h-full w-80 p-4">
+				<ul className="menu bg-base-200 min-h-full w-66 p-4">
 					{Categorias ? (
 						<>
 							<h1 className="text-2xl font-bold text-center my-5">Categorias</h1>
-							<div className="grid grid-cols-2 justify-center gap-2">
+							<div className="grid grid-cols-1 justify-center gap-2">
 								{Categorias.map((value) => (
-									<button
-										className="btn btn-outline mb-2 col-span-1"
-										key={value}>
-										{value}
-									</button>
+									<RedirectButton
+										Url={`/${EmpresaName}/produtos?categorias=${value.nome}`}
+										buttonText={value.nome}
+										key={value.nome}
+										ClassName="btn btn-outline mb-2 col-span-1"
+									/>
 								))}
 							</div>
 						</>

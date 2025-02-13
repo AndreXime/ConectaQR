@@ -1,5 +1,5 @@
-import { Header, Footer, ContatoButton } from '@/components/Empresa';
-import { FaMapMarkerAlt, FaShoppingCart, FaQrcode } from 'react-icons/fa';
+import { Header, Footer } from '@/components/Empresa';
+import { FaShoppingCart } from 'react-icons/fa';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -14,7 +14,7 @@ type InfoType = {
 
 async function getCompanyInfo(nomeEmpresa: string): Promise<InfoType | null> {
 	try {
-		const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/empresa/${nomeEmpresa}`, { method: 'get' });
+		const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/empresas?nome=${nomeEmpresa}`, { method: 'get' });
 		if (!response.ok) {
 			throw Error;
 		} else {
@@ -54,21 +54,18 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 						Visitar produtos
 					</Link>
 
-					<ContatoButton Message={info.contato} />
-
-					<Link
-						href={`/${nomeEmpresa}/QRCode?tema=${info.tema}`}
-						className="btn btn-primary font-bold text-lg  w-full lg:w-1/2">
-						<FaQrcode /> QR Code
-					</Link>
-					<Link
-						target="_blank"
-						rel="noopener noreferrer"
-						href={info.maps || ''}
-						className={`btn btn-primary font-bold text-lg ${info.maps ? ' ' : 'btn-disabled'}  w-full lg:w-1/2`}>
-						<FaMapMarkerAlt />
-						Google Maps
-					</Link>
+					{info.maps ? (
+						<iframe
+							src={info.maps}
+							width="600"
+							height="600"
+							className="border-0 w-full h-full"
+							allowFullScreen={false}
+							loading="lazy"
+							referrerPolicy="no-referrer-when-downgrade"></iframe>
+					) : (
+						<></>
+					)}
 				</div>
 			</main>
 

@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 
-type SchemaNomes = "RegistrarEmpresa" | "Produtos" | "LoginEmpresa" | "UpdateEmpresa";
+type SchemaNomes = "RegistrarEmpresa" | "Produtos" | "LoginEmpresa" | "UpdateEmpresa" | "Categoria";
 
 type ValidationFunction = (data: Record<string, unknown>) => string[];
 
@@ -95,10 +95,13 @@ const schemas: SchemaType = {
     ...validateString("tema", data.tema, 1, true)
   ],
   Produtos: (data) => [
-    ...validateExtraFields(data, ["nome", "preco", "categorias", "imagem"]),
+    ...validateExtraFields(data, ["nome", "preco", "categoria", "imagem"]),
     ...validateString("nome", data.nome, 6),
     ...validateNumber("preco", data.preco),
-    ...validateString("categorias", data.categorias, 6),
-    ...validateString("imagem", data.imagem, 6)
+    ...validateString("categorias", data.categorias, 6)
+  ],
+  Categoria: (data) => [
+    ...validateExtraFields(data, ["nome", "categoriaId"]),
+    ...validateString("nome", data.nome, 3)
   ]
 };

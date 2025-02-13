@@ -15,7 +15,9 @@ model Empresa {
 
   descricao      String?
   descricaoCurta String?
-  contato        String?
+  telefone       String?
+  emailContato   String?
+  instagram      String?
   tema           String? @default("bumblebee")
   maps           String?
 
@@ -41,9 +43,9 @@ model Categoria {
 
 model Produto {
   id     String @id @default(uuid())
-  nome   String
+  nome   String 
   preco  String
-  imagem String
+  imagemUrl String
 
   categoriaId String
   categoria   Categoria @relation(fields: [categoriaId], references: [id])

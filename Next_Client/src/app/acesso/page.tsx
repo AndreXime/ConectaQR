@@ -50,8 +50,6 @@ export default function Page() {
 			});
 
 			if (!response.ok) {
-				console.log(await response.json());
-
 				setErrors({ register: ['', '', '', '', (await response.json()).message], login: Errors.login });
 			} else {
 				router.push('/acesso/painel');
@@ -79,7 +77,6 @@ export default function Page() {
 			});
 
 			if (!response.ok) {
-				console.log(await response.json());
 				setErrors({ register: Errors.register, login: (await response.json()).message });
 			} else {
 				router.push('/acesso/painel');

@@ -1,4 +1,7 @@
-import Empresa from "./empresaControllers.js";
-import Produto from "./produtoControllers.js";
-import Publicas from "./RotasPublicas.js";
-export { Empresa, Produto, Publicas };
+import Empresa from "./protected/Empresa.js";
+import Categoria from "./protected/Categoria.js";
+import Produto from "./protected/Produto.js";
+import PublicInfo from "./InfoPublica.js";
+import Auth from "./AuthController.js";
+
+export { Empresa, Produto, PublicInfo, Auth, Categoria };

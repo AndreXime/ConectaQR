@@ -48,6 +48,13 @@ export default function Drawer({ children, setTab }: DrawerProps) {
 									Gerenciar Produtos
 								</button>
 							</li>
+							<li>
+								<button
+									className="btn btn-ghost btn-outline"
+									onClick={() => setTab('QRCode')}>
+									Gerar QRCode
+								</button>
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -79,6 +86,13 @@ export default function Drawer({ children, setTab }: DrawerProps) {
 							className="btn btn-ghost btn-outline mb-2"
 							onClick={() => setTab('Produtos')}>
 							Gerenciar Produtos
+						</button>
+					</li>
+					<li>
+						<button
+							className="btn btn-ghost btn-outline"
+							onClick={() => setTab('QRCode')}>
+							Gerar QRCode
 						</button>
 					</li>
 				</ul>

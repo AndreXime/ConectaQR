@@ -1,20 +1,23 @@
 'use client';
-import { Drawer, Resumo, Produtos, Editar } from '@/components/Painel';
-import { useState } from 'react';
+import { Drawer, Resumo, Produtos, Editar, QRCode } from '@/components/Painel';
+import { useEffect, useState } from 'react';
 import type { PropsPage } from './page';
 
 export default function App({ initialData }: PropsPage) {
 	const [Tab, setTab] = useState('Inicio');
-	const [Empresa, setInfoData] = useState(initialData);
+	const [Empresa, setEmpresa] = useState(initialData);
 	const [ProdutosData, setProdutosData] = useState(initialData.produtos);
 	const [Categorias, setCategorias] = useState(initialData.categorias);
 
-	console.log(initialData);
+	useEffect(() => {
+		document.getElementById('root')?.setAttribute('data-theme', Empresa.tema);
+	}, [Tab, Empresa.tema]);
 
 	return (
 		<div
+			id="root"
 			data-theme={Empresa.tema}
-			className="min-h-screen">
+			className="min-h-screen bg-base-100">
 			<Drawer setTab={setTab}>
 				<main className="p-5">
 					{Tab === 'Inicio' && (
@@ -27,7 +30,7 @@ export default function App({ initialData }: PropsPage) {
 					{Tab === 'Editar' && (
 						<Editar
 							Data={Empresa}
-							setInfo={setInfoData}
+							setEmpresa={setEmpresa}
 						/>
 					)}
 					{Tab === 'Produtos' && (
@@ -38,6 +41,7 @@ export default function App({ initialData }: PropsPage) {
 							setCategorias={setCategorias}
 						/>
 					)}
+					{Tab === 'QRCode' && <QRCode nomeEmpresa={Empresa.nome} />}
 				</main>
 			</Drawer>
 		</div>

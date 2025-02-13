@@ -53,18 +53,21 @@ paths:
                 email:
                   type: string
                   example: "email@email.com"
+                descricao:
+                  type: string
+                  example: "Essa empresa é muito legal ele vende muito"
       responses:
         "201":
           description: Empresa registrada com sucesso
 
-  /empresa/{nome}:
+  /empresas:
     get:
       tags:
         - Rotas publicas
       summary: Buscar empresas por nome ou retorna todas as empresas
       parameters:
         - name: nome
-          in: path
+          in: query
           required: false
           schema:
             type: string
@@ -76,7 +79,7 @@ paths:
     get:
       tags:
         - Rotas publicas
-      summary: Buscar produtos de uma empresa
+      summary: Retorna categorias e produtos de uma empresa, pode-se usar paginação
       parameters:
         - name: empresa
           in: path
