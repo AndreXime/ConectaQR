@@ -10,21 +10,21 @@ export default async function CompaniesPage() {
 
 						<section className="mb-6">
 							<h2 className="text-xl font-semibold mb-2">1. Introdução</h2>
-							<p className="text-gray-600">
+							<p className="text-base-content">
 								Bem-vindo ao nosso serviço! Ao acessar nosso site, você concorda com os seguintes termos e condições.
 							</p>
 						</section>
 
 						<section className="mb-6">
 							<h2 className="text-xl font-semibold mb-2">2. Coleta de Informações</h2>
-							<p className="text-gray-600">
+							<p className="text-base-content">
 								Coletamos dados para melhorar sua experiência. Isso pode incluir nome, e-mail e preferências de uso.
 							</p>
 						</section>
 
 						<section className="mb-6">
 							<h2 className="text-xl font-semibold mb-2">3. Uso das Informações</h2>
-							<p className="text-gray-600">
+							<p className="text-base-content">
 								Utilizamos suas informações apenas para fins de comunicação e personalização do serviço. Não vendemos
 								seus dados para terceiros.
 							</p>
@@ -32,7 +32,7 @@ export default async function CompaniesPage() {
 
 						<section className="mb-6">
 							<h2 className="text-xl font-semibold mb-2">4. Segurança dos Dados</h2>
-							<p className="text-gray-600">
+							<p className="text-base-content">
 								Implementamos medidas de segurança para proteger suas informações, mas não podemos garantir segurança
 								absoluta.
 							</p>
@@ -40,7 +40,7 @@ export default async function CompaniesPage() {
 
 						<section className="mb-6">
 							<h2 className="text-xl font-semibold mb-2">5. Alterações nos Termos</h2>
-							<p className="text-gray-600">
+							<p className="text-base-content">
 								Podemos modificar estes termos a qualquer momento. As alterações serão notificadas em nosso site.
 							</p>
 						</section>

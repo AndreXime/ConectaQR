@@ -83,15 +83,16 @@ export default async function Page({
 					Categorias={data.categorias}
 					EmpresaName={nomeEmpresa}>
 					<main className="flex-grow container p-4 mx-auto">
-						<h1 className="text-3xl font-bold text-center my-5">Principais produtos</h1>
 						<div className="flex justify-center gap-4 mb-5">
 							{pagination.PaginasTotais > 1 && (
 								<>
-									<button className="btn btn-outline">{pagination.PaginaAtual}</button>
-									<button className="btn btn-outline">{pagination.PaginaAtual + 1}</button>
-
-									<button>...</button>
-									<button className="btn btn-outline">{pagination.PaginasTotais}</button>
+									{Array.from({ length: pagination.PaginasTotais }, (_, index) => (
+										<button
+											key={index + 1}
+											className="btn btn-outline">
+											{index + 1}
+										</button>
+									))}
 								</>
 							)}
 						</div>
@@ -101,7 +102,7 @@ export default async function Page({
 									key={index}
 									name={product.nome}
 									image={product.imagemUrl}
-									price={product.preco}
+									price={Number(product.preco).toFixed(2)}
 								/>
 							))}
 						</div>

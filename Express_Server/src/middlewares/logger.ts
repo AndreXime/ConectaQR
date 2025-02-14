@@ -17,7 +17,7 @@ const logger = (req: Request, res: Response, next: NextFunction) => {
     if (process.env.NODE_ENV !== "production") {
       console.log(message);
     }
-    fs.appendFile(logFilePath, message, (err) => {
+    fs.appendFile(logFilePath, message + "\n", (err) => {
       if (err) console.log(err);
     });
   });

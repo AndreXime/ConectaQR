@@ -22,7 +22,7 @@ export default function Header({ EmpresaName, children, Categorias }: HeaderProp
 				className="drawer-toggle"
 			/>
 			<div className="drawer-content flex flex-col">
-				<nav className="navbar flex bg-base-300 w-full p-3 shadow relative justify-center">
+				<nav className="navbar flex bg-primary text-primary-content w-full p-3 shadow relative justify-center">
 					<label
 						htmlFor="my-drawer"
 						className="btn btn-square btn-ghost left-3 absolute md:relative md:mr-5">
@@ -37,14 +37,14 @@ export default function Header({ EmpresaName, children, Categorias }: HeaderProp
 
 					<div className="hidden md:flex md:flex-1 md:justify-end">
 						<SearchProduto
-							className="input input-bordered flex items-center gap-2 w-1/2"
+							className="input input-bordered flex items-center gap-2 w-1/2 text-base-content"
 							empresa={EmpresaName}
 						/>
 					</div>
 				</nav>
-				<div className="md:hidden bg-base-300 w-full px-5">
+				<div className="md:hidden bg-secondary w-full px-5">
 					<SearchProduto
-						className="input input-bordered gap-2 w-full my-2"
+						className="input input-bordered gap-2 w-full my-2 text-base-content"
 						empresa={EmpresaName}
 					/>
 				</div>
@@ -55,7 +55,7 @@ export default function Header({ EmpresaName, children, Categorias }: HeaderProp
 					htmlFor="my-drawer"
 					className="drawer-overlay"></label>
 				<ul className="menu bg-base-200 min-h-full w-66 p-4">
-					{Categorias ? (
+					{Categorias && (
 						<>
 							<h1 className="text-2xl font-bold text-center my-5">Categorias</h1>
 							<div className="grid grid-cols-1 justify-center gap-2">
@@ -69,8 +69,6 @@ export default function Header({ EmpresaName, children, Categorias }: HeaderProp
 								))}
 							</div>
 						</>
-					) : (
-						<></>
 					)}
 				</ul>
 			</div>

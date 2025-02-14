@@ -86,7 +86,18 @@ const schemas: SchemaType = {
     ...validateString("senha", data.senha, 6)
   ],
   UpdateEmpresa: (data) => [
-    ...validateExtraFields(data, ["nome", "senha", "email", "descricao", "descricaoCurta", "tema"]),
+    ...validateExtraFields(data, [
+      "nome",
+      "senha",
+      "email",
+      "descricao",
+      "descricaoCurta",
+      "tema",
+      "maps",
+      "instagram",
+      "telefone",
+      "emailContato"
+    ]),
     ...validateEmail("email", data.email, true),
     ...validateString("senha", data.senha, 6, true),
     ...validateString("nome", data.nome, 6, true),

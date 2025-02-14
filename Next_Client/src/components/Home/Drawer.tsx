@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { FaBars } from 'react-icons/fa';
+import { FaArrowRight, FaBars } from 'react-icons/fa';
 import ThemeSwitcher from '../common/themeSwitcher';
 
 interface props {
@@ -11,16 +11,16 @@ export default function Navbar({ children, absolute }: props) {
 	return (
 		<div className="drawer">
 			<input
-				id="my-drawer-3"
+				id="drawer"
 				type="checkbox"
 				className="drawer-toggle"
 			/>
 			<div className="drawer-content flex flex-col">
 				{/* Navbar */}
-				<div className={`navbar bg-base-100 w-full ${absolute && 'absolute'}`}>
+				<nav className={`navbar bg-base-100 w-full ${absolute && 'absolute'}`}>
 					<div className="lg:hidden absolute">
 						<label
-							htmlFor="my-drawer-3"
+							htmlFor="drawer"
 							aria-label="open sidebar"
 							className="btn btn-square btn-ghost">
 							<FaBars size={20} />
@@ -69,9 +69,18 @@ export default function Navbar({ children, absolute }: props) {
 									Termos de uso
 								</Link>
 							</li>
+							<div className="divider divider-horizontal"></div>
+
+							<li>
+								<Link
+									className="btn btn-primary btn-ghost"
+									href="/termos">
+									Sobre a plataforma
+								</Link>
+							</li>
 						</ul>
 					</div>
-				</div>
+				</nav>
 				{children}
 			</div>
 			{/* Navbar mobile */}
@@ -81,37 +90,44 @@ export default function Navbar({ children, absolute }: props) {
 					aria-label="close sidebar"
 					className="drawer-overlay"></label>
 				<ul className="menu bg-base-200 min-h-full w-60 p-4 z-50">
-					<li className="text-lg font-bold text-center my-4">Links do site</li>
+					<li className="text-lg font-bold text-center mt-4 mb-7">Navegação do site</li>
 					<li>
 						<Link
-							className="btn btn-primary  my-3"
+							className="btn btn-primary  mb-3"
 							href="/empresas">
-							Empresas parceiras
+							Empresas parceiras <FaArrowRight />
 						</Link>
 					</li>
 					<li>
 						<Link
-							className="btn btn-primary "
+							className="btn btn-primary mb-3"
 							href="/acesso">
-							Painel da empresa
+							Painel da empresa <FaArrowRight />
 						</Link>
 					</li>
 					<li>
 						<Link
-							className="btn btn-primary  my-3"
+							className="btn btn-primary mb-3"
 							href="/feedback">
-							Feedback
+							Feedback <FaArrowRight />
 						</Link>
 					</li>
 					<li>
 						<Link
-							className="btn btn-primary "
+							className="btn btn-primary mb-3"
 							href="/termos">
-							Termos de uso
+							Termos de uso <FaArrowRight />
 						</Link>
 					</li>
 					<li>
-						<ThemeSwitcher className="btn-outline mt-3" />
+						<Link
+							className="btn btn-primary mb-3"
+							href="/termos">
+							Sobre a plataforma <FaArrowRight />
+						</Link>
+					</li>
+					<li>
+						<ThemeSwitcher className="btn-outline" />
 					</li>
 				</ul>
 			</div>

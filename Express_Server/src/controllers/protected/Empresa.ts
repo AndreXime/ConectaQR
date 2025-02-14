@@ -25,26 +25,45 @@ const getAllDataFromOwnEmpresa = async (req: Request, res: Response): Promise<vo
 
 const updateEmpresa = async (req: Request, res: Response): Promise<void> => {
   try {
-    const camposPermitidos = ["nome", "senha", "email", "descricao", "descricaoCurta", "tema"];
+    const camposPermitidos = [
+      "nome",
+      "senha",
+      "email",
+      "descricao",
+      "descricaoCurta",
+      "tema",
+      "maps",
+      "instagram",
+      "telefone",
+      "emailContato"
+    ];
 
     const dadosAtualizados = Object.fromEntries(
       Object.entries(req.body).filter(
-        ([key, value]) => camposPermitidos.includes(key) && typeof value === "string"
+        ([key, value]) => camposPermitidos.includes(key) && value && typeof value === "string"
       )
     );
+
+    if (dadosAtualizados.maps && typeof dadosAtualizados.maps == "string") {
+      const match = dadosAtualizados.maps.match(/src="(https:\/\/www\.google\.com\/maps\/embed\?[^"]+)"/);
+      if (match && match[1]) {
+        dadosAtualizados.maps = match[1]; // Usa o grupo 1 (conteúdo do src)
+      } else {
+        delete dadosAtualizados.maps;
+      }
+    }
 
     if (Object.keys(dadosAtualizados).length === 0) {
       res.status(400).json({ message: "Nenhum campo para atualizar" });
       return;
     }
 
-    await Empresa.update({
+    const EmpresaAtualizada = await Empresa.update({
       where: { id: req.userId },
-      select: {},
       data: dadosAtualizados
     });
 
-    res.status(200).json({ message: "Atualizado com sucesso" });
+    res.status(200).json({ message: "Atualizado com sucesso", data: EmpresaAtualizada });
   } catch {
     res.status(400).json({ message: "Erro ao atualizar" });
   }
@@ -53,7 +72,7 @@ const updateEmpresa = async (req: Request, res: Response): Promise<void> => {
 const deleteEmpresa = async (req: Request, res: Response): Promise<void> => {
   try {
     await Empresa.delete({
-      where: { id: req.userId },
+      where: { id: req.userId }
     });
     res.status(200).json({ message: "Sucesso" });
   } catch {

@@ -1,5 +1,4 @@
 'use client';
-import { FaQuestionCircle } from 'react-icons/fa';
 type Props = {
 	Title: string;
 	Message: { title?: string; message: string }[];
@@ -8,14 +7,6 @@ type Props = {
 export default function Component({ Title, Message }: Props) {
 	return (
 		<>
-			<button
-				className={`cursor-pointer`}
-				onClick={() => (document.getElementById('modal' + Title)! as HTMLDialogElement).showModal()}>
-				<FaQuestionCircle
-					color="blue"
-					size={15}
-				/>
-			</button>
 			<dialog
 				id={'modal' + Title}
 				className="modal">

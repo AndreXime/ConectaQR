@@ -8,7 +8,7 @@ type HeaderProps = {
 };
 export default function Header({ EmpresaName, Icon, Tab }: HeaderProps) {
 	return (
-		<nav className="bg-base-300 p-3 shadow">
+		<nav className="bg-primary text-primary-content p-3 shadow">
 			<div className="container mx-auto flex relative justify-center items-center">
 				<Link
 					className={`${Icon ? '' : 'hidden'}`}

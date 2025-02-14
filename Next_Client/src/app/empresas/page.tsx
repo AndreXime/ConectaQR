@@ -1,6 +1,5 @@
 import { Drawer, Footer } from '@/components/Home';
 import Link from 'next/link';
-import { FaSearch } from 'react-icons/fa';
 import type { Empresa } from '@/types/types';
 
 async function getCompanies(): Promise<Empresa[] | null> {
@@ -31,16 +30,7 @@ export default async function CompaniesPage() {
 			<div className="min-h-screen bg-base-200">
 				{Empresas?.length ? (
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 m-3">
-						<h1 className="text-2xl font-bold text-center col-span-full pt-5">
-							Empresas na ConectaQR
-							<label className="input input-bordered gap-2 w-full my-4 col-span-full">
-								<input
-									type="text"
-									placeholder="Pesquisar empresas..."
-								/>
-								<FaSearch />
-							</label>
-						</h1>
+						<h1 className="text-2xl font-bold text-center col-span-full pt-5">Empresas na ConectaQR</h1>
 						{Empresas.map((company, index) => (
 							<div
 								key={index}

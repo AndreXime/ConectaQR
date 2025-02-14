@@ -1,13 +1,16 @@
 import { Header, Footer } from '@/components/Empresa';
-import { FaShoppingCart } from 'react-icons/fa';
+import { FaInstagram, FaPhone, FaShoppingCart } from 'react-icons/fa';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { MdEmail } from 'react-icons/md';
 
 type InfoType = {
 	descricaoCurta?: string;
 	descricao?: string;
 	maps?: string;
-	contato?: string;
+	telefone?: string;
+	instagram?: string;
+	emailContato?: string;
 	tema: string;
 	nomeEmpresa: string;
 };
@@ -40,13 +43,13 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 				Icon={false}
 				EmpresaName={nomeEmpresa.split('-').join(' ')}
 			/>
-			<main className="flex-grow flex-col my-8 mx-2 lg:mx-52">
+			<main className="flex-grow flex-col mt-8 mx-2 lg:mx-52">
 				<div className="flex flex-col">
 					<h2 className="text-center text-lg">
 						{info.descricao || info.descricaoCurta || 'Não foi informado nenhuma descrição'}
 					</h2>
 				</div>
-				<div className="flex flex-col items-center gap-4 mt-15">
+				<div className="flex flex-col items-center gap-10 mt-10">
 					<Link
 						className="btn btn-primary font-bold text-lg w-full lg:w-1/2"
 						href={`/${nomeEmpresa}/produtos`}>
@@ -54,17 +57,48 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 						Visitar produtos
 					</Link>
 
-					{info.maps ? (
+					<div className="flex flex-row gap-5">
+						{info.instagram && (
+							<Link
+								rel="noopener noreferrer nofollow"
+								className="btn btn-ghost"
+								href={`https://www.instagram.com/${
+									info.instagram.startsWith('@') ? info.instagram.slice(1) : info.instagram
+								}`}>
+								<FaInstagram size={35} />
+							</Link>
+						)}
+
+						{info.telefone && (
+							<Link
+								rel="noopener noreferrer nofollow"
+								className="btn btn-ghost"
+								href={`tel:${info.telefone}`}>
+								<FaPhone size={30} />
+							</Link>
+						)}
+
+						{info.emailContato && (
+							<Link
+								rel="noopener noreferrer nofollow"
+								className="btn btn-ghost"
+								href={`mailto:${info.emailContato}`}>
+								<MdEmail size={35} />
+							</Link>
+						)}
+					</div>
+
+					{info.maps && (
 						<iframe
+							rel="noopener noreferrer nofollow"
 							src={info.maps}
-							width="600"
-							height="600"
+							width="1000"
+							height="1000"
 							className="border-0 w-full h-full"
 							allowFullScreen={false}
 							loading="lazy"
-							referrerPolicy="no-referrer-when-downgrade"></iframe>
-					) : (
-						<></>
+							referrerPolicy="no-referrer-when-downgrade"
+						/>
 					)}
 				</div>
 			</main>

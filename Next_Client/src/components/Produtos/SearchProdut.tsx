@@ -17,6 +17,8 @@ export default function SearchProduto({ empresa, className }: Props) {
 
 		if (inputValue) {
 			router.push(`/${empresa}/produtos?s=${inputValue}`);
+		} else {
+			router.push(`/${empresa}/produtos`);
 		}
 	};
 
@@ -25,7 +27,7 @@ export default function SearchProduto({ empresa, className }: Props) {
 			className={className}
 			onSubmit={handleSubmit}>
 			<input
-				type="teamext"
+				type="text"
 				placeholder="Pesquisar produtos..."
 			/>
 			<FaSearch />

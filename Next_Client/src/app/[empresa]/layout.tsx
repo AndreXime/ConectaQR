@@ -1,4 +1,4 @@
-import '@/styles/globals.css';
+import '@Styles';
 
 export async function generateMetadata({ params }: { params: Promise<{ empresa: string }> }) {
 	const { empresa } = await params;

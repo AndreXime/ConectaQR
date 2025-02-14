@@ -1,12 +1,13 @@
-import { type Dispatch, type SetStateAction } from 'react';
+import { useState, type Dispatch, type SetStateAction } from 'react';
 import type { EmpresaCompleta } from '@/types/types';
-import Modal from '../common/Modal';
+import { FaQuestionCircle } from 'react-icons/fa';
 
 type Props = {
 	Data: EmpresaCompleta;
 	setEmpresa: Dispatch<SetStateAction<EmpresaCompleta>>;
 };
-export default function Editar({ Data }: Props) {
+export default function Editar({ Data, setEmpresa }: Props) {
+	const [EmpresaError, setEmpresaError] = useState('');
 	const themes = [
 		'light',
 		'dark',
@@ -51,40 +52,31 @@ export default function Editar({ Data }: Props) {
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-
+		setEmpresaError('');
 		const form = event.currentTarget;
 		const formData = new FormData(form);
+		const formInputs = Object.fromEntries(formData.entries());
 
-		console.log(formData);
-	};
+		try {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/empresa`, {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				credentials: 'include',
+				body: JSON.stringify(formInputs),
+			});
 
-	const tips = {
-		metadata: {
-			title: 'O que é metadata?',
-			message: [
-				{
-					title: 'Cartão de visita digital',
-					message:
-						'Quando alguém pesquisa seu site no Google, os metadados funcionam como um cartão de visita. Se você não tiver um título e uma descrição bem feitos, é como se entregasse um cartão em branco.',
-				},
-				{
-					title: 'Mensagem no WhatsApp',
-					message:
-						'Já percebeu que, quando você manda um link no WhatsApp, às vezes aparece uma prévia bonitinha com imagem e descrição? Isso acontece por causa dos metadados. Sem eles, o link aparece seco e sem graça, e as pessoas podem nem se interessar em clicar.',
-				},
-			],
-		},
-		googlemaps: {
-			title: 'Como eu tenho o google maps na minha pagina?',
-			message: [
-				{ message: 'Obtenha o código de incorporação' },
-				{ message: 'Acesse Google Maps' },
-				{ message: 'Busque o local desejado' },
-				{ message: 'Clique em Compartilhar' },
-				{ message: 'Vá até a aba Incorporar um mapa' },
-				{ message: 'Copie o código <iframe>...</iframe>' },
-			],
-		},
+			const { message, data } = await response.json();
+			if (!response.ok) {
+				setEmpresaError(message);
+			} else {
+				setEmpresa(data);
+				form.reset();
+			}
+		} catch (err) {
+			setEmpresaError('Erro interno no servidor' + err);
+		}
 	};
 
 	return (
@@ -126,17 +118,19 @@ export default function Editar({ Data }: Props) {
 								<input
 									name="senha"
 									type="text"
+									placeholder="*********"
 									className="input input-bordered w-full max-w-xs"
 								/>
 							</label>
 
 							<label className="form-control w-full max-w-xs mb-4">
 								<div className="label">
-									<span className="label-text">Instagram da sua empresa</span>
+									<span className="label-text">Qual o @ do instagram da sua empresa</span>
 								</div>
 								<input
 									name="instagram"
 									type="text"
+									placeholder="@suaempresa"
 									className="input input-bordered w-full max-w-xs"
 									defaultValue={Data.instagram}
 								/>
@@ -149,6 +143,7 @@ export default function Editar({ Data }: Props) {
 								<input
 									name="telefone"
 									type="text"
+									placeholder="(88) 98XXXXXX"
 									className="input input-bordered w-full max-w-xs"
 									defaultValue={Data.telefone}
 								/>
@@ -161,6 +156,7 @@ export default function Editar({ Data }: Props) {
 								<input
 									name="emailContato"
 									type="text"
+									placeholder="emaildecontato@email.com"
 									className="input input-bordered w-full max-w-xs"
 									defaultValue={Data.emailContato}
 								/>
@@ -180,10 +176,14 @@ export default function Editar({ Data }: Props) {
 							<label className="form-control w-full max-w-xs mb-4">
 								<div className="label">
 									<span className="label-text">Descrição curta para metadata</span>
-									<Modal
-										Title={tips.metadata.title}
-										Message={tips.metadata.message}
-									/>
+									<button
+										className={`cursor-pointer`}
+										onClick={() => (document.getElementById('modal_metadata')! as HTMLDialogElement).showModal()}>
+										<FaQuestionCircle
+											color="blue"
+											size={15}
+										/>
+									</button>
 								</div>
 								<textarea
 									name="descricaoCurta"
@@ -195,13 +195,17 @@ export default function Editar({ Data }: Props) {
 							<label className="form-control w-full max-w-xs mb-4">
 								<div className="label">
 									<span className="label-text">Link do google maps</span>
-									<Modal
-										Title={tips.googlemaps.title}
-										Message={tips.googlemaps.message}
-									/>
+									<button
+										className={`cursor-pointer`}
+										onClick={() => (document.getElementById('modal_maps')! as HTMLDialogElement).showModal()}>
+										<FaQuestionCircle
+											color="blue"
+											size={15}
+										/>
+									</button>
 								</div>
 								<textarea
-									name="googlemaps"
+									name="maps"
 									className="textarea w-full max-w-xs h-20"
 									defaultValue={Data.maps}
 									placeholder={'https://www.google.com/maps/embed....'}
@@ -217,9 +221,10 @@ export default function Editar({ Data }: Props) {
 									data-theme={value}
 									key={value}
 									type="radio"
-									name="temas"
+									name="tema"
 									className="btn theme-controller col-span-1 capitalize"
 									aria-label={value}
+									defaultChecked={value === Data.tema}
 									value={value}
 									onClick={() => {
 										TemaDemo(value);
@@ -235,8 +240,61 @@ export default function Editar({ Data }: Props) {
 					</form>
 				</div>
 			</div>
-
-			<div className="card w-full bg-base-100 shadow"></div>
+			{EmpresaError && (
+				<div className="toast toast-top toast-start">
+					<div className="alert alert-info">
+						<span>{EmpresaError}</span>
+					</div>
+				</div>
+			)}
+			<dialog
+				id={'modal_metadata'}
+				className="modal">
+				<div className="modal-box">
+					<h3 className="font-bold text-lg text-center">O que é metadata?</h3>
+					<div className="py-4">
+						<p>
+							<strong>Cartão de visita digital: </strong>
+							Quando alguém pesquisa seu site no Google, os metadados funcionam como um cartão de visita. Se você não
+							tiver um título e uma descrição bem feitos, é como se entregasse um cartão em branco.
+						</p>
+						<p>
+							<strong>Mensagem no WhatsApp: </strong>
+							Já percebeu que, quando você manda um link no WhatsApp, às vezes aparece uma prévia bonitinha com imagem e
+							descrição? Isso acontece por causa dos metadados. Sem eles, o link aparece seco e sem graça, e as pessoas
+							podem nem se interessar em clicar.
+						</p>
+					</div>
+					<div className="modal-action">
+						<form method="dialog">
+							<button className="btn">Fechar</button>
+						</form>
+					</div>
+				</div>
+			</dialog>
+			<dialog
+				id={'modal_maps'}
+				className="modal">
+				<div className="modal-box">
+					<h3 className="font-bold text-lg text-center">Como eu tenho o google maps na minha pagina?</h3>
+					<div className="py-4">
+						<ul>
+							<li>Obtenha o código de incorporação</li>
+							<li>Acesse Google Maps</li>
+							<li>Busque o local da sua loja</li>
+							<li>Clique em Compartilhar</li>
+							<li>Vá até a aba Incorporar um mapa</li>
+							<li>{'Copie o código <iframe>...</iframe>'}</li>
+							<li>Cole o codigo que damos conta de extrair o link</li>
+						</ul>
+					</div>
+					<div className="modal-action">
+						<form method="dialog">
+							<button className="btn">Fechar</button>
+						</form>
+					</div>
+				</div>
+			</dialog>
 		</section>
 	);
 }

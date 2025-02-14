@@ -22,7 +22,7 @@ export default function GenerationStep() {
 							return (
 								<div
 									key={k}
-									className="card w-full bg-base-200 shadow-xl hover:shadow-2xl">
+									className="card w-full shadow-xl hover:shadow-2xl">
 									<div className="grid -mt-4 place-items-center">
 										<div className="w-8 h-8  rounded-full  bg-amber-500 text-slate-100 flex font-bold justify-center items-center">
 											<p>{k + 1}</p>
