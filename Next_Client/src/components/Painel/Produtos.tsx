@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useState, type Dispatch, type SetStateAction } from 'react';
+import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
 import { FaEdit, FaSave, FaTrash, FaUpload } from 'react-icons/fa';
 import type { Produtos, Categorias } from '@/types/types';
 
@@ -11,9 +11,19 @@ type Props = {
 };
 
 export default function Produtos({ Produtos, setProdutos, Categorias, setCategorias }: Props) {
-	const [CategoriaError, SetCategoriaError] = useState('');
-	const [ProdutoError, SetProdutoError] = useState('');
+	const [Popup, setPopup] = useState(['', '']);
 	const [file, setFile] = useState<File | null>(null);
+	const [Editando, setEditando] = useState<Produtos>();
+
+	useEffect(() => {
+		if (Popup[0]) {
+			const timer = setTimeout(() => {
+				setPopup(['', '']);
+			}, 10000);
+
+			return () => clearTimeout(timer);
+		}
+	}, [Popup]);
 
 	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const selectedFile = event.target.files?.[0] || null;
@@ -22,12 +32,12 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 
 	const handleCategoriaSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		SetCategoriaError('');
-		const formData = new FormData(event.currentTarget);
+		const form = event.currentTarget;
+		const formData = new FormData(form);
 		const nome = String(formData.get('categoria'));
 
 		if (nome.length === 0) {
-			SetCategoriaError('Nenhum nome foi fornecido');
+			setPopup(['error', 'Nenhum nome foi fornecido']);
 			return;
 		}
 
@@ -42,19 +52,19 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 			});
 			const { message, data } = await response.json();
 			if (!response.ok) {
-				SetCategoriaError(message);
+				setPopup(['error', message]);
 			} else {
+				setPopup(['success', 'Categoria salva com sucesso']);
 				setCategorias((prevItems) => [...prevItems, data]);
-				event.currentTarget.reset();
+				form.reset();
 			}
-		} catch {
-			SetCategoriaError('Erro interno no servidor');
+		} catch (err) {
+			setPopup(['error', 'Erro interno no servidor ' + err]);
 		}
 	};
 
 	const handleProdutoSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		SetProdutoError('');
 		const form = event.currentTarget;
 		const formData = new FormData(form);
 		const nome = String(formData.get('nome'));
@@ -63,7 +73,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 		const imagem = formData.get('imagem') as File;
 
 		if (!nome || !preco || !categoria || !imagem) {
-			SetProdutoError('Um campo não foi fornecido');
+			setPopup(['error', 'Um campo não foi fornecido']);
 			return;
 		}
 
@@ -76,13 +86,69 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 
 			const { message, data } = await response.json();
 			if (!response.ok) {
-				SetProdutoError(message);
+				setPopup(['error', message]);
 			} else {
+				setPopup(['success', 'Produto salvo com sucesso!']);
 				setProdutos((prevItems) => [...prevItems, data]);
+				setFile(null);
 				form.reset();
 			}
 		} catch (err) {
-			SetProdutoError('Erro interno no servidor' + err);
+			setPopup(['error', 'Erro interno no servidor' + err]);
+		}
+	};
+
+	const handleProdutoUpdate = async (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		const form = event.currentTarget;
+		const formData = new FormData(form);
+		const produtoId = String(formData.get('id'));
+		const nome = String(formData.get('nome'));
+		const preco = String(formData.get('preco'));
+		const categoria = String(formData.get('categoria'));
+		const imagem = formData.get('imagem') as File;
+
+		if (!nome || !preco || !categoria || !imagem || !produtoId) {
+			setPopup(['error', 'Um campo não foi fornecido']);
+			return;
+		}
+
+		try {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/produto`, {
+				method: 'POST',
+				credentials: 'include',
+				body: formData,
+			});
+
+			const { message, data } = await response.json();
+			if (!response.ok) {
+				setPopup(['error', message]);
+			} else {
+				setPopup(['success', 'Produto atualizado com sucesso!']);
+				setProdutos((prevItems) => [...prevItems, data]);
+				setFile(null);
+				form.reset();
+			}
+		} catch (err) {
+			setPopup(['error', 'Erro interno no servidor' + err]);
+		}
+	};
+
+	const handleProdutoDelete = async (produtoId: string) => {
+		try {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/produto/${produtoId}`, {
+				method: 'DELETE',
+				credentials: 'include',
+			});
+
+			const { message } = await response.json();
+			if (!response.ok) {
+				setPopup(['error', message]);
+			} else {
+				setPopup(['success', 'Produto deletado com sucesso!']);
+			}
+		} catch (err) {
+			setPopup(['error', 'Erro interno no servidor' + err]);
 		}
 	};
 
@@ -109,7 +175,6 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 							className="btn btn-success">
 							<FaSave /> Salvar
 						</button>
-						{CategoriaError ? <span className="text-error text-base">{CategoriaError}</span> : ''}
 					</form>
 
 					<div className="flex flex-row flex-wrap gap-4">
@@ -134,7 +199,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 						htmlFor="fileUpload"
 						className="btn btn-outline">
 						<FaUpload />
-						{file ? file.name : 'Escolha um arquivo'}{' '}
+						{file ? file.name : 'Escolha um arquivo'}
 						<input
 							name="imagem"
 							id="fileUpload"
@@ -185,7 +250,6 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 						<FaSave /> Salvar
 					</button>
 				</form>
-				{ProdutoError ? <span>{ProdutoError}</span> : <></>}
 			</div>
 			<div className="overflow-x-auto w-full">
 				<table className="table table-zebra min-w-max">
@@ -216,10 +280,17 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 								<td>{value.categoria.nome}</td>
 								<td>
 									<div className="flex flex-row">
-										<button className="btn btn-ghost btn-error mr-2">
+										<button
+											onClick={() => handleProdutoDelete(value.id)}
+											className="btn btn-ghost btn-error mr-2">
 											<FaTrash size={18} />
 										</button>
-										<button className="btn btn-ghost btn-info">
+										<button
+											onClick={() => {
+												setEditando(value);
+												(document.getElementById('modal_edit')! as HTMLDialogElement).showModal();
+											}}
+											className="btn btn-ghost btn-info">
 											<FaEdit size={18} />
 										</button>
 									</div>
@@ -229,6 +300,95 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 					</tbody>
 				</table>
 			</div>
+			{Popup[0] && (
+				<div className="toast toast-top toast-start">
+					<div className={`alert alert-${Popup[0]}`}>
+						<span>{Popup[1]}</span>
+					</div>
+				</div>
+			)}
+			<dialog
+				id={'modal_edit'}
+				className="modal">
+				<div className="modal-box">
+					<h3 className="font-bold text-lg text-center">Editando um produto</h3>
+					{Editando && (
+						<div className="py-4">
+							<form
+								onSubmit={handleProdutoUpdate}
+								encType="multipart/form-data"
+								className="flex flex-col gap-4 mx-2">
+								<input
+									name="produtoId"
+									value={Editando.id}
+									className="hidden"
+								/>
+								<label
+									htmlFor="fileUpload"
+									className="btn btn-outline">
+									<FaUpload />
+									{file ? file.name : 'Escolha um arquivo'}
+									<input
+										name="imagem"
+										id="fileUpload"
+										type="file"
+										className="hidden"
+										onChange={handleFileChange}
+									/>
+								</label>
+
+								<label className="floating-label flex-grow-1">
+									<span>Nome do produto</span>
+									<input
+										name="nome"
+										defaultValue={Editando.nome}
+										type="text"
+										className="input w-full"
+									/>
+								</label>
+
+								<label className="floating-label flex-grow-1">
+									<span>Preço</span>
+									<input
+										name="preco"
+										defaultValue={Editando.preco}
+										type="number"
+										className="input w-full"
+									/>
+								</label>
+
+								<label className="floating-label flex-grow-1">
+									<span>Categoria</span>
+									<select
+										name="categoriaId"
+										defaultValue={Editando.categoria.nome}
+										className="select">
+										<option disabled>Selecione categoria</option>
+										{Categorias.map((value) => (
+											<option
+												value={value.id}
+												key={value.nome}>
+												{value.nome}
+											</option>
+										))}
+									</select>
+								</label>
+
+								<button
+									type="submit"
+									className="btn btn-success">
+									<FaSave /> Salvar
+								</button>
+							</form>
+						</div>
+					)}
+					<div className="modal-action">
+						<form method="dialog">
+							<button className="btn">Fechar</button>
+						</form>
+					</div>
+				</div>
+			</dialog>
 		</div>
 	);
 }

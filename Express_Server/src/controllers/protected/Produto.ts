@@ -77,22 +77,18 @@ const updateProduto = async (req: Request, res: Response): Promise<void> => {
       const empresaNome = empresa.nome;
       const empresaDir = path.join(path.resolve("uploads"), empresaNome);
 
-      // É bom fazer a verificação se a pasta da empresa existe
-      if (!fs.existsSync(empresaDir)) {
-        fs.mkdirSync(empresaDir, { recursive: true });
-      }
-
       const fileName = `${nome}.webp`;
       const filePath = path.join(empresaDir, fileName);
+      const newImagemUrl = `${process.env.PUBLIC_DOMAIN}/uploads/${empresaNome}/${fileName}`;
 
       // Remover a imagem antiga se existir
-      if (fs.existsSync(produto.imagemUrl)) {
-        fs.unlinkSync(produto.imagemUrl);
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
       }
 
-      await sharp(req.file.buffer).resize({ width: 800 }).toFormat("webp", { quality: 80 }).toFile(filePath);
+      await sharp(req.file.buffer).resize({ width: 800 }).toFormat("webp", { quality: 70 }).toFile(filePath);
 
-      imagemUrl = filePath;
+      imagemUrl = newImagemUrl;
     }
 
     await Produtos.update({
@@ -105,7 +101,7 @@ const updateProduto = async (req: Request, res: Response): Promise<void> => {
       }
     });
 
-    res.status(200).json({ message: "Sucesso" });
+    res.status(200).json({ message: "Produto atualizado com sucesso" });
   } catch {
     res.status(500).json({ message: "Erro interno no servidor" });
   }
@@ -113,21 +109,20 @@ const updateProduto = async (req: Request, res: Response): Promise<void> => {
 
 const deleteProduto = async (req: Request, res: Response): Promise<void> => {
   try {
-    const produto = await Produtos.delete({
+    const produtoId = req.params.id;
+    const { empresa, nome } = await Produtos.delete({
       where: {
-        id: req.body.produtoId,
+        id: produtoId,
         empresaId: req.userId
       },
-      select: { imagemUrl: true }
+      select: { nome: true, empresa: { select: { nome: true } } }
     });
 
-    if (!produto) {
-      res.status(400).json({ message: "Esse produto não existe" });
-      return;
-    }
+    const empresaDir = path.join(path.resolve("uploads"), empresa.nome);
+    const filePath = path.join(empresaDir, `${nome}.webp`);
 
-    if (fs.existsSync(produto.imagemUrl)) {
-      fs.unlinkSync(produto.imagemUrl); // Remove a imagem
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath); // Remove a imagem
     }
 
     res.status(200).json({ message: "Produto removido com sucesso" });

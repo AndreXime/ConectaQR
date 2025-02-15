@@ -7,9 +7,15 @@ const getAllDataFromOwnEmpresa = async (req: Request, res: Response): Promise<vo
       where: { id: req.userId },
       include: {
         produtos: {
-          select: { nome: true, preco: true, imagemUrl: true, categoria: { select: { nome: true } } }
+          select: {
+            id: true,
+            nome: true,
+            preco: true,
+            imagemUrl: true,
+            categoria: { select: { nome: true } }
+          }
         },
-        categorias: true
+        categorias: { select: { id: true, nome: true } }
       }
     });
 

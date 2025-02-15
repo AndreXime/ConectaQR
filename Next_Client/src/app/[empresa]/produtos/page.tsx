@@ -72,7 +72,7 @@ export default async function Page({
 				<Header
 					Categorias={data?.categorias}
 					EmpresaName={nomeEmpresa.split('-').join(' ')}>
-					<main className="flex-grow container mx-auto p-4">
+					<main className="flex-grow container min-h-screen mx-auto p-4">
 						<h1 className="text-2xl font-bold text-center my-5">
 							Essa empresa não tem nenhum produto castrado no momento
 						</h1>
@@ -82,7 +82,7 @@ export default async function Page({
 				<Header
 					Categorias={data.categorias}
 					EmpresaName={nomeEmpresa}>
-					<main className="flex-grow container p-4 mx-auto">
+					<main className="flex-grow container min-h-screen p-4 mx-auto">
 						<div className="flex justify-center gap-4 mb-5">
 							{pagination.PaginasTotais > 1 && (
 								<>

@@ -1,4 +1,4 @@
-import { useState, type Dispatch, type SetStateAction } from 'react';
+import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
 import type { EmpresaCompleta } from '@/types/types';
 import { FaQuestionCircle } from 'react-icons/fa';
 
@@ -7,7 +7,7 @@ type Props = {
 	setEmpresa: Dispatch<SetStateAction<EmpresaCompleta>>;
 };
 export default function Editar({ Data, setEmpresa }: Props) {
-	const [EmpresaError, setEmpresaError] = useState('');
+	const [Popup, setPopup] = useState(['', '']);
 	const themes = [
 		'light',
 		'dark',
@@ -50,9 +50,18 @@ export default function Editar({ Data, setEmpresa }: Props) {
 		document.getElementById('root')?.setAttribute('data-theme', value);
 	};
 
+	useEffect(() => {
+		if (Popup[0]) {
+			const timer = setTimeout(() => {
+				setPopup(['', '']);
+			}, 10000);
+
+			return () => clearTimeout(timer);
+		}
+	}, [Popup]);
+
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		setEmpresaError('');
 		const form = event.currentTarget;
 		const formData = new FormData(form);
 		const formInputs = Object.fromEntries(formData.entries());
@@ -69,13 +78,14 @@ export default function Editar({ Data, setEmpresa }: Props) {
 
 			const { message, data } = await response.json();
 			if (!response.ok) {
-				setEmpresaError(message);
+				setPopup(['error', message]);
 			} else {
+				setPopup(['success', 'Dados salvo com sucesso']);
 				setEmpresa(data);
 				form.reset();
 			}
 		} catch (err) {
-			setEmpresaError('Erro interno no servidor' + err);
+			setPopup(['error', 'Erro interno no servidor ' + err]);
 		}
 	};
 
@@ -166,9 +176,10 @@ export default function Editar({ Data, setEmpresa }: Props) {
 								<div className="label">
 									<span className="label-text">Descrição para a pagina inicial da loja</span>
 								</div>
-								<textarea
+								<input
+									type="text"
 									name="descricao"
-									className="textarea w-full max-w-xs h-20"
+									className="input input-bordered w-full max-w-xs"
 									defaultValue={Data.descricao}
 								/>
 							</label>
@@ -185,9 +196,10 @@ export default function Editar({ Data, setEmpresa }: Props) {
 										/>
 									</button>
 								</div>
-								<textarea
+								<input
+									type="text"
 									name="descricaoCurta"
-									className="textarea w-full max-w-xs h-20"
+									className="input input-bordered w-full max-w-xs"
 									defaultValue={Data.descricaoCurta}
 								/>
 							</label>
@@ -204,16 +216,17 @@ export default function Editar({ Data, setEmpresa }: Props) {
 										/>
 									</button>
 								</div>
-								<textarea
+								<input
 									name="maps"
-									className="textarea w-full max-w-xs h-20"
+									type="text"
+									className="input input-bordered w-full max-w-xs"
 									defaultValue={Data.maps}
 									placeholder={'https://www.google.com/maps/embed....'}
 								/>
 							</label>
 						</div>
 
-						<span className="badge badge-sm badge-warning">Dezenas de temas!</span>
+						<span className="badge badge-sm badge-warning">30 temas para escolher!</span>
 						<h2 className="text-2xl font-bold">Mude o tema</h2>
 						<div className="mt-6 grid grid-cols-3 lg:grid-cols-12 gap-2 text-xs">
 							{themes.map((value) => (
@@ -240,10 +253,10 @@ export default function Editar({ Data, setEmpresa }: Props) {
 					</form>
 				</div>
 			</div>
-			{EmpresaError && (
+			{Popup[0] && (
 				<div className="toast toast-top toast-start">
-					<div className="alert alert-info">
-						<span>{EmpresaError}</span>
+					<div className={`alert alert-${Popup[0]}`}>
+						<span>{Popup[1]}</span>
 					</div>
 				</div>
 			)}

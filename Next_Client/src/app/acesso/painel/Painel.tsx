@@ -18,7 +18,9 @@ export default function App({ initialData }: PropsPage) {
 			id="root"
 			data-theme={Empresa.tema}
 			className="min-h-screen bg-base-100">
-			<Drawer setTab={setTab}>
+			<Drawer
+				setTab={setTab}
+				nomeEmpresa={Empresa.nome}>
 				<main className="p-5">
 					{Tab === 'Inicio' && (
 						<Resumo

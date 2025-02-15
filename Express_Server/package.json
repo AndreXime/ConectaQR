@@ -11,7 +11,7 @@
     "start": "npm run dev && node --require dotenv/config dist/server.js",
     "dev": "npm run lint && npm run build",
     "build": "echo Construindo build && rm -rf ./dist && tsc && echo Build concluida",
-    "lint": "echo Verificando problemas &&eslint ./src && echo Nenhum problema encontrado"
+    "lint": "echo Verificando problemas && eslint ./src && echo Nenhum problema encontrado"
   },
   "keywords": [],
   "author": "",

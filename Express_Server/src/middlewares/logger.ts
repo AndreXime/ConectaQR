@@ -13,7 +13,7 @@ const logger = (req: Request, res: Response, next: NextFunction) => {
     const segundosPassados = (seconds + nanoseconds / 1e9).toFixed(3);
     const status = res.statusCode;
     const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
-    const message = `| ${req.method} ${req.originalUrl} | IP: ${ip} | Tempo: ${segundosPassados} | Status: ${status}`;
+    const message = `| ${req.method} ${req.originalUrl} | IP: ${ip} | Tempo: ${segundosPassados} | Status: ${status} |`;
     if (process.env.NODE_ENV !== "production") {
       console.log(message);
     }

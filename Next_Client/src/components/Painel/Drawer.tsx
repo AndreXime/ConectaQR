@@ -1,12 +1,14 @@
+import Link from 'next/link';
 import type { Dispatch, ReactNode, SetStateAction } from 'react';
 import { FaBars } from 'react-icons/fa';
 
 type DrawerProps = {
+	nomeEmpresa: string;
 	children: ReactNode;
 	setTab: Dispatch<SetStateAction<string>>;
 };
 
-export default function Drawer({ children, setTab }: DrawerProps) {
+export default function Drawer({ children, setTab, nomeEmpresa }: DrawerProps) {
 	return (
 		<div className="drawer">
 			<input
@@ -15,7 +17,7 @@ export default function Drawer({ children, setTab }: DrawerProps) {
 				className="drawer-toggle"
 			/>
 			<div className="drawer-content flex flex-col">
-				<div className="navbar bg-base-300 w-full relative">
+				<div className="navbar bg-primary text-base-content w-full relative">
 					<div className="flex-none md:hidden absolute left-5">
 						<label
 							htmlFor="my-drawer-3"
@@ -24,36 +26,45 @@ export default function Drawer({ children, setTab }: DrawerProps) {
 							<FaBars size={20} />
 						</label>
 					</div>
-					<div className="mx-2 flex-1 px-2 text-center md:text-left font-semibold">ConnectQR</div>
+					<div className="mx-2 flex-1 px-2 text-primary-content text-center md:text-left text-xl font-semibold">
+						ConnectQR
+					</div>
 					<div className="hidden flex-none md:block">
 						<ul className="menu menu-horizontal">
 							<li>
 								<button
-									className="btn btn-ghost btn-outline mx-2"
+									className="btn btn-accent mx-2"
 									onClick={() => setTab('Inicio')}>
 									Visão geral
 								</button>
 							</li>
 							<li>
 								<button
-									className="btn btn-ghost btn-outline"
+									className="btn btn-accent "
 									onClick={() => setTab('Editar')}>
 									Editar perfil
 								</button>
 							</li>
 							<li>
 								<button
-									className="btn btn-ghost btn-outline mx-2"
+									className="btn btn-accent  mx-2"
 									onClick={() => setTab('Produtos')}>
 									Gerenciar Produtos
 								</button>
 							</li>
 							<li>
 								<button
-									className="btn btn-ghost btn-outline"
+									className="btn btn-accent "
 									onClick={() => setTab('QRCode')}>
 									Gerar QRCode
 								</button>
+							</li>
+							<li>
+								<Link
+									className="btn btn-accent  mx-2"
+									href={'/' + nomeEmpresa}>
+									Ver sua loja
+								</Link>
 							</li>
 						</ul>
 					</div>
@@ -69,31 +80,38 @@ export default function Drawer({ children, setTab }: DrawerProps) {
 					<h1 className="text-lg font-semibold text-center mb-3">Painel</h1>
 					<li>
 						<button
-							className="btn btn-ghost btn-outline mb-2"
+							className="btn btn-accent mb-2"
 							onClick={() => setTab('Inicio')}>
 							Visão geral
 						</button>
 					</li>
 					<li>
 						<button
-							className="btn btn-ghost btn-outline mb-2"
+							className="btn btn-accent mb-2"
 							onClick={() => setTab('Editar')}>
 							Editar perfil
 						</button>
 					</li>
 					<li>
 						<button
-							className="btn btn-ghost btn-outline mb-2"
+							className="btn btn-accent mb-2"
 							onClick={() => setTab('Produtos')}>
 							Gerenciar Produtos
 						</button>
 					</li>
 					<li>
 						<button
-							className="btn btn-ghost btn-outline"
+							className="btn btn-accent mb-2"
 							onClick={() => setTab('QRCode')}>
 							Gerar QRCode
 						</button>
+					</li>
+					<li>
+						<Link
+							className="btn btn-accent"
+							href={'/' + nomeEmpresa}>
+							Ver sua loja
+						</Link>
 					</li>
 				</ul>
 			</div>
