@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { Dispatch, ReactNode, SetStateAction } from 'react';
-import { FaBars } from 'react-icons/fa';
+import { FaArrowRight, FaBars } from 'react-icons/fa';
 
 type DrawerProps = {
 	nomeEmpresa: string;
@@ -12,7 +12,7 @@ export default function Drawer({ children, setTab, nomeEmpresa }: DrawerProps) {
 	return (
 		<div className="drawer">
 			<input
-				id="my-drawer-3"
+				id="drawer"
 				type="checkbox"
 				className="drawer-toggle"
 			/>
@@ -20,7 +20,7 @@ export default function Drawer({ children, setTab, nomeEmpresa }: DrawerProps) {
 				<div className="navbar bg-primary text-base-content w-full relative">
 					<div className="flex-none md:hidden absolute left-5">
 						<label
-							htmlFor="my-drawer-3"
+							htmlFor="drawer"
 							aria-label="open sidebar"
 							className="btn btn-square btn-ghost">
 							<FaBars size={20} />
@@ -71,46 +71,46 @@ export default function Drawer({ children, setTab, nomeEmpresa }: DrawerProps) {
 				</div>
 				{children}
 			</div>
-			<div className="drawer-side">
+			<div className="drawer-side z-20">
 				<label
-					htmlFor="my-drawer-3"
+					htmlFor="drawer"
 					aria-label="close sidebar"
 					className="drawer-overlay"></label>
-				<ul className="menu bg-base-200 min-h-full w-60 p-4">
-					<h1 className="text-lg font-semibold text-center mb-3">Painel</h1>
+				<ul className="menu bg-base-200 min-h-full w-60 p-1">
+					<h1 className="text-xl font-bold text-center my-5">Painel</h1>
 					<li>
 						<button
-							className="btn btn-accent mb-2"
+							className="btn btn-accent mb-2 flex justify-between"
 							onClick={() => setTab('Inicio')}>
-							Visão geral
+							Visão geral <FaArrowRight />
 						</button>
 					</li>
 					<li>
 						<button
-							className="btn btn-accent mb-2"
+							className="btn btn-accent mb-2 flex justify-between"
 							onClick={() => setTab('Editar')}>
-							Editar perfil
+							Editar perfil <FaArrowRight />
 						</button>
 					</li>
 					<li>
 						<button
-							className="btn btn-accent mb-2"
+							className="btn btn-accent mb-2 flex justify-between"
 							onClick={() => setTab('Produtos')}>
-							Gerenciar Produtos
+							Gerenciar Produtos <FaArrowRight />
 						</button>
 					</li>
 					<li>
 						<button
-							className="btn btn-accent mb-2"
+							className="btn btn-accent mb-2 flex justify-between"
 							onClick={() => setTab('QRCode')}>
-							Gerar QRCode
+							Gerar QRCode <FaArrowRight />
 						</button>
 					</li>
 					<li>
 						<Link
-							className="btn btn-accent"
+							className="btn btn-accent flex justify-between"
 							href={'/' + nomeEmpresa}>
-							Ver sua loja
+							Ver sua loja <FaArrowRight />
 						</Link>
 					</li>
 				</ul>

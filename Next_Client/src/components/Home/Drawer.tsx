@@ -16,7 +16,6 @@ export default function Navbar({ children, absolute }: props) {
 				className="drawer-toggle"
 			/>
 			<div className="drawer-content flex flex-col">
-				{/* Navbar */}
 				<nav className={`navbar bg-base-100 w-full ${absolute && 'absolute'}`}>
 					<div className="lg:hidden absolute">
 						<label
@@ -27,54 +26,48 @@ export default function Navbar({ children, absolute }: props) {
 						</label>
 					</div>
 					<Link
-						href={'/'}
-						className="mx-2 flex-1 px-2 text-xl font-bold text-center lg:text-left items-center">
+						href="/"
+						className=" flex-1 px-2 text-xl font-bold text-center lg:text-left items-center">
 						ConectaQR
 					</Link>
 					<div className="hidden flex-none lg:block">
-						<ul className="menu menu-horizontal">
-							<li>
+						<ul className="menu menu-horizontal divide-x divide-gray-500">
+							<li className=" px-1">
 								<ThemeSwitcher />
 							</li>
-							<div className="divider divider-horizontal"></div>
-							<li>
+							<li className=" px-1">
 								<Link
 									className="btn btn-primary btn-ghost "
 									href="/empresas">
 									Empresas parceiras
 								</Link>
 							</li>
-							<div className="divider divider-horizontal"></div>
 
-							<li>
+							<li className=" px-1">
 								<Link
 									className="btn btn-primary btn-ghost "
 									href="/acesso">
 									Painel da empresa
 								</Link>
 							</li>
-							<div className="divider divider-horizontal"></div>
-							<li>
+							<li className=" px-1">
 								<Link
 									className="btn btn-primary btn-ghost "
 									href="/feedback">
 									Feedback
 								</Link>
 							</li>
-							<div className="divider divider-horizontal"></div>
-							<li>
+							<li className="px-1">
 								<Link
 									className="btn btn-primary btn-ghost"
 									href="/termos">
 									Termos de uso
 								</Link>
 							</li>
-							<div className="divider divider-horizontal"></div>
-
-							<li>
+							<li className="px-1">
 								<Link
 									className="btn btn-primary btn-ghost"
-									href="/termos">
+									href="/sobre-nos">
 									Sobre a plataforma
 								</Link>
 							</li>
@@ -84,50 +77,53 @@ export default function Navbar({ children, absolute }: props) {
 				{children}
 			</div>
 			{/* Navbar mobile */}
-			<div className="drawer-side z-50">
+			<div className="drawer-side">
 				<label
-					htmlFor="my-drawer-3"
+					htmlFor="drawer"
 					aria-label="close sidebar"
 					className="drawer-overlay"></label>
-				<ul className="menu bg-base-200 min-h-full w-60 p-4 z-50">
+				<ul className="menu bg-base-200 min-h-full w-60">
 					<li className="text-lg font-bold text-center mt-4 mb-7">Navegação do site</li>
 					<li>
 						<Link
-							className="btn btn-primary  mb-3"
+							className="btn btn-primary mb-3 flex justify-between"
 							href="/empresas">
 							Empresas parceiras <FaArrowRight />
 						</Link>
 					</li>
 					<li>
 						<Link
-							className="btn btn-primary mb-3"
+							className="btn btn-primary mb-3 flex justify-between"
 							href="/acesso">
 							Painel da empresa <FaArrowRight />
 						</Link>
 					</li>
 					<li>
 						<Link
-							className="btn btn-primary mb-3"
+							className="btn btn-primary mb-3 flex justify-between"
 							href="/feedback">
 							Feedback <FaArrowRight />
 						</Link>
 					</li>
 					<li>
 						<Link
-							className="btn btn-primary mb-3"
+							className="btn btn-primary mb-3 flex justify-between"
 							href="/termos">
 							Termos de uso <FaArrowRight />
 						</Link>
 					</li>
 					<li>
 						<Link
-							className="btn btn-primary mb-3"
-							href="/termos">
+							className="btn btn-primary mb-3 flex justify-between"
+							href="/sobre-nos">
 							Sobre a plataforma <FaArrowRight />
 						</Link>
 					</li>
 					<li>
-						<ThemeSwitcher className="btn-outline" />
+						<ThemeSwitcher
+							text
+							className="btn-outline flex justify-between"
+						/>
 					</li>
 				</ul>
 			</div>

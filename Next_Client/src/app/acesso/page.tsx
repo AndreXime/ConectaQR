@@ -17,14 +17,14 @@ export default function Page() {
 		const nome = String(formData.get('nome')) || '';
 		const email = String(formData.get('email')) || '';
 		const senha = String(formData.get('senha')) || '';
-		const descricaoCurta = String(formData.get('descricaoCurta')) || '';
+		const descricao = String(formData.get('descricao')) || '';
 
 		const erros = ['', '', '', ''];
 
 		if (nome.length <= 8) {
 			erros[0] = 'O nome deve ter mais de 8 caracteres.';
 		}
-		if (descricaoCurta.length <= 15) {
+		if (descricao.length <= 15) {
 			erros[3] = 'A descricao deve ter mais de 15 caracteres.';
 		}
 		if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
@@ -46,7 +46,7 @@ export default function Page() {
 					'Content-Type': 'application/json',
 				},
 				credentials: 'include',
-				body: JSON.stringify({ nome, email, senha, descricaoCurta }),
+				body: JSON.stringify({ nome, email, senha, descricao }),
 			});
 
 			if (!response.ok) {
@@ -88,7 +88,7 @@ export default function Page() {
 
 	return (
 		<Drawer>
-			<div className="flex flex-col py-5 items-center bg-base-300 min-h-screen">
+			<div className="flex flex-col py-5 items-center bg-base-200 min-h-screen">
 				{Registrando ? (
 					<form
 						key="RegistroForm"
@@ -122,7 +122,7 @@ export default function Page() {
 						<fieldset className="fieldset">
 							<legend className="fieldset-legend text-base">Descreva um pouco sobre sua empresa</legend>
 							<textarea
-								name="descricaoCurta"
+								name="descricao"
 								className="input w-full textarea"
 								placeholder="Crie uma descricao breve"
 								rows={3}

@@ -13,14 +13,14 @@ export default function Feedback() {
 
 	return (
 		<Drawer>
-			<div className="min-h-screen bg-base-200 py-10 px-4 flex justify-center">
-				<div className="card shadow-xl p-7 bg-base-100">
+			<div className="min-h-screen bg-base-200 py-7 px-4 flex justify-center">
+				<div className="card shadow-xl py-10 px-5 bg-base-100">
 					{/* Título */}
 					<h1 className="text-3xl font-bold text-center mb-6">Feedback e Suporte</h1>
 
 					{/* FAQ - Perguntas Frequentes */}
 					<div className="mb-10">
-						<h2 className="text-2xl font-semibold mb-4">Perguntas Frequentes</h2>
+						<h2 className="text-2xl font-semibold mb-4 p-2">Perguntas Frequentes</h2>
 
 						<div className="join join-vertical w-full">
 							<div className="collapse collapse-arrow bg-base-100">
@@ -60,7 +60,7 @@ export default function Feedback() {
 
 					{/* Formulário de Dúvida */}
 					<div className="bg-base-100 p-2">
-						<h2 className="text-2xl font-semibold mb-4">Envie como foi sua experiencia</h2>
+						<h2 className="text-2xl font-semibold mb-4">Conte como foi sua experiencia</h2>
 
 						<form
 							onSubmit={handleSubmit}
@@ -105,6 +105,7 @@ export default function Feedback() {
 
 							<button
 								type="submit"
+								disabled
 								className="btn btn-primary w-full">
 								Enviar Feedback
 							</button>

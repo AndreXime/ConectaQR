@@ -21,7 +21,7 @@ export default function App({ initialData }: PropsPage) {
 			<Drawer
 				setTab={setTab}
 				nomeEmpresa={Empresa.nome}>
-				<main className="p-5">
+				<main className="p-3">
 					{Tab === 'Inicio' && (
 						<Resumo
 							Data={Empresa}

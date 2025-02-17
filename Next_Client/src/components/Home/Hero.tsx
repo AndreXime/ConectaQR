@@ -4,7 +4,7 @@ import Link from 'next/link';
 export default function hero() {
 	return (
 		<header className="hero py-10 bg-gradient-to-t from-blue-500 to-purple-700 min-h-screen">
-			<div className="hero-content md:px-0 px-4 max-w-6xl flex-col lg:flex-row-reverse">
+			<div className="hero-content px-4 max-w-6xl flex-col lg:flex-row-reverse">
 				<Image
 					width={800}
 					height={800}

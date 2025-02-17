@@ -3,7 +3,7 @@ import { Drawer, Footer } from '@/components/Home';
 export default async function CompaniesPage() {
 	return (
 		<Drawer>
-			<div className="min-h-screen bg-base-200 py-10 px-4 flex justify-center">
+			<div className="min-h-screen bg-base-200 py-7 px-4 flex justify-center">
 				<div className="card shadow-xl bg-base-100">
 					<div className="card-body">
 						<h1 className="text-3xl font-bold mb-4">Termos de Uso e Política de Privacidade</h1>

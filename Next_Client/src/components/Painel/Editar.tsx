@@ -90,9 +90,9 @@ export default function Editar({ Data, setEmpresa }: Props) {
 	};
 
 	return (
-		<section className="flex flex-col gap-5">
+		<section className="flex flex-col">
 			<div className="card w-full bg-base-100 shadow-2xl">
-				<div className="card-body">
+				<div className="card-body px-5">
 					<h2 className="text-2xl font-bold">Editar dados</h2>
 					<span className="text-xs">Dica: salve suas alterações no final da pagina</span>
 					<form onSubmit={handleSubmit}>
@@ -292,7 +292,6 @@ export default function Editar({ Data, setEmpresa }: Props) {
 					<h3 className="font-bold text-lg text-center">Como eu tenho o google maps na minha pagina?</h3>
 					<div className="py-4">
 						<ul>
-							<li>Obtenha o código de incorporação</li>
 							<li>Acesse Google Maps</li>
 							<li>Busque o local da sua loja</li>
 							<li>Clique em Compartilhar</li>

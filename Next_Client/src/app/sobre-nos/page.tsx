@@ -1,20 +1,32 @@
+import ServerState from '@/components/common/serverState';
 import { Drawer, Footer } from '@/components/Home';
+import { GoAlertFill } from 'react-icons/go';
 import Link from 'next/link';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
 export default async function CompaniesPage() {
 	return (
 		<Drawer>
-			<div className=" bg-base-200 py-10 px-4 flex justify-center">
+			<div className=" bg-base-200 py-7 px-4 flex justify-center">
 				<div className="card shadow-xl lg:max-w-1/2 bg-base-100">
 					<div className="card-body ">
 						<h1 className="text-3xl font-bold mb-4">Sobre a plataforma</h1>
+						<ServerState />
+						<div className="flex flex-row font-bold gap-1">
+							<GoAlertFill
+								size={18}
+								color="red"
+							/>
+							A plataforma precisa de ajudar financeira para se manter online, qualquer quantia é bem vinda
+						</div>
+
 						<section className="mb-6">
 							<h2 className="text-xl font-semibold mb-2">Nossa equipe</h2>
 							<p className="text-base-content">
 								Esta plataforma foi desenvolvida por uma único estudante de ciencias da computação
 							</p>
 						</section>
+
 						<section className="mb-6">
 							<h2 className="text-xl font-semibold mb-2">Como foi feito</h2>
 							<p className="text-base-content">

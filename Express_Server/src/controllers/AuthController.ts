@@ -4,11 +4,11 @@ import { generateToken } from "../middlewares/index.js";
 
 const createEmpresa = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { email, senha, nome, descricaoCurta } = req.body;
+    const { email, senha, nome, descricao } = req.body;
     // Nome precisa ser formartado para facilitar ter outras urls com esse nome
     const formartNome = (nome as string).toLowerCase().replace(/\s+/g, "-");
     const empresa = await Empresa.create({
-      data: { email, senha, nome: formartNome, descricaoCurta },
+      data: { email, senha, nome: formartNome, descricao },
       select: { id: true }
     });
     const token = generateToken(empresa.id);
