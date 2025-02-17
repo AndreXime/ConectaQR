@@ -11,7 +11,7 @@ services:
 
   server:
     build:
-      context: ./Server
+      context: ./
       dockerfile: Dockerfile
     depends_on:
       - database
@@ -19,7 +19,7 @@ services:
       - "4000:4000"
     environment:
       NODE_ENV: production
-      databaseUrl: postgres://conectaqr:8tNv5J6A7g5UplF0omFn@database:5432/rootDatabase
+      DATABASE_URL: postgres://conectaqr:8tNv5J6A7g5UplF0omFn@database:5432/rootDatabase
       JWT_KEY: 8tNv5J6A7g5UplF0omFn
       PUBLIC_DOMAIN: "http://localhost:4000"
       PORT: "4000"
