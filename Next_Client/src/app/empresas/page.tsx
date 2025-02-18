@@ -9,6 +9,7 @@ async function getCompanies(): Promise<Empresa[] | null> {
 			headers: {
 				'Content-Type': 'application/json',
 			},
+			cache: 'no-store',
 		});
 
 		if (!response.ok) {

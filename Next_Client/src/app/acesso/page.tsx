@@ -45,6 +45,7 @@ export default function Page() {
 				headers: {
 					'Content-Type': 'application/json',
 				},
+				cache: 'no-store',
 				credentials: 'include',
 				body: JSON.stringify({ nome, email, senha, descricao }),
 			});
@@ -52,6 +53,7 @@ export default function Page() {
 			if (!response.ok) {
 				setErrors({ register: ['', '', '', '', (await response.json()).message], login: Errors.login });
 			} else {
+				setErrors({ register: ['', '', '', '', ''], login: '' });
 				router.push('/acesso/painel');
 			}
 		} catch {
@@ -72,6 +74,7 @@ export default function Page() {
 				headers: {
 					'Content-Type': 'application/json',
 				},
+				cache: 'no-store',
 				credentials: 'include',
 				body: JSON.stringify({ email, senha }),
 			});
@@ -121,11 +124,11 @@ export default function Page() {
 						</fieldset>
 						<fieldset className="fieldset">
 							<legend className="fieldset-legend text-base">Descreva um pouco sobre sua empresa</legend>
-							<textarea
+							<input
 								name="descricao"
-								className="input w-full textarea"
-								placeholder="Crie uma descricao breve"
-								rows={3}
+								type="text"
+								className="input w-full"
+								placeholder="Crie uma descricao sobre o que é sua empresa"
 							/>
 							{Errors.register[3] && <p className="fieldset-label text-error">{Errors.register[3]}</p>}
 						</fieldset>

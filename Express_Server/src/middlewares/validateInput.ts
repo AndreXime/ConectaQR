@@ -14,7 +14,6 @@ export default function validateInput(schemaNome: SchemaNomes) {
       res.status(400).json({ message: "A requisição deve ser um objeto válido." });
       return;
     }
-
     try {
       const errors = schema(req.body);
       if (errors.length > 0) {
@@ -74,11 +73,11 @@ const validateExtraFields = (data: Record<string, unknown>, allowedFields: strin
 
 const schemas: SchemaType = {
   RegistrarEmpresa: (data) => [
-    ...validateExtraFields(data, ["email", "senha", "nome", "descricaoCurta"]),
+    ...validateExtraFields(data, ["email", "senha", "nome", "descricao"]),
     ...validateEmail("email", data.email),
     ...validateString("senha", data.senha, 6),
     ...validateString("nome", data.nome, 6),
-    ...validateString("descricaoCurta", data.descricaoCurta, 20)
+    ...validateString("descricao", data.descricao, 20)
   ],
   LoginEmpresa: (data) => [
     ...validateExtraFields(data, ["email", "senha"]),

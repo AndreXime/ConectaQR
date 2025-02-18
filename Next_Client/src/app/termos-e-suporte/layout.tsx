@@ -3,8 +3,8 @@ import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 
 export const metadata: Metadata = {
-	title: 'Termos e Privacidade',
-	description: 'Todas as empresas parceiras que estão presentes na nossa plataforma',
+	title: 'Termos e Suporte',
+	description: 'Os termos da pagina e duvidas frequentes',
 	keywords: ['Conectar', 'Produtos', 'Vitrine', 'Lojas', 'Vendas', 'Empresas'],
 };
 

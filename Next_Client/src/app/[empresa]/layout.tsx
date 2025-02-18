@@ -2,7 +2,6 @@ import '@Styles';
 
 type InfoType = {
 	descricaoCurta?: string;
-	telefone?: string;
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ empresa: string }> }) {
@@ -18,7 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<{ empresa: 
 		const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/empresas?nome=${empresa}`, {
 			method: 'get',
 			cache: 'force-cache',
-			next: { tags: [`empresa-${empresa}`], revalidate: 5400 },
+			next: { revalidate: 5400 },
 		});
 		if (response.ok) {
 			info = await response.json();

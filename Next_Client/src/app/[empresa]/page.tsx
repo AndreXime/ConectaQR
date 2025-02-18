@@ -17,7 +17,10 @@ type InfoType = {
 
 async function getCompanyInfo(nomeEmpresa: string): Promise<InfoType | null> {
 	try {
-		const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/empresas?nome=${nomeEmpresa}`, { method: 'get' });
+		const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/empresas?nome=${nomeEmpresa}`, {
+			method: 'get',
+			cache: 'no-store',
+		});
 		if (!response.ok) {
 			throw Error;
 		} else {

@@ -31,7 +31,7 @@ async function getProps({ nomeEmpresa, page, categorias, search }: getProps): Pr
 	const URL = `${process.env.NEXT_PUBLIC_API_URL}/produto/${nomeEmpresa}${queryPage}${queryCategoria}${querySearch}`;
 
 	try {
-		const response = await fetch(URL, { method: 'get' });
+		const response = await fetch(URL, { method: 'get', cache: 'no-store' });
 		const status = response.status;
 		if (status >= 400) {
 			return { naoExiste: true };

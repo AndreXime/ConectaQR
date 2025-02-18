@@ -53,15 +53,8 @@ export default function Navbar({ children, absolute }: props) {
 							<li className=" px-1">
 								<Link
 									className="btn btn-primary btn-ghost "
-									href="/feedback">
-									Feedback
-								</Link>
-							</li>
-							<li className="px-1">
-								<Link
-									className="btn btn-primary btn-ghost"
-									href="/termos">
-									Termos de uso
+									href="/termos-e-suporte">
+									Termos e Suporte
 								</Link>
 							</li>
 							<li className="px-1">
@@ -101,15 +94,8 @@ export default function Navbar({ children, absolute }: props) {
 					<li>
 						<Link
 							className="btn btn-primary mb-3 flex justify-between"
-							href="/feedback">
-							Feedback <FaArrowRight />
-						</Link>
-					</li>
-					<li>
-						<Link
-							className="btn btn-primary mb-3 flex justify-between"
-							href="/termos">
-							Termos de uso <FaArrowRight />
+							href="/termos-e-suporte">
+							Termos e Suporte <FaArrowRight />
 						</Link>
 					</li>
 					<li>

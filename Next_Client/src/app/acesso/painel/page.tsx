@@ -18,6 +18,7 @@ export default async function PageServer() {
 				'Content-Type': 'application/json',
 				Authorization: `Bearer ${token?.value}`,
 			},
+			cache: 'no-store',
 			credentials: 'include',
 		});
 
