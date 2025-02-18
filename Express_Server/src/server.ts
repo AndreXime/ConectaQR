@@ -4,7 +4,19 @@ import routes from "./routes.js";
 import middlewareTempo from "./middlewares/logger.js";
 import path from "path";
 
+// @ts-ignore
+import cors from "cors";
+
 const app = express();
+
+app.use(
+  cors({
+    origin: process.env.CLIENT_DOMAIN,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true
+  })
+);
 
 app.set("x-powered-by", false); // Desativa assinatura do express nas requisiçoes
 app.use(middlewareTempo); // Mede o tempo de que o servidor demora em cada requisição
