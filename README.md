@@ -2,26 +2,38 @@
 
 ## O que é
 
-ConectaQR é uma plataforma criada para a exposição de produtos em lojas presenciais por meio de QRCodes os usuarios iriam poder ver o que a loja tem disponivel.
+Uma plataforma web para exposição de produtos permitindo que cada empresa tenha sua própria página
+personalizada, exibindo seus produtos e informações essenciais, como WhatsApp, Instagram e localização via Google
+Maps. E também, o sistema gera um QR Code para cada loja, permitindo que clientes em lojas físicas acessem o catálogo
+de produtos e verifiquem preços pelo celular.
 
-## Funcionalidades
+## Principais funcionalidades:
 
-- Gerenciar produtos com imagens e categorias
-- Personalização do tema de suas paginas
-- Gerar QRCode automaticamente
+- Página exclusiva para cada empresa com identidade visual personalizada.
+- Catálogo de produtos com imagens, descrições e preços.
+- Upload de imagens dos produtos diretamente pelo painel administrativo.
+- Geração automática de QR Code para acesso rápido ao catálogo na loja física.
+- Integração com redes sociais e contato direto via WhatsApp.
+- Localização dinâmica via Google Maps.
+- Painel administrativo para gerenciamento de produtos e informações empresariais.
 
 ## Como usar
 
-Você pode usar diretamente [nesse site]() ou você pode usar em um servidor local basta baixar o codigo e usar
+Você pode usar diretamente [nesse site](https://conectaqr.tech/) ou você pode usar em um servidor local basta baixar o codigo e executa esses passo a passo
 
 ```bash
-git clone https://github.com/AndreXime/vitrine-virtual.git
-npm install && npm run build
-npm start
+git clone https://github.com/AndreXime/ConnectQR.git
+
+cd ConectaQR/Express_Server
+docker compose up -d
+
+cd ../Next_Client
+# Adicionando variaveis para o Next
+echo "NEXT_PUBLIC_DOMAIN=\"http://localhost:3000\"" > .env
+echo "NEXT_PUBLIC_API_URL=\"http://localhost:4000\"" >> .env
+npm run build && npm start
 ```
 
 ## Detalhes tecnicos
 
-Analise do Google PageSpeed: [Inicio](https://pagespeed.web.dev/analysis/https-conectaqr-vercel-app/o6ofb4enmm?form_factor=mobile), [Empresas](https://pagespeed.web.dev/analysis/https-conectaqr-vercel-app-empresas/5ae924dhgp?form_factor=mobile), [Empresa](https://pagespeed.web.dev/analysis/https-conectaqr-vercel-app-TechNova/cjz9h3unri?form_factor=mobile), [QRCodeEmpresa](https://pagespeed.web.dev/analysis/https-conectaqr-vercel-app-TechNova-QRCode/lwythbrgjd?form_factor=mobile), [ProdutosEmpresa](https://pagespeed.web.dev/analysis/https-conectaqr-vercel-app-TechNova-produtos/r09noktlot?form_factor=mobile), [FormAcesso](https://pagespeed.web.dev/analysis/https-conectaqr-vercel-app-acesso/o68dj41nep?form_factor=mobile), [Painel](https://pagespeed.web.dev/analysis/https-conectaqr-vercel-app-acesso-painel/ixaht6xdec?form_factor=mobile)
-
-Está usando tailwind com daisyui, nextjs com typescript e em breve vai desenvolvido o backend uma preview das [tabelas do banco de dados](https://drawsql.app/teams/nenhuma-5/diagrams/project-connectqr)
+Essa plataforma adota Typescript no Nextjs e no Express, e usa TailwindCSS e PostgreSQL e outra biblioteca auxiliares como sharp para formartar imagens de uploads
