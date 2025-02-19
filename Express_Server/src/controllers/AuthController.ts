@@ -15,7 +15,7 @@ const createEmpresa = async (req: Request, res: Response): Promise<void> => {
     res.cookie("token", token, {
       maxAge: 2 * 60 * 60 * 1000,
       httpOnly: true,
-      secure: false,
+      secure: process.env.NODE_ENV === "production",
       domain: process.env.DOMAIN,
       sameSite: "lax"
     });
@@ -36,7 +36,7 @@ const loginEmpresa = async (req: Request, res: Response): Promise<void> => {
       res.cookie("token", token, {
         maxAge: 2 * 60 * 60 * 1000,
         httpOnly: true,
-        secure: false,
+        secure: process.env.NODE_ENV === "production",
         domain: process.env.DOMAIN,
         sameSite: "lax"
       });

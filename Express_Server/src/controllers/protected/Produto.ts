@@ -41,8 +41,7 @@ const createProduto = async (req: Request, res: Response): Promise<void> => {
     });
 
     res.json({ message: "Produto adicionado!", data: produto });
-  } catch (err) {
-    console.log(err);
+  } catch {
     res.status(500).json({ message: "Erro no servidor" });
   }
 };

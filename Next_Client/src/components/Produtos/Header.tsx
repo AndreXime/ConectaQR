@@ -42,7 +42,7 @@ export default function Header({ EmpresaName, children, Categorias }: HeaderProp
 						/>
 					</div>
 				</nav>
-				<div className="md:hidden bg-secondary w-full px-5">
+				<div className="md:hidden bg-primary w-full px-5">
 					<SearchProduto
 						className="input input-bordered gap-2 w-full my-2 text-base-content"
 						empresa={EmpresaName}
@@ -57,14 +57,14 @@ export default function Header({ EmpresaName, children, Categorias }: HeaderProp
 				<ul className="menu bg-base-200 min-h-full w-66 p-4">
 					{Categorias && (
 						<>
-							<h1 className="text-2xl font-bold text-center my-5">Categorias</h1>
-							<div className="grid grid-cols-1 justify-center gap-2">
+							<h1 className="text-xl font-bold text-center my-4">Categorias</h1>
+							<div className="flex flex-col justify-center">
 								{Categorias.map((value) => (
 									<RedirectButton
 										Url={`/${EmpresaName}/produtos?categorias=${value.nome}`}
 										buttonText={value.nome}
 										key={value.nome}
-										ClassName="btn btn-outline mb-2 col-span-1"
+										ClassName="btn btn-primary mb-2 justify-between"
 									/>
 								))}
 							</div>
