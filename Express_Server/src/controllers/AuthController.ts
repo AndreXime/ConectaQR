@@ -13,9 +13,10 @@ const createEmpresa = async (req: Request, res: Response): Promise<void> => {
     });
     const token = generateToken(empresa.id);
     res.cookie("token", token, {
-      maxAge: 60 * 60 * 60 * 1000,
+      maxAge: 2 * 60 * 60 * 1000,
       httpOnly: true,
       secure: false,
+      domain: process.env.DOMAIN,
       sameSite: "lax"
     });
     res.status(200).json({ message: "Sucesso" });
@@ -29,12 +30,14 @@ const loginEmpresa = async (req: Request, res: Response): Promise<void> => {
     const empresa = await Empresa.findUnique({ where: req.body, select: { id: true } });
     if (!empresa) {
       res.status(400).json({ message: "Essa empresa não existe" });
+      return;
     } else {
       const token = generateToken(empresa.id);
       res.cookie("token", token, {
-        maxAge: 60 * 60 * 60 * 1000,
+        maxAge: 2 * 60 * 60 * 1000,
         httpOnly: true,
         secure: false,
+        domain: process.env.DOMAIN,
         sameSite: "lax"
       });
       res.status(200).json({ message: "Sucesso" });

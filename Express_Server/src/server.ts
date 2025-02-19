@@ -19,6 +19,7 @@ app.use(
 );
 
 app.set("x-powered-by", false); // Desativa assinatura do express nas requisiçoes
+app.set("trust proxy", 1); // Para lidar com proxies
 app.use(middlewareTempo); // Mede o tempo de que o servidor demora em cada requisição
 app.use(cookieParser()); // Para pode usar cookies entre o client e o server
 app.use(express.json()); // Para entender requisições JSON

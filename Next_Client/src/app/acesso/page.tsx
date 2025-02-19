@@ -45,7 +45,6 @@ export default function Page() {
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				cache: 'no-store',
 				credentials: 'include',
 				body: JSON.stringify({ nome, email, senha, descricao }),
 			});
@@ -74,7 +73,6 @@ export default function Page() {
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				cache: 'no-store',
 				credentials: 'include',
 				body: JSON.stringify({ email, senha }),
 			});

@@ -23,6 +23,8 @@ services:
       JWT_KEY: 8tNv5J6A7g5UplF0omFn
       PUBLIC_DOMAIN: "http://localhost:4000"
       PORT: "4000"
+      CLIENT_DOMAIN: "http://localhost:3000"
+      DOMAIN: "localhost"
 
 volumes:
   pgdata:
