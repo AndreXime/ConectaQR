@@ -24,14 +24,11 @@ Você pode usar diretamente [nesse site](https://conectaqr.tech/) ou você pode 
 ```bash
 git clone https://github.com/AndreXime/ConnectQR.git
 
-cd ConectaQR/Express_Server
-docker compose up -d
+cd ConectaQR
+docker compose up
 
-cd ../Next_Client
-# Adicionando variaveis para o Next
-echo "NEXT_PUBLIC_DOMAIN=\"http://localhost:3000\"" > .env
-echo "NEXT_PUBLIC_API_URL=\"http://localhost:4000\"" >> .env
-npm run build && npm start
+# Voce pode mudar as variaveis no arquivo docker-compose
+
 ```
 
 ## Detalhes tecnicos
