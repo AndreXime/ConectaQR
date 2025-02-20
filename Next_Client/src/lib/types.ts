@@ -4,7 +4,6 @@ type Empresa = {
 	senha?: string;
 
 	descricao?: string;
-	descricaoCurta?: string;
 	tema: string;
 	maps?: string;
 	contato?: string;
@@ -15,7 +14,6 @@ type EmpresaCompleta = {
 	email?: string;
 	senha?: string;
 	descricao?: string;
-	descricaoCurta?: string;
 	tema: string;
 	maps?: string;
 	telefone?: string;

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
 import { FaEdit, FaSave, FaTrash, FaUpload } from 'react-icons/fa';
-import type { Produtos, Categorias } from '@/types/types';
+import type { Produtos, Categorias } from '@/lib/types';
 
 type Props = {
 	Produtos: Produtos[];
@@ -328,7 +328,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 									htmlFor="fileUpload"
 									className="btn btn-outline">
 									<FaUpload />
-									{file ? file.name : 'Escolha um arquivo'}
+									{file ? file.name : 'Deixe em branco para não alterar a foto'}
 									<input
 										name="imagem"
 										id="fileUpload"
@@ -385,7 +385,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 					)}
 					<div className="modal-action">
 						<form method="dialog">
-							<button className="btn">Fechar</button>
+							<button className="btn btn-accent">Fechar</button>
 						</form>
 					</div>
 				</div>

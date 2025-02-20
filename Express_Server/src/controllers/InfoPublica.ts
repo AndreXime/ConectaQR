@@ -23,7 +23,7 @@ const getProdutos = async (req: Request, res: Response): Promise<void> => {
         where: {
           empresa: { nome: empresa },
           ...(categoria ? { categoria: { nome: categoria as string } } : {}),
-          ...(search ? { nome: { contains: search as string, mode:"insensitive"}} : {} )
+          ...(search ? { nome: { contains: search as string, mode: "insensitive" } } : {})
         },
         select: { nome: true, preco: true, imagemUrl: true },
         skip: (PaginaAtual - 1) * limitePorPagina,
@@ -66,7 +66,7 @@ const getAllEmpresasOrByName = async (req: Request, res: Response): Promise<void
 
     if (!nome) {
       const data = await Empresa.findMany({
-        select: { nome: true, descricao: true, descricaoCurta: true }
+        select: { nome: true, descricao: true }
       });
 
       res.status(200).json({ data: data });
@@ -78,7 +78,6 @@ const getAllEmpresasOrByName = async (req: Request, res: Response): Promise<void
       select: {
         nome: true,
         descricao: true,
-        descricaoCurta: true,
         tema: true,
         maps: true,
         telefone: true,

@@ -1,6 +1,6 @@
 import { Drawer, Footer } from '@/components/Home';
 import Link from 'next/link';
-import type { Empresa } from '@/types/types';
+import type { Empresa } from '@/lib/types';
 
 async function getCompanies(): Promise<Empresa[] | null> {
 	try {

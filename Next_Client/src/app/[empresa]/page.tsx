@@ -5,7 +5,6 @@ import { notFound } from 'next/navigation';
 import { MdEmail } from 'react-icons/md';
 
 type InfoType = {
-	descricaoCurta?: string;
 	descricao?: string;
 	maps?: string;
 	telefone?: string;
@@ -48,9 +47,7 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 			/>
 			<main className="flex-grow flex-col mt-8 mx-2 lg:mx-52">
 				<div className="flex flex-col">
-					<h2 className="text-center text-lg">
-						{info.descricao || info.descricaoCurta || 'Não foi informado nenhuma descrição'}
-					</h2>
+					<h2 className="text-center text-lg">{info.descricao || 'Não foi informado nenhuma descrição'}</h2>
 				</div>
 				<div className="flex flex-col items-center gap-10 mt-10">
 					<Link

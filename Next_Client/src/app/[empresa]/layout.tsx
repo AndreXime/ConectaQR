@@ -1,7 +1,7 @@
 import '@Styles';
 
 type InfoType = {
-	descricaoCurta?: string;
+	descricao?: string;
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ empresa: string }> }) {
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ empresa: 
 
 	return {
 		title: capitalize,
-		description: info?.descricaoCurta || `Página oficial de ${capitalize} na plataforma`,
+		description: info?.descricao || `Página oficial de ${capitalize} na plataforma`,
 	};
 }
 

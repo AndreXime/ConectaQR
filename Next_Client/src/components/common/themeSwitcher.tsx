@@ -22,6 +22,7 @@ export default function ThemeSwitcher({ className, text }: Props) {
 
 	useEffect(() => {
 		document.documentElement.setAttribute('data-theme', theme);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const toggleTheme = () => {

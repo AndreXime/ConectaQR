@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import Painel from './Painel';
-import type { EmpresaCompleta } from '@/types/types.ts';
+import type { EmpresaCompleta } from '@/lib/types';
 import { cookies } from 'next/headers';
 
 export type PropsPage = {

@@ -36,7 +36,6 @@ const updateEmpresa = async (req: Request, res: Response): Promise<void> => {
       "senha",
       "email",
       "descricao",
-      "descricaoCurta",
       "tema",
       "maps",
       "instagram",

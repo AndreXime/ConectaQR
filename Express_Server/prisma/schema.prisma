@@ -14,7 +14,6 @@ model Empresa {
   senha String
 
   descricao      String?
-  descricaoCurta String?
   telefone       String?
   emailContato   String?
   instagram      String?

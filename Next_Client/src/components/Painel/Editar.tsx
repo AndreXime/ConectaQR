@@ -1,6 +1,7 @@
 import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
-import type { EmpresaCompleta } from '@/types/types';
+import type { EmpresaCompleta } from '@/lib/types';
 import { FaQuestionCircle } from 'react-icons/fa';
+import themes from '@/lib/themes';
 
 type Props = {
 	Data: EmpresaCompleta;
@@ -8,43 +9,6 @@ type Props = {
 };
 export default function Editar({ Data, setEmpresa }: Props) {
 	const [Popup, setPopup] = useState(['', '']);
-	const themes = [
-		'light',
-		'dark',
-		'cupcake',
-		'bumblebee',
-		'emerald',
-		'corporate',
-		'synthwave',
-		'retro',
-		'cyberpunk',
-		'valentine',
-		'halloween',
-		'garden',
-		'forest',
-		'aqua',
-		'lofi',
-		'pastel',
-		'fantasy',
-		'wireframe',
-		'black',
-		'luxury',
-		'dracula',
-		'cmyk',
-		'autumn',
-		'business',
-		'acid',
-		'lemonade',
-		'night',
-		'coffee',
-		'winter',
-		'dim',
-		'nord',
-		'sunset',
-		'caramellatte',
-		'abyss',
-		'silk',
-	];
 
 	const TemaDemo = async (value: string) => {
 		document.getElementById('root')?.setAttribute('data-theme', value);
@@ -94,7 +58,8 @@ export default function Editar({ Data, setEmpresa }: Props) {
 			<div className="card w-full bg-base-100 shadow-2xl">
 				<div className="card-body px-5">
 					<h2 className="text-2xl font-bold">Editar dados</h2>
-					<span className="text-xs">Dica: salve suas alterações no final da pagina</span>
+					<span className="text-xs">Lembrete: salve suas alterações no final da pagina</span>
+					<span className="text-xs">Dica: deixe em branco algum campo para remover ele</span>
 					<form onSubmit={handleSubmit}>
 						<div className="join join-vertical mt-6 w-full grid grid-cols-1 md:grid-cols-3">
 							<label className="form-control w-full max-w-xs mb-4">
@@ -186,26 +151,6 @@ export default function Editar({ Data, setEmpresa }: Props) {
 
 							<label className="form-control w-full max-w-xs mb-4">
 								<div className="label">
-									<span className="label-text">Descrição curta para metadata</span>
-									<button
-										className={`cursor-pointer`}
-										onClick={() => (document.getElementById('modal_metadata')! as HTMLDialogElement).showModal()}>
-										<FaQuestionCircle
-											color="blue"
-											size={15}
-										/>
-									</button>
-								</div>
-								<input
-									type="text"
-									name="descricaoCurta"
-									className="input input-bordered w-full max-w-xs"
-									defaultValue={Data.descricaoCurta}
-								/>
-							</label>
-
-							<label className="form-control w-full max-w-xs mb-4">
-								<div className="label">
 									<span className="label-text">Link do google maps</span>
 									<button
 										className={`cursor-pointer`}
@@ -226,7 +171,7 @@ export default function Editar({ Data, setEmpresa }: Props) {
 							</label>
 						</div>
 
-						<span className="badge badge-sm badge-warning">30 temas para escolher!</span>
+						<span className="badge badge-sm badge-warning">35 temas para escolher!</span>
 						<h2 className="text-2xl font-bold">Mude o tema</h2>
 						<div className="mt-6 grid grid-cols-3 lg:grid-cols-12 gap-2 text-xs">
 							{themes.map((value) => (

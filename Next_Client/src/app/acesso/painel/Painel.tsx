@@ -43,7 +43,12 @@ export default function App({ initialData }: PropsPage) {
 							setCategorias={setCategorias}
 						/>
 					)}
-					{Tab === 'QRCode' && <QRCode nomeEmpresa={Empresa.nome} />}
+					{Tab === 'QRCode' && (
+						<QRCode
+							categorias={Categorias || []}
+							nomeEmpresa={Empresa.nome}
+						/>
+					)}
 				</main>
 			</Drawer>
 		</div>

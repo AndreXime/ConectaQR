@@ -90,7 +90,6 @@ const schemas: SchemaType = {
       "senha",
       "email",
       "descricao",
-      "descricaoCurta",
       "tema",
       "maps",
       "instagram",
@@ -101,7 +100,6 @@ const schemas: SchemaType = {
     ...validateString("senha", data.senha, 6, true),
     ...validateString("nome", data.nome, 6, true),
     ...validateString("descricao", data.descricao, 20, true),
-    ...validateString("descricaoCurta", data.descricaoCurta, 10, true),
     ...validateString("tema", data.tema, 1, true)
   ],
   Produtos: (data) => [
