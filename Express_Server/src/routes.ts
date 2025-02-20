@@ -18,7 +18,7 @@ router.delete("/empresa", verifyAuth, Empresa.deleteEmpresa);
 router.get("/empresa", verifyAuth, Empresa.getAllDataFromOwnEmpresa);
 
 router.post("/produto", verifyAuth, upload.single("imagem"), Produto.createProduto);
-router.patch("/produto", verifyAuth, validateInput("Produtos"), Produto.updateProduto);
+router.patch("/produto", verifyAuth, upload.single("imagem"), Produto.updateProduto);
 router.delete("/produto/:id", verifyAuth, Produto.deleteProduto);
 
 router.post("/categoria", verifyAuth, validateInput("Categoria"), Categoria.createCategoria);

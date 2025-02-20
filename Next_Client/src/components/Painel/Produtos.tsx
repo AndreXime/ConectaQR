@@ -102,20 +102,14 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 		event.preventDefault();
 		const form = event.currentTarget;
 		const formData = new FormData(form);
-		const produtoId = String(formData.get('id'));
-		const nome = String(formData.get('nome'));
-		const preco = String(formData.get('preco'));
-		const categoria = String(formData.get('categoria'));
-		const imagem = formData.get('imagem') as File;
 
-		if (!nome || !preco || !categoria || !imagem || !produtoId) {
-			setPopup(['error', 'Um campo não foi fornecido']);
-			return;
+		if (file) {
+			formData.append('imagem', file);
 		}
 
 		try {
 			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/produto`, {
-				method: 'POST',
+				method: 'PATCH',
 				credentials: 'include',
 				body: formData,
 			});
@@ -124,8 +118,12 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 			if (!response.ok) {
 				setPopup(['error', message]);
 			} else {
-				setPopup(['success', 'Produto atualizado com sucesso!']);
-				setProdutos((prevItems) => [...prevItems, data]);
+				setPopup([
+					'success',
+					'Produto atualizado com sucesso! Pode ser necessario recarregar a pagina para atualizar a imagem ',
+				]);
+				setProdutos((prev) => prev.map((product) => (product.id === data.id ? { ...data } : product)));
+				setEditando(data);
 				setFile(null);
 				form.reset();
 			}
@@ -146,6 +144,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 				setPopup(['error', message]);
 			} else {
 				setPopup(['success', 'Produto deletado com sucesso!']);
+				setProdutos((prev) => prev.filter((product) => product.id !== produtoId));
 			}
 		} catch (err) {
 			setPopup(['error', 'Erro interno no servidor' + err]);
@@ -272,6 +271,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 											height={300}
 											src={value.imagemUrl}
 											alt={`Imagem do produto ${value.nome}`}
+											className="object-contain"
 										/>
 									</div>
 								</td>
@@ -302,7 +302,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 			</div>
 			{Popup[0] && (
 				<div className="toast toast-top toast-start">
-					<div className={`alert alert-${Popup[0]}`}>
+					<div className={`alert ${Popup[0] === 'success' ? 'alert-success' : 'alert-error'}`}>
 						<span>{Popup[1]}</span>
 					</div>
 				</div>
@@ -322,6 +322,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 									name="produtoId"
 									value={Editando.id}
 									className="hidden"
+									readOnly
 								/>
 								<label
 									htmlFor="fileUpload"
@@ -362,7 +363,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 									<select
 										name="categoriaId"
 										defaultValue={Editando.categoria.nome}
-										className="select">
+										className="select w-full">
 										<option disabled>Selecione categoria</option>
 										{Categorias.map((value) => (
 											<option

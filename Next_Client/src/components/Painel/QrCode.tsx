@@ -1,7 +1,7 @@
 import QRCodeDownload from '@/components/Painel/QRCodeDownload';
 
 export default function QRCode({ nomeEmpresa }: { nomeEmpresa: string }) {
-	const baseURL = `https://${process.env.NEXT_PUBLIC_DOMAIN}/${nomeEmpresa}`;
+	const baseURL = `${process.env.NEXT_PUBLIC_DOMAIN}/${nomeEmpresa}`;
 
 	const QRcodes = [
 		{ title: 'Tela inicial', link: baseURL },

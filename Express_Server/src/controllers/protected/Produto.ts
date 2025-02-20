@@ -23,7 +23,7 @@ const createProduto = async (req: Request, res: Response): Promise<void> => {
       fs.mkdirSync(empresaDir, { recursive: true });
     }
 
-    const fileName = `${nome}.webp`;
+    const fileName = `${nomeEmpresa.nome + Date.now()}.webp`;
     const filePath = path.join(empresaDir, fileName);
     const imagemUrl = `${process.env.PUBLIC_DOMAIN}/uploads/${nomeEmpresa.nome}/${fileName}`;
 
@@ -37,7 +37,7 @@ const createProduto = async (req: Request, res: Response): Promise<void> => {
         categoria: { connect: { id: categoriaId } },
         empresa: { connect: { id: req.userId } }
       },
-      select: { nome: true, preco: true, imagemUrl: true, categoria: true }
+      select: { nome: true, preco: true, imagemUrl: true, categoria: { select: { nome: true, id: true } } }
     });
 
     res.json({ message: "Produto adicionado!", data: produto });
@@ -52,7 +52,7 @@ const updateProduto = async (req: Request, res: Response): Promise<void> => {
 
     const produto = await Produtos.findUnique({
       where: { id: produtoId, empresaId: req.userId },
-      select: { imagemUrl: true }
+      select: { imagemUrl: true, empresa: { select: { nome: true } } }
     });
 
     if (!produto) {
@@ -63,26 +63,19 @@ const updateProduto = async (req: Request, res: Response): Promise<void> => {
     let imagemUrl = produto.imagemUrl; // Mantém a imagem antiga se não mudar
 
     if (req.file) {
-      const empresa = await Empresa.findUnique({
-        where: { id: req.userId },
-        select: { nome: true }
-      });
-
-      if (!empresa) {
-        res.status(404).json({ message: "Empresa não encontrada" });
-        return;
-      }
-
-      const empresaNome = empresa.nome;
+      const empresaNome = produto.empresa.nome;
       const empresaDir = path.join(path.resolve("uploads"), empresaNome);
 
-      const fileName = `${nome}.webp`;
+      const fileName = `${empresaNome + Date.now()}.webp`;
       const filePath = path.join(empresaDir, fileName);
       const newImagemUrl = `${process.env.PUBLIC_DOMAIN}/uploads/${empresaNome}/${fileName}`;
 
+      const oldPath = imagemUrl.split("/").pop();
+      if (!oldPath) throw Error;
+
       // Remover a imagem antiga se existir
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
+      if (fs.existsSync(path.join(empresaDir, oldPath))) {
+        fs.unlinkSync(path.join(empresaDir, oldPath));
       }
 
       await sharp(req.file.buffer).resize({ width: 800 }).toFormat("webp", { quality: 70 }).toFile(filePath);
@@ -90,19 +83,26 @@ const updateProduto = async (req: Request, res: Response): Promise<void> => {
       imagemUrl = newImagemUrl;
     }
 
-    await Produtos.update({
+    const data = await Produtos.update({
       where: { id: produtoId, empresaId: req.userId },
       data: {
         nome,
         preco,
-        imagemUrl, // Atualiza apenas se a imagem mudou
+        imagemUrl,
         categoria: { connect: { id: categoriaId } }
+      },
+      select: {
+        id: true,
+        nome: true,
+        preco: true,
+        imagemUrl: true,
+        categoria: { select: { nome: true } }
       }
     });
 
-    res.status(200).json({ message: "Produto atualizado com sucesso" });
-  } catch {
-    res.status(500).json({ message: "Erro interno no servidor" });
+    res.status(200).json({ message: "Produto atualizado com sucesso", data });
+  } catch (error) {
+    res.status(500).json({ message: "Erro interno no servidor " + error });
   }
 };
 
