@@ -25,7 +25,7 @@ app.use(cookieParser()); // Para pode usar cookies entre o client e o server
 app.use(express.json()); // Para entender requisições JSON
 app.use(express.urlencoded({ extended: true })); // Para entender dados de formulários
 
-app.use("/uploads", express.static(path.resolve("uploads")));
+app.use("/uploads", express.static(path.resolve("generated/uploads")));
 app.use("/", routes);
 
 const port = Number(process.env.PORT) || 4000;

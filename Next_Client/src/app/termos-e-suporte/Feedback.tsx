@@ -1,13 +1,31 @@
 'use client';
 
 export default function Feedback() {
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		const formData = new FormData(e.currentTarget);
-		const data = Object.fromEntries(formData);
+		const form = e.currentTarget;
+		const formData = new FormData(form);
+		const formInputs = Object.fromEntries(formData.entries());
 
-		alert(`Dúvida enviada com sucesso! ${data}`);
-		e.currentTarget.reset();
+		try {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/feedback`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(formInputs),
+			});
+
+			if (!response.ok) {
+				alert('Erro ao enviar feedback');
+			} else {
+				alert('Feedback enviado com sucesso');
+
+				form.reset();
+			}
+		} catch {
+			alert('Erro ao enviar feedback');
+		}
 	};
 
 	return (
@@ -101,7 +119,7 @@ export default function Feedback() {
 						</label>
 						<input
 							type="text"
-							name="name"
+							name="nome"
 							className="input input-bordered w-full"
 							placeholder="Seu nome"
 							required
@@ -126,7 +144,7 @@ export default function Feedback() {
 							<span className="label-text">Mensagem</span>
 						</label>
 						<textarea
-							name="message"
+							name="mensagem"
 							className="textarea textarea-bordered w-full"
 							placeholder="Descreva sua experiencia"
 							rows={4}
@@ -135,7 +153,6 @@ export default function Feedback() {
 
 					<button
 						type="submit"
-						disabled
 						className="btn btn-primary w-full">
 						Enviar Feedback
 					</button>

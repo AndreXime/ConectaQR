@@ -16,7 +16,7 @@ const createProduto = async (req: Request, res: Response): Promise<void> => {
     const nomeEmpresa = await Empresa.findUnique({ where: { id: req.userId }, select: { nome: true } });
     if (!nomeEmpresa) throw 1;
 
-    const empresaDir = path.join(path.resolve("uploads"), nomeEmpresa.nome);
+    const empresaDir = path.join(path.resolve("generated/uploads"), nomeEmpresa.nome);
 
     // Criar a pasta da empresa se não existir
     if (!fs.existsSync(empresaDir)) {
@@ -64,7 +64,7 @@ const updateProduto = async (req: Request, res: Response): Promise<void> => {
 
     if (req.file) {
       const empresaNome = produto.empresa.nome;
-      const empresaDir = path.join(path.resolve("uploads"), empresaNome);
+      const empresaDir = path.join(path.resolve("generated/uploads"), empresaNome);
 
       const fileName = `${empresaNome + Date.now()}.webp`;
       const filePath = path.join(empresaDir, fileName);

@@ -1,6 +1,5 @@
 /node_modules
 /dist
-*.log
-.env
 /swagger/node_modules
-/uploads
+.env
+generated

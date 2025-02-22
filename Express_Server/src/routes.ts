@@ -2,7 +2,15 @@ import type { Response, Request } from "express";
 import { Router } from "express";
 import multer from "multer";
 
-import { Empresa, Produto, Categoria, PublicInfo, Auth } from "./controllers/index.js";
+import {
+  Empresa,
+  Produto,
+  Categoria,
+  PublicInfo,
+  Auth,
+  Feedback,
+  FeedbackAdmin
+} from "./controllers/index.js";
 import { validateInput, verifyAuth } from "./middlewares/index.js";
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -28,6 +36,10 @@ router.delete("/categoria/:id", verifyAuth, Categoria.deleteCategoria);
 /* Rotas publicas */
 router.get("/empresas", PublicInfo.getAllEmpresasOrByName);
 router.get("/produto/:empresa", PublicInfo.getProdutos);
+router.post("/feedback", Feedback);
+
+/* Rotas para admins */
+router.get("/feedbackadmin", FeedbackAdmin);
 
 router.all("/", async (req: Request, res: Response) => {
   res.status(200).json({ message: "Pong" });

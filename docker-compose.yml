@@ -8,6 +8,8 @@ services:
     ports:
       - '5432:5432'
     command: postgres -c log_min_messages=warning
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 
   server:
     build:
@@ -25,6 +27,9 @@ services:
       PORT: '4000'
       CLIENT_DOMAIN: 'http://localhost:3000'
       DOMAIN: 'localhost'
+      ADMIN_KEY: 'senha123'
+    volumes:
+      - generated:/app/generated
 
   client:
     build:
@@ -40,4 +45,5 @@ services:
       - '3000:3000'
 
 volumes:
+  generated:
   pgdata:
