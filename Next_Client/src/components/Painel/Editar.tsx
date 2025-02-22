@@ -113,7 +113,7 @@ export default function Editar({ Data, setEmpresa }: Props) {
 
 							<label className="form-control w-full max-w-xs mb-4">
 								<div className="label">
-									<span className="label-text">Telefone que seus clientes veram</span>
+									<span className="label-text">Qual o seu WhatsApp para Clientes?</span>
 								</div>
 								<input
 									name="telefone"

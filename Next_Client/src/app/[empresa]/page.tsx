@@ -1,5 +1,5 @@
 import { Header, Footer } from '@/components/Empresa';
-import { FaInstagram, FaPhone, FaShoppingCart } from 'react-icons/fa';
+import { FaInstagram, FaShoppingCart, FaWhatsapp } from 'react-icons/fa';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { MdEmail } from 'react-icons/md';
@@ -51,7 +51,7 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 				</div>
 				<div className="flex flex-col items-center gap-10 mt-10">
 					<Link
-						className="btn btn-primary font-bold text-lg w-full lg:w-1/2"
+						className="btn btn-primary font-bold text-lg w-[90%] lg:w-1/2"
 						href={`/${nomeEmpresa}/produtos`}>
 						<FaShoppingCart />
 						Visitar produtos
@@ -65,7 +65,7 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 								href={`https://www.instagram.com/${
 									info.instagram.startsWith('@') ? info.instagram.slice(1) : info.instagram
 								}`}>
-								<FaInstagram size={35} />
+								<FaInstagram size={35} /> Instagram
 							</Link>
 						)}
 
@@ -74,7 +74,7 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 								rel="noopener noreferrer nofollow"
 								className="btn btn-ghost"
 								href={`tel:${info.telefone}`}>
-								<FaPhone size={30} />
+								<FaWhatsapp size={35} /> WhatsApp
 							</Link>
 						)}
 
@@ -83,7 +83,7 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 								rel="noopener noreferrer nofollow"
 								className="btn btn-ghost"
 								href={`mailto:${info.emailContato}`}>
-								<MdEmail size={35} />
+								<MdEmail size={35} /> Email
 							</Link>
 						)}
 					</div>

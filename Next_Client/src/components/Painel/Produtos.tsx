@@ -14,6 +14,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 	const [Popup, setPopup] = useState(['', '']);
 	const [file, setFile] = useState<File | null>(null);
 	const [Editando, setEditando] = useState<Produtos>();
+	const [Carregando, setCarregando] = useState(false);
 
 	useEffect(() => {
 		if (Popup[0]) {
@@ -41,6 +42,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 			return;
 		}
 
+		setCarregando(true);
 		try {
 			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categoria`, {
 				method: 'POST',
@@ -51,6 +53,8 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 				body: JSON.stringify({ nome }),
 			});
 			const { message, data } = await response.json();
+			setCarregando(false);
+
 			if (!response.ok) {
 				setPopup(['error', message]);
 			} else {
@@ -76,6 +80,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 			setPopup(['error', 'Um campo não foi fornecido']);
 			return;
 		}
+		setCarregando(true);
 
 		try {
 			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/produto`, {
@@ -85,6 +90,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 			});
 
 			const { message, data } = await response.json();
+			setCarregando(false);
 			if (!response.ok) {
 				setPopup(['error', message]);
 			} else {
@@ -107,6 +113,8 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 			formData.append('imagem', file);
 		}
 
+		setCarregando(true);
+
 		try {
 			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/produto`, {
 				method: 'PATCH',
@@ -115,6 +123,8 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 			});
 
 			const { message, data } = await response.json();
+			setCarregando(false);
+
 			if (!response.ok) {
 				setPopup(['error', message]);
 			} else {
@@ -133,6 +143,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 	};
 
 	const handleProdutoDelete = async (produtoId: string) => {
+		setCarregando(true);
 		try {
 			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/produto/${produtoId}`, {
 				method: 'DELETE',
@@ -140,6 +151,8 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 			});
 
 			const { message } = await response.json();
+			setCarregando(false);
+
 			if (!response.ok) {
 				setPopup(['error', message]);
 			} else {
@@ -169,11 +182,20 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 							/>
 						</label>
 
-						<button
-							type="submit"
-							className="btn btn-success">
-							<FaSave /> Salvar
-						</button>
+						{Carregando ? (
+							<button
+								type="submit"
+								disabled
+								className="btn btn-success">
+								<span className="loading loading-spinner loading-lg"></span>
+							</button>
+						) : (
+							<button
+								type="submit"
+								className="btn btn-success">
+								<FaSave /> Salvar
+							</button>
+						)}
 					</form>
 
 					<div className="flex flex-row flex-wrap gap-4">
@@ -243,11 +265,20 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 						</select>
 					</label>
 
-					<button
-						type="submit"
-						className="btn btn-success">
-						<FaSave /> Salvar
-					</button>
+					{Carregando ? (
+						<button
+							type="submit"
+							disabled
+							className="btn btn-success">
+							<span className="loading loading-spinner loading-lg"></span>
+						</button>
+					) : (
+						<button
+							type="submit"
+							className="btn btn-success">
+							<FaSave /> Salvar
+						</button>
+					)}
 				</form>
 			</div>
 			<div className="overflow-x-auto w-full">
@@ -375,11 +406,20 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 									</select>
 								</label>
 
-								<button
-									type="submit"
-									className="btn btn-success">
-									<FaSave /> Salvar
-								</button>
+								{Carregando ? (
+									<button
+										type="submit"
+										disabled
+										className="btn btn-success">
+										<span className="loading loading-spinner loading-lg"></span>
+									</button>
+								) : (
+									<button
+										type="submit"
+										className="btn btn-success">
+										<FaSave /> Salvar
+									</button>
+								)}
 							</form>
 						</div>
 					)}

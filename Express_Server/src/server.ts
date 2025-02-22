@@ -30,5 +30,5 @@ app.use("/", routes);
 
 const port = Number(process.env.PORT) || 4000;
 app.listen(port, "0.0.0.0", () => {
-  console.log(`\nServer online em ${process.env.PUBLIC_DOMAIN}`);
+  console.log(`Server online em ${process.env.PUBLIC_DOMAIN}\n`);
 });

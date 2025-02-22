@@ -10,7 +10,7 @@ async function prismaDeploy() {
       console.error(`Erro ao rodar migrate deploy: ${error.message}`);
       return;
     }
-    console.log(`${stdout}`);
+    console.log(`${stdout}\n`);
   });
 }
 
