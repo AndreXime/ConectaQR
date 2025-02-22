@@ -30,12 +30,12 @@ services:
     build:
       context: ./Next_Client
       dockerfile: dockerfile
-      args:
-        NODE_ENV: production
-        NEXT_PUBLIC_DOMAIN: http://localhost:3000
-        NEXT_PUBLIC_API_URL: http://localhost:4000
-        IMAGE_PROTOCOL: http
-        IMAGE_HOSTNAME: localhost
+    environment:
+      NODE_ENV: production
+      NEXT_PUBLIC_DOMAIN: http://localhost:3000
+      NEXT_PUBLIC_API_URL: http://localhost:4000
+      IMAGE_PROTOCOL: http
+      IMAGE_HOSTNAME: localhost
     ports:
       - '3000:3000'
 
