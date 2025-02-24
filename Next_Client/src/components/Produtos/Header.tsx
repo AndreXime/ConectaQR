@@ -61,10 +61,11 @@ export default function Header({ EmpresaName, children, Categorias }: HeaderProp
 							<div className="flex flex-col justify-center">
 								{Categorias.map((value) => (
 									<RedirectButton
-										Url={`/${EmpresaName}/produtos?categorias=${value.nome}`}
+										Url={`/${EmpresaName}/produtos?categoria=${value.nome}`}
 										buttonText={value.nome}
 										key={value.nome}
 										ClassName="btn btn-primary mb-2 justify-between"
+										icon
 									/>
 								))}
 							</div>

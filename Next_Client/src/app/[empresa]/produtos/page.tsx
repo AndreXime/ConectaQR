@@ -1,4 +1,4 @@
-import { Footer, Header, ProductCard } from '@/components/Produtos';
+import { Footer, Header, ProductCard, RedirectButton } from '@/components/Produtos';
 import { notFound } from 'next/navigation';
 
 type PropsType = {
@@ -16,19 +16,23 @@ type PropsType = {
 	pagination?: { PaginaAtual: number; limitePorPagina: number; ProdutosTotal: number; PaginasTotais: number };
 	tema?: string;
 };
-type getProps = {
-	nomeEmpresa: string;
-	page: string | null;
-	categorias: string | null;
-	search: string | null;
-};
 
-async function getProps({ nomeEmpresa, page, categorias, search }: getProps): Promise<PropsType> {
-	const queryCategoria = `${categorias ? `?categoria=${categorias}` : ''}`;
-	const querySearch = `${search ? `?search=${search}` : ''}`;
-	const queryPage = `${page ? `?page=${page}` : ''}`;
+async function montarQueryURL(page: string | undefined, categoria: string | undefined, search: string | undefined) {
+	const params: string[] = [];
 
-	const URL = `${process.env.NEXT_PUBLIC_API_URL}/produto/${nomeEmpresa}${queryPage}${queryCategoria}${querySearch}`;
+	if (page) params.push(`page=${page}`);
+	if (categoria) params.push(`categoria=${categoria}`);
+	if (search) params.push(`search=${search}`);
+
+	if (params.length > 0) {
+		return `?${params.join('&')}`;
+	}
+
+	return '';
+}
+
+async function getProps(nome: string, query: string): Promise<PropsType> {
+	const URL = `${process.env.NEXT_PUBLIC_API_URL}/produto/${nome}${query}`;
 
 	try {
 		const response = await fetch(URL, { method: 'get', cache: 'no-store' });
@@ -52,13 +56,15 @@ export default async function Page({
 	searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
 	const nomeEmpresa = (await params).empresa;
+	const query = await searchParams;
 
-	const querys = await searchParams;
-	const page = (querys?.page as string) || null;
-	const categorias = (querys?.categoria as string) || null;
-	const search = (querys?.s as string) || null;
+	const queryUrl = await montarQueryURL(
+		(query?.page as string) || undefined,
+		(query?.categoria as string) || undefined,
+		(query?.s as string) || undefined
+	);
 
-	const { naoExiste, data, pagination, tema } = await getProps({ nomeEmpresa, page, categorias, search });
+	const { naoExiste, data, pagination, tema } = await getProps(nomeEmpresa, queryUrl);
 
 	if (naoExiste) {
 		notFound();
@@ -86,12 +92,17 @@ export default async function Page({
 						<div className="flex justify-center gap-4 mb-5">
 							{pagination.PaginasTotais > 1 && (
 								<>
-									{Array.from({ length: pagination.PaginasTotais }, (_, index) => (
-										<button
-											key={index + 1}
-											className="btn btn-outline">
-											{index + 1}
-										</button>
+									{Array.from({ length: pagination.PaginasTotais }, async (_, index) => (
+										<RedirectButton
+											key={`${index + 1}`}
+											ClassName="btn btn-outline"
+											Url={`/${nomeEmpresa}/produtos${await montarQueryURL(
+												String(index + 1),
+												(query?.categoria as string) || undefined,
+												undefined
+											)}`}
+											buttonText={`${index + 1}`}
+										/>
 									))}
 								</>
 							)}

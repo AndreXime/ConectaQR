@@ -19,7 +19,7 @@ de produtos e verifiquem preços pelo celular.
 
 ## Como usar
 
-Você pode usar diretamente [nesse site](https://conectaqr.tech/) ou você pode usar em um servidor local basta baixar o codigo e executa esses passo a passo
+Você pode usar diretamente [no site do projeto](https://conectaqr.tech/) ou você pode usar em um servidor local basta baixar o codigo e executa esses passo a passo
 
 ```bash
 git clone https://github.com/AndreXime/ConnectQR.git
@@ -34,3 +34,7 @@ docker compose up
 ## Detalhes tecnicos
 
 Essa plataforma adota Typescript no Nextjs e no Express, e usa TailwindCSS e PostgreSQL e outra biblioteca auxiliares como sharp para formartar imagens de uploads
+
+- Logger que armazena resultados das requisiçoes
+- JWT que encripta em cookies o id de sessão
+- Swagger para documentação da api

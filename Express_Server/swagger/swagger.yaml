@@ -115,6 +115,15 @@ paths:
       responses:
         "200":
           description: Empresa deletada
+    get:
+      tags:
+        - Rotas privadas
+      summary: Retornar todos os dados da empresa do cookie
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Empresa
 
   /produto:
     post:
@@ -131,8 +140,6 @@ paths:
       responses:
         "201":
           description: Produto criado
-
-  /produto/{id}:
     patch:
       tags:
         - Rotas privadas
@@ -153,6 +160,8 @@ paths:
       responses:
         "200":
           description: Produto atualizado
+
+  /produto/{id}:
     delete:
       tags:
         - Rotas privadas

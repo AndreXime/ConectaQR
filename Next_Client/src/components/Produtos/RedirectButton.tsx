@@ -6,9 +6,10 @@ type Props = {
 	buttonText: string;
 	ClassName: string;
 	key?: string;
+	icon?: boolean;
 };
 
-export default function RedirectButton({ Url, buttonText, ClassName, key }: Props) {
+export default function RedirectButton({ Url, buttonText, ClassName, key, icon }: Props) {
 	const router = useRouter();
 
 	const handleClick = () => {
@@ -20,7 +21,7 @@ export default function RedirectButton({ Url, buttonText, ClassName, key }: Prop
 			key={key}
 			className={ClassName}
 			onClick={handleClick}>
-			{buttonText} <FaArrowRight />
+			{buttonText} {icon ? <FaArrowRight /> : ''}
 		</button>
 	);
 }
