@@ -3,8 +3,8 @@ import Categoria from "./protected/Categoria.js";
 import Produto from "./protected/Produto.js";
 import PublicInfo from "./InfoPublica.js";
 import Auth from "./AuthController.js";
-import { Feedback } from "./feedback.js";
-import { FeedbackAdmin } from "./admin/admin.js";
+import { Feedback } from "./feedback/feedback.js";
+import { FeedbackAdmin } from "./feedback/feedbackadmin.js";
 
 export default { Empresa, Produto, PublicInfo, Auth, Categoria, Feedback, FeedbackAdmin };
 

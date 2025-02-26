@@ -1,11 +1,11 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 import { Empresa, Produtos, Categoria } from "../database/models.js";
 
 const getProdutos = async (req: Request, res: Response): Promise<void> => {
   try {
     const { empresa } = req.params;
     const { categoria, page, search } = req.query;
-    const limitePorPagina = 12;
+    const limitePorPagina = 20;
 
     const PaginaAtual = parseInt(page as string) || 1;
     if (isNaN(PaginaAtual) || PaginaAtual <= 0) {
@@ -25,7 +25,7 @@ const getProdutos = async (req: Request, res: Response): Promise<void> => {
           ...(categoria ? { categoria: { nome: categoria as string } } : {}),
           ...(search ? { nome: { contains: search as string, mode: "insensitive" } } : {})
         },
-        select: { nome: true, preco: true, imagemUrl: true },
+        select: { nome: true, preco: true, imagemUrl: true, categoria: { select: { nome: true } } },
         skip: (PaginaAtual - 1) * limitePorPagina,
         take: limitePorPagina
       }),

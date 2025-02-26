@@ -26,8 +26,8 @@ const Feedback = async (req: Request, res: Response): Promise<void> => {
 
     fs.appendFileSync(FILE_PATH, feedbackLine);
     res.status(200).json({ message: "Feedback salvo com sucesso!" });
-  } catch {
-    res.status(500).json({ message: "Erro no servidor" });
+  } catch (error) {
+    res.status(500).json({ message: "Erro no servidor", error });
     return;
   }
 };
