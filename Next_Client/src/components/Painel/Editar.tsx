@@ -1,11 +1,11 @@
 import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
-import type { EmpresaCompleta } from '@/lib/types';
+import type { EmpresaPrivate } from '@/lib/types';
 import { FaQuestionCircle } from 'react-icons/fa';
 import themes from '@/lib/themes';
 
 type Props = {
-	Data: EmpresaCompleta;
-	setEmpresa: Dispatch<SetStateAction<EmpresaCompleta>>;
+	Data: EmpresaPrivate;
+	setEmpresa: Dispatch<SetStateAction<EmpresaPrivate>>;
 };
 export default function Editar({ Data, setEmpresa }: Props) {
 	const [Popup, setPopup] = useState(['', '']);

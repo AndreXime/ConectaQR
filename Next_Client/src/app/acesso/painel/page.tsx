@@ -1,10 +1,10 @@
 import { redirect } from 'next/navigation';
 import Painel from './Painel';
-import type { EmpresaCompleta } from '@/lib/types';
 import { cookies } from 'next/headers';
+import { EmpresaPrivate } from '@/lib/types';
 
 export type PropsPage = {
-	initialData: EmpresaCompleta;
+	initialData: EmpresaPrivate;
 };
 
 export default async function PageServer() {

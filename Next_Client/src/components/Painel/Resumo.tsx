@@ -1,7 +1,7 @@
-import type { EmpresaCompleta } from '@/lib/types';
+import type { EmpresaPrivate } from '@/lib/types';
 
 type Props = {
-	Data: EmpresaCompleta;
+	Data: EmpresaPrivate;
 	qtdCategorias: number;
 	qtdProdutos: number;
 };

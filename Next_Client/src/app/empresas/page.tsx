@@ -1,8 +1,8 @@
 import { Drawer, Footer } from '@/components/Home';
 import Link from 'next/link';
-import type { Empresa } from '@/lib/types';
+import type { EmpresaPublica } from '@/lib/types';
 
-async function getCompanies(): Promise<Empresa[] | null> {
+async function getCompanies(): Promise<EmpresaPublica[] | null> {
 	try {
 		const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/empresas`, {
 			method: 'GET',

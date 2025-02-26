@@ -3,18 +3,9 @@ import { FaInstagram, FaShoppingCart, FaWhatsapp } from 'react-icons/fa';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { MdEmail } from 'react-icons/md';
+import type { EmpresaPublica } from '@/lib/types';
 
-type InfoType = {
-	descricao?: string;
-	maps?: string;
-	telefone?: string;
-	instagram?: string;
-	emailContato?: string;
-	tema: string;
-	nomeEmpresa: string;
-};
-
-async function getCompanyInfo(nomeEmpresa: string): Promise<InfoType | null> {
+async function getCompanyInfo(nomeEmpresa: string): Promise<EmpresaPublica | null> {
 	try {
 		const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/empresas?nome=${nomeEmpresa}`, {
 			method: 'get',

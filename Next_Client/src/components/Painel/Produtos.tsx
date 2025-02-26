@@ -1,19 +1,19 @@
 import Image from 'next/image';
 import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
 import { FaEdit, FaSave, FaTrash, FaUpload } from 'react-icons/fa';
-import type { Produtos, Categorias } from '@/lib/types';
+import type { Produto, Categoria } from '@/lib/types';
 
 type Props = {
-	Produtos: Produtos[];
-	Categorias: Categorias[];
-	setProdutos: Dispatch<SetStateAction<Produtos[]>>;
-	setCategorias: Dispatch<SetStateAction<Categorias[]>>;
+	Produtos: Produto[];
+	Categorias: Categoria[];
+	setProdutos: Dispatch<SetStateAction<Produto[]>>;
+	setCategorias: Dispatch<SetStateAction<Categoria[]>>;
 };
 
 export default function Produtos({ Produtos, setProdutos, Categorias, setCategorias }: Props) {
 	const [Popup, setPopup] = useState(['', '']);
 	const [file, setFile] = useState<File | null>(null);
-	const [Editando, setEditando] = useState<Produtos>();
+	const [Editando, setEditando] = useState<Produto>();
 	const [Carregando, setCarregando] = useState(false);
 
 	useEffect(() => {

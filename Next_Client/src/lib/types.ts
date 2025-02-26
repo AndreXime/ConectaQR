@@ -1,34 +1,34 @@
-type Empresa = {
+type EmpresaPublica = {
 	nome: string;
-	email?: string;
-	senha?: string;
-
 	descricao?: string;
 	tema: string;
+
 	maps?: string;
-	contato?: string;
+	telefone?: string;
+	instagram?: string;
+	emailContato?: string;
 };
 
-type EmpresaCompleta = {
+type EmpresaPrivate = {
 	nome: string;
 	email?: string;
-	senha?: string;
+
 	descricao?: string;
 	tema: string;
 	maps?: string;
 	telefone?: string;
 	instagram?: string;
 	emailContato?: string;
-	categorias: Categorias[];
-	produtos: Produtos[];
+	categorias: Categoria[];
+	produtos: Produto[];
 };
 
-type Categorias = {
-	id: string;
+type Categoria = {
+	id?: string;
 	nome: string;
 };
 
-type Produtos = {
+type Produto = {
 	id: string;
 	nome: string;
 	preco: string;
@@ -36,4 +36,4 @@ type Produtos = {
 	imagemUrl: string;
 };
 
-export type { Empresa, Categorias, Produtos, EmpresaCompleta };
+export type { EmpresaPublica, Categoria, Produto, EmpresaPrivate };

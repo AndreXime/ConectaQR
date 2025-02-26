@@ -3,15 +3,12 @@ import type { ReactNode } from 'react';
 import { FaBars } from 'react-icons/fa';
 import RedirectButton from './RedirectButton';
 import SearchProduto from './SearchProdut';
+import type { Categoria } from '@/lib/types';
 
 type HeaderProps = {
 	EmpresaName: string;
 	children: ReactNode;
-	Categorias:
-		| {
-				nome: string;
-		  }[]
-		| undefined;
+	Categorias: Categoria[] | undefined;
 };
 export default function Header({ EmpresaName, children, Categorias }: HeaderProps) {
 	return (
@@ -29,7 +26,7 @@ export default function Header({ EmpresaName, children, Categorias }: HeaderProp
 						<FaBars size={20} />
 					</label>
 
-					<Link href={`/${EmpresaName}`}>
+					<Link href={`/${EmpresaName}/produtos`}>
 						<h1 className="md:text-left text-center md:ml-4 text-2xl font-bold capitalize">
 							{EmpresaName.split('-').join(' ')}
 						</h1>

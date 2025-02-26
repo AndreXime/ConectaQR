@@ -1,11 +1,11 @@
 'use client';
 
-import { Categorias } from '@/lib/types';
+import { Categoria } from '@/lib/types';
 import { QRCodeCanvas } from 'qrcode.react';
 import { useRef, useState } from 'react';
 import { FaDownload } from 'react-icons/fa';
 
-export default function QRCode({ nomeEmpresa, categorias }: { nomeEmpresa: string; categorias: Categorias[] }) {
+export default function QRCode({ nomeEmpresa, categorias }: { nomeEmpresa: string; categorias: Categoria[] }) {
 	const baseURL = `${process.env.NEXT_PUBLIC_DOMAIN}/${nomeEmpresa}`;
 	const QRcodes = [
 		{ title: 'Tela inicial', link: baseURL },

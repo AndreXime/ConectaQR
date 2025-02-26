@@ -1,17 +1,20 @@
 import { Footer, Header, ProductCard, RedirectButton } from '@/components/Produtos';
 import { notFound } from 'next/navigation';
+import type { Produto, Categoria } from '@/lib/types';
+import Carrosel from '@/components/Produtos/Carrosel';
+
+type dataConfirm = {
+	data: {
+		produtos: Produto[];
+		categorias: Categoria[];
+	};
+};
 
 type PropsType = {
 	naoExiste?: boolean;
 	data?: {
-		produtos: {
-			nome: string;
-			imagemUrl: string;
-			preco: string;
-		}[];
-		categorias: {
-			nome: string;
-		}[];
+		produtos: Produto[];
+		categorias: Categoria[];
 	};
 	pagination?: { PaginaAtual: number; limitePorPagina: number; ProdutosTotal: number; PaginasTotais: number };
 	tema?: string;
@@ -48,6 +51,19 @@ async function getProps(nome: string, query: string): Promise<PropsType> {
 	}
 }
 
+async function OrganizarProdutos(data: dataConfirm['data']) {
+	return data.produtos.reduce((acc: Record<string, Produto[]>, produto) => {
+		const categoria = produto.categoria.nome;
+
+		if (!acc[categoria]) {
+			acc[categoria] = [];
+		}
+
+		acc[categoria].push(produto);
+		return acc;
+	}, {});
+}
+
 export default async function Page({
 	params,
 	searchParams,
@@ -70,6 +86,11 @@ export default async function Page({
 		notFound();
 	}
 
+	let ProdutoPorCategoria: Record<string, Produto[]> = {};
+	if (!query?.categoria && !!data && !!pagination) {
+		ProdutoPorCategoria = await OrganizarProdutos(data);
+	}
+
 	return (
 		<div
 			data-theme={tema}
@@ -88,35 +109,49 @@ export default async function Page({
 				<Header
 					Categorias={data.categorias}
 					EmpresaName={nomeEmpresa}>
-					<main className="flex-grow container min-h-screen p-4 mx-auto">
-						<div className="flex justify-center gap-4 mb-5">
-							{pagination.PaginasTotais > 1 && (
-								<>
-									{Array.from({ length: pagination.PaginasTotais }, async (_, index) => (
-										<RedirectButton
-											key={`${index + 1}`}
-											ClassName="btn btn-outline"
-											Url={`/${nomeEmpresa}/produtos${await montarQueryURL(
-												String(index + 1),
-												(query?.categoria as string) || undefined,
-												undefined
-											)}`}
-											buttonText={`${index + 1}`}
+					<main className="flex-grow container min-h-screen px-4 pb-4 mx-auto">
+						{!!query?.categoria ? (
+							<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-5">
+								<div className="flex justify-center gap-4 mb-5">
+									{pagination.PaginasTotais > 1 && (
+										<>
+											{Array.from({ length: pagination.PaginasTotais }, async (_, index) => (
+												<RedirectButton
+													key={`${index + 1}`}
+													ClassName="btn btn-outline"
+													Url={`/${nomeEmpresa}/produtos${await montarQueryURL(
+														String(index + 1),
+														(query?.categoria as string) || undefined,
+														undefined
+													)}`}
+													buttonText={`${index + 1}`}
+												/>
+											))}
+										</>
+									)}
+								</div>
+								{data.produtos.map((product, index) => (
+									<ProductCard
+										key={index}
+										name={product.nome}
+										image={product.imagemUrl}
+										price={Number(product.preco).toFixed(2)}
+									/>
+								))}
+							</div>
+						) : (
+							<div>
+								{Object.entries(ProdutoPorCategoria).map(([categoria, produtos], index) => (
+									<div key={categoria}>
+										<h2 className="text-2xl font-bold p-10 text-center">{categoria}</h2>
+										<Carrosel
+											key={categoria + index}
+											data={produtos}
 										/>
-									))}
-								</>
-							)}
-						</div>
-						<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-							{data.produtos.map((product, index) => (
-								<ProductCard
-									key={index}
-									name={product.nome}
-									image={product.imagemUrl}
-									price={Number(product.preco).toFixed(2)}
-								/>
-							))}
-						</div>
+									</div>
+								))}
+							</div>
+						)}
 					</main>
 					<Footer EmpresaName={nomeEmpresa.split('-').join(' ')} />
 				</Header>
