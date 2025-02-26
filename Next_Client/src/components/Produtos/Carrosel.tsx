@@ -4,21 +4,27 @@ import { useEffect, useRef } from 'react';
 import ProductCard from './ProductCard';
 import Glide, { Swipe, Breakpoints, Autoplay } from '@glidejs/glide/dist/glide.modular.esm';
 import '@glidejs/glide/dist/css/glide.core.min.css';
+import Link from 'next/link';
+import { FaArrowRight } from 'react-icons/fa';
 
 type Prop = {
 	data: Produto[];
+	categoria: string;
+	urlCategoria: string;
 };
 
-export default function Slider({ data }: Prop) {
+export default function Slider({ data, categoria, urlCategoria }: Prop) {
 	const sliderRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		if (!sliderRef.current) return;
 		const slider = new Glide(sliderRef.current, {
-			type: 'carousel',
+			type: 'slider',
 			gap: 10,
 			autoplay: 5000,
 			perView: 4,
+			rewind: false,
+			bound: true,
 			touchRatio: 1,
 			breakpoints: {
 				768: { perView: 2 },
@@ -53,6 +59,18 @@ export default function Slider({ data }: Prop) {
 							/>
 						</li>
 					))}
+					<li className="glide__slide">
+						<Link href={urlCategoria}>
+							<div className="bg-base-100 rounded-xl">
+								<div className="w-full h-85 overflow-hidden flex gap-10 flex-col items-center justify-center">
+									<FaArrowRight size={50} />
+									<h6 className="text-lg text-center font-semibold leading-6 text-base-content h-12 line-clamp-2">
+										Ver mais de {categoria}
+									</h6>
+								</div>
+							</div>
+						</Link>
+					</li>
 				</ul>
 			</div>
 		</div>

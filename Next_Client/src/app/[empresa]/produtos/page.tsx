@@ -87,7 +87,7 @@ export default async function Page({
 	}
 
 	let ProdutoPorCategoria: Record<string, Produto[]> = {};
-	if (!query?.categoria && !!data && !!pagination) {
+	if (!query?.categoria && !!data) {
 		ProdutoPorCategoria = await OrganizarProdutos(data);
 	}
 
@@ -112,7 +112,7 @@ export default async function Page({
 					<main className="flex-grow container min-h-screen px-4 pb-4 mx-auto">
 						{!!query?.categoria ? (
 							<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-5">
-								<div className="flex justify-center gap-4 mb-5">
+								<div className="flex justify-center gap-4 mb-5 col-span-full">
 									{pagination.PaginasTotais > 1 && (
 										<>
 											{Array.from({ length: pagination.PaginasTotais }, async (_, index) => (
@@ -136,6 +136,7 @@ export default async function Page({
 										name={product.nome}
 										image={product.imagemUrl}
 										price={Number(product.preco).toFixed(2)}
+										className="col-span-1"
 									/>
 								))}
 							</div>
@@ -146,6 +147,8 @@ export default async function Page({
 										<h2 className="text-2xl font-bold p-10 text-center">{categoria}</h2>
 										<Carrosel
 											key={categoria + index}
+											categoria={categoria}
+											urlCategoria={`/${nomeEmpresa}/produtos?categoria=${categoria}`}
 											data={produtos}
 										/>
 									</div>

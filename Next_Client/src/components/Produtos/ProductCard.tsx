@@ -4,11 +4,12 @@ interface ProductCardProps {
 	name: string;
 	image: string;
 	price: string;
+	className?: string;
 }
 
-export default function ProductCard({ name, image, price }: ProductCardProps) {
+export default function ProductCard({ name, image, price, className }: ProductCardProps) {
 	return (
-		<div className="bg-base-100 rounded-xl">
+		<div className={'bg-base-100 rounded-xl ' + className}>
 			<div className="w-full h-55 overflow-hidden flex items-center justify-center select-none">
 				<Image
 					width={500}
