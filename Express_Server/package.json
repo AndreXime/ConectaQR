@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node dist/server.js",
-    "dev": "npm run lint && npm run build && node --require dotenv/config dist/server.js",
+    "dev": "npm run lint -s && npm run build -s && node --require dotenv/config dist/server.js",
     "build": "rm -rf ./dist && tsc && echo Build concluida",
     "lint": "eslint ./src && echo Nenhum problema encontrado",
     "test": "npx jest --verbose",

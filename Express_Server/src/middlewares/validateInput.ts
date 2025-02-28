@@ -17,7 +17,7 @@ export default function validateInput(schemaNome: SchemaNomes) {
     try {
       const errors = schema(req.body);
       if (errors.length > 0) {
-        res.status(400).json({ message: errors });
+        res.status(400).json({ message: errors.join(" - ") });
         return;
       }
     } catch {
@@ -96,11 +96,10 @@ const schemas: SchemaType = {
       "telefone",
       "emailContato"
     ]),
-    ...validateEmail("email", data.email, true),
+    ...validateEmail("email", data.email, false),
     ...validateString("senha", data.senha, 6, true),
-    ...validateString("nome", data.nome, 6, true),
-    ...validateString("descricao", data.descricao, 20, true),
-    ...validateString("tema", data.tema, 1, true)
+    ...validateString("nome", data.nome, 6, false),
+    ...validateString("descricao", data.descricao, 20, true)
   ],
   Produtos: (data) => [
     ...validateExtraFields(data, ["nome", "preco", "categoria", "imagem"]),

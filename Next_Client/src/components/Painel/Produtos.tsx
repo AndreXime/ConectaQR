@@ -128,10 +128,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 			if (!response.ok) {
 				setPopup(['error', message]);
 			} else {
-				setPopup([
-					'success',
-					'Produto atualizado com sucesso! Pode ser necessario recarregar a pagina para atualizar a imagem ',
-				]);
+				setPopup(['success', 'Produto atualizado com sucesso!']);
 				setProdutos((prev) => prev.map((product) => (product.id === data.id ? { ...data } : product)));
 				setEditando(data);
 				setFile(null);

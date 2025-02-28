@@ -36,4 +36,14 @@ type Produto = {
 	imagemUrl: string;
 };
 
-export type { EmpresaPublica, Categoria, Produto, EmpresaPrivate };
+type ProdutoPageProps = {
+	naoExiste?: boolean;
+	data?: {
+		produtos: Produto[];
+		categorias: Categoria[];
+	};
+	pagination?: { PaginaAtual: number; limitePorPagina: number; ProdutosTotal: number; PaginasTotais: number };
+	tema?: string;
+};
+
+export type { EmpresaPublica, Categoria, Produto, EmpresaPrivate, ProdutoPageProps };

@@ -70,7 +70,7 @@ export default function Editar({ Data, setEmpresa }: Props) {
 									type="text"
 									name="nome"
 									className="input input-bordered w-full max-w-xs"
-									defaultValue={Data.nome}
+									defaultValue={Data.nome.split('-').join(' ')}
 								/>
 							</label>
 

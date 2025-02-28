@@ -7,7 +7,7 @@ const getProdutos = async (req: Request, res: Response): Promise<void> => {
     const { categoria, page, search } = req.query;
     const limitePorPagina = 20;
 
-    const PaginaAtual = parseInt(page as string) || 1;
+    const PaginaAtual = Number(page as string) || 1;
     if (isNaN(PaginaAtual) || PaginaAtual <= 0) {
       res.status(400).json({ message: "Query page deve ser numero positivo" });
       return;

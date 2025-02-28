@@ -1,8 +1,7 @@
 import { Empresa, Produtos } from "../../database/models.js";
 import { Request, Response } from "express";
-import path from "path";
 import sharp from "sharp";
-import fs from "fs";
+import { apagarImagemporURL, FilePath_Url_Maker } from "../../lib/gerenciarImagens.js";
 
 const createProduto = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -14,18 +13,9 @@ const createProduto = async (req: Request, res: Response): Promise<void> => {
     }
 
     const nomeEmpresa = await Empresa.findUnique({ where: { id: req.userId }, select: { nome: true } });
-    if (!nomeEmpresa) throw 1;
+    if (!nomeEmpresa) throw Error;
 
-    const empresaDir = path.join(path.resolve("generated/uploads"), nomeEmpresa.nome);
-
-    // Criar a pasta da empresa se não existir
-    if (!fs.existsSync(empresaDir)) {
-      fs.mkdirSync(empresaDir, { recursive: true });
-    }
-
-    const fileName = `${nomeEmpresa.nome + Date.now()}.webp`;
-    const filePath = path.join(empresaDir, fileName);
-    const imagemUrl = `${process.env.PUBLIC_DOMAIN}/uploads/${nomeEmpresa.nome}/${fileName}`;
+    const { filePath, newImagemUrl } = FilePath_Url_Maker(nomeEmpresa.nome);
 
     await sharp(req.file.buffer).resize({ width: 800 }).toFormat("webp", { quality: 70 }).toFile(filePath);
 
@@ -33,11 +23,17 @@ const createProduto = async (req: Request, res: Response): Promise<void> => {
       data: {
         nome,
         preco,
-        imagemUrl,
+        imagemUrl: newImagemUrl,
         categoria: { connect: { id: categoriaId } },
         empresa: { connect: { id: req.userId } }
       },
-      select: { nome: true, preco: true, imagemUrl: true, categoria: { select: { nome: true, id: true } } }
+      select: {
+        id: true,
+        nome: true,
+        preco: true,
+        imagemUrl: true,
+        categoria: { select: { nome: true, id: true } }
+      }
     });
 
     res.json({ message: "Produto adicionado!", data: produto });
@@ -63,20 +59,9 @@ const updateProduto = async (req: Request, res: Response): Promise<void> => {
     let imagemUrl = produto.imagemUrl; // Mantém a imagem antiga se não mudar
 
     if (req.file) {
-      const empresaNome = produto.empresa.nome;
-      const empresaDir = path.join(path.resolve("generated/uploads"), empresaNome);
+      const { filePath, newImagemUrl } = FilePath_Url_Maker(produto.empresa.nome);
 
-      const fileName = `${empresaNome + Date.now()}.webp`;
-      const filePath = path.join(empresaDir, fileName);
-      const newImagemUrl = `${process.env.PUBLIC_DOMAIN}/uploads/${empresaNome}/${fileName}`;
-
-      const oldPath = imagemUrl.split("/").pop();
-      if (!oldPath) throw Error;
-
-      // Remover a imagem antiga se existir
-      if (fs.existsSync(path.join(empresaDir, oldPath))) {
-        fs.unlinkSync(path.join(empresaDir, oldPath));
-      }
+      apagarImagemporURL(imagemUrl);
 
       await sharp(req.file.buffer).resize({ width: 800 }).toFormat("webp", { quality: 70 }).toFile(filePath);
 
@@ -109,20 +94,15 @@ const updateProduto = async (req: Request, res: Response): Promise<void> => {
 const deleteProduto = async (req: Request, res: Response): Promise<void> => {
   try {
     const produtoId = req.params.id;
-    const { empresa, nome } = await Produtos.delete({
+    const { imagemUrl } = await Produtos.delete({
       where: {
         id: produtoId,
         empresaId: req.userId
       },
-      select: { nome: true, empresa: { select: { nome: true } } }
+      select: { imagemUrl: true }
     });
 
-    const empresaDir = path.join(path.resolve("uploads"), empresa.nome);
-    const filePath = path.join(empresaDir, `${nome}.webp`);
-
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath); // Remove a imagem
-    }
+    apagarImagemporURL(imagemUrl);
 
     res.status(200).json({ message: "Produto removido com sucesso" });
   } catch {

@@ -8,11 +8,8 @@
     "useUnknownInCatchVariables": false,
     "outDir": "./dist",
     "rootDir": "./src",
-    "paths": {
-      "@/*": ["./src/*"]
-    },
     "types": ["node", "jest"]
   },
-  "include": ["src/*.ts", "src/**/*.ts", "tests/*.ts"],
-  "exclude": ["node_modules", "tests/*.js"]
+  "include": ["src/*.ts", "src/**/*.ts"],
+  "exclude": ["node_modules"]
 }

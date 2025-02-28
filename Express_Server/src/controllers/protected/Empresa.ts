@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Empresa } from "../../database/models.js";
+import fs from "fs/promises";
 
 const getAllDataFromOwnEmpresa = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -31,36 +32,37 @@ const getAllDataFromOwnEmpresa = async (req: Request, res: Response): Promise<vo
 
 const updateEmpresa = async (req: Request, res: Response): Promise<void> => {
   try {
-    const camposPermitidos = [
-      "nome",
-      "senha",
-      "email",
-      "descricao",
-      "tema",
-      "maps",
-      "instagram",
-      "telefone",
-      "emailContato"
-    ];
+    const dadosAtualizados = {
+      nome: req.body?.nome,
+      senha: req.body?.senha,
+      email: req.body?.email,
+      descricao: req.body?.descricao || "",
+      tema: req.body?.tema || "",
+      maps: req.body?.maps || "",
+      instagram: req.body?.instagram || "",
+      telefone: req.body?.telefone || "",
+      emailContato: req.body?.emailContato || ""
+    };
 
-    const dadosAtualizados = Object.fromEntries(
-      Object.entries(req.body).filter(
-        ([key, value]) => camposPermitidos.includes(key) && value && typeof value === "string"
-      )
-    );
+    if (!dadosAtualizados.nome || !dadosAtualizados.email) {
+      res.status(400).json({ message: "Voce não pode deletar campos obrigatorios!" });
+      return;
+    } else {
+      dadosAtualizados.nome = (dadosAtualizados.nome as string).toLowerCase().replace(/\s+/g, "-");
+    }
+    /* Usuario não quis alterar senha deve-se tirar do objeto */
+    if (!dadosAtualizados.senha) {
+      delete dadosAtualizados.senha;
+    }
 
+    /** Extraindo a url do iframe do google maps, senão estiver dos parametros é deletado */
     if (dadosAtualizados.maps && typeof dadosAtualizados.maps == "string") {
       const match = dadosAtualizados.maps.match(/src="(https:\/\/www\.google\.com\/maps\/embed\?[^"]+)"/);
       if (match && match[1]) {
-        dadosAtualizados.maps = match[1]; // Usa o grupo 1 (conteúdo do src)
+        dadosAtualizados.maps = match[1];
       } else {
         delete dadosAtualizados.maps;
       }
-    }
-
-    if (Object.keys(dadosAtualizados).length === 0) {
-      res.status(400).json({ message: "Nenhum campo para atualizar" });
-      return;
     }
 
     const EmpresaAtualizada = await Empresa.update({
@@ -76,9 +78,11 @@ const updateEmpresa = async (req: Request, res: Response): Promise<void> => {
 
 const deleteEmpresa = async (req: Request, res: Response): Promise<void> => {
   try {
-    await Empresa.delete({
-      where: { id: req.userId }
+    const empresa = await Empresa.delete({
+      where: { id: req.userId },
+      select: { nome: true, produtos: { select: { imagemUrl: true } } }
     });
+    await fs.rm("./generated/uploads/" + empresa.nome, { recursive: true, force: true });
     res.status(200).json({ message: "Sucesso" });
   } catch {
     res.status(400).json({ message: "Erro ao remover" });

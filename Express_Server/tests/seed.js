@@ -4,17 +4,25 @@ const prisma = new PrismaClient();
 const { categoria, empresa, produto } = prisma;
 
 async function main() {
-  /* Um exemplo de uma empresa completa */
-  const empresaCriada = await empresa.create({
-    data: {
-      nome: "amazon",
-      email: "amazon@email.com",
-      senha: "senha123",
-      descricao: "descricao",
-      telefone: "123456789",
-      instagram: "instagram",
-      emailContato: "emailemail"
-    }
+  /* Um exemplo de uma empresa completa e uma vazia */
+  const [empresaCriada] = await empresa.createManyAndReturn({
+    data: [
+      {
+        nome: "amazon",
+        email: "amazon@email.com",
+        senha: "senha123",
+        descricao: "descricao",
+        telefone: "123456789",
+        instagram: "instagram",
+        emailContato: "emailemail"
+      },
+      {
+        nome: "apple",
+        email: "apple@email.com",
+        senha: "senha123",
+        descricao: "descricao"
+      }
+    ]
   });
   const [Categoria, Categoria2, Categoria3] = await categoria.createManyAndReturn({
     data: [
@@ -33,25 +41,10 @@ async function main() {
       empresaId: empresaCriada.id
     }))
   });
-
-  /* Empresa vazia */
-  await empresa.create({
-    data: {
-      nome: "apple",
-      email: "apple@email.com",
-      senha: "senha123",
-      descricao: "descricao"
-    }
-  });
 }
 
-main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    console.log("Seed ocorreu com sucesso");
+await main();
 
-    await prisma.$disconnect();
-  });
+console.log("Seed ocorreu com sucesso");
+
+await prisma.$disconnect();

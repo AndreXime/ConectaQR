@@ -1,40 +1,10 @@
 import { Footer, Header, ProductCard, RedirectButton } from '@/components/Produtos';
 import { notFound } from 'next/navigation';
-import type { Produto, Categoria } from '@/lib/types';
+import type { Produto, ProdutoPageProps } from '@/lib/types';
 import Carrosel from '@/components/Produtos/Carrosel';
+import { montarQueryURL, OrganizarProdutos } from '@/lib/index';
 
-type dataConfirm = {
-	data: {
-		produtos: Produto[];
-		categorias: Categoria[];
-	};
-};
-
-type PropsType = {
-	naoExiste?: boolean;
-	data?: {
-		produtos: Produto[];
-		categorias: Categoria[];
-	};
-	pagination?: { PaginaAtual: number; limitePorPagina: number; ProdutosTotal: number; PaginasTotais: number };
-	tema?: string;
-};
-
-async function montarQueryURL(page: string | undefined, categoria: string | undefined, search: string | undefined) {
-	const params: string[] = [];
-
-	if (page) params.push(`page=${page}`);
-	if (categoria) params.push(`categoria=${categoria}`);
-	if (search) params.push(`search=${search}`);
-
-	if (params.length > 0) {
-		return `?${params.join('&')}`;
-	}
-
-	return '';
-}
-
-async function getProps(nome: string, query: string): Promise<PropsType> {
+async function getProps(nome: string, query: string): Promise<ProdutoPageProps> {
 	const URL = `${process.env.NEXT_PUBLIC_API_URL}/produto/${nome}${query}`;
 
 	try {
@@ -49,19 +19,6 @@ async function getProps(nome: string, query: string): Promise<PropsType> {
 	} catch {
 		return { naoExiste: true };
 	}
-}
-
-async function OrganizarProdutos(data: dataConfirm['data']) {
-	return data.produtos.reduce((acc: Record<string, Produto[]>, produto) => {
-		const categoria = produto.categoria.nome;
-
-		if (!acc[categoria]) {
-			acc[categoria] = [];
-		}
-
-		acc[categoria].push(produto);
-		return acc;
-	}, {});
 }
 
 export default async function Page({
@@ -98,7 +55,7 @@ export default async function Page({
 			{!data || !pagination || data.produtos.length == 0 ? (
 				<Header
 					Categorias={data?.categorias}
-					EmpresaName={nomeEmpresa.split('-').join(' ')}>
+					EmpresaName={nomeEmpresa}>
 					<main className="flex-grow container min-h-screen mx-auto p-4">
 						<h1 className="text-2xl font-bold text-center my-5">
 							Essa empresa não tem nenhum produto castrado no momento
@@ -110,7 +67,7 @@ export default async function Page({
 					Categorias={data.categorias}
 					EmpresaName={nomeEmpresa}>
 					<main className="flex-grow container min-h-screen px-4 pb-4 mx-auto">
-						{!!query?.categoria ? (
+						{!!query?.categoria || !!query?.s ? (
 							<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-5">
 								<div className="flex justify-center gap-4 mb-5 col-span-full">
 									{pagination.PaginasTotais > 1 && (

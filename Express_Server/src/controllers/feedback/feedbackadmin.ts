@@ -20,7 +20,7 @@ const parseLogToJson = (logData: string): object[] => {
         rota: match[2].trim(),
         ip: match[3].trim(),
         tempo: parseFloat(match[4]),
-        status: parseInt(match[5], 10),
+        status: Number(match[5]),
         data: match[6].trim()
       };
     })
