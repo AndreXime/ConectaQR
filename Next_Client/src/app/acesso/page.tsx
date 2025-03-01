@@ -89,12 +89,12 @@ export default function Page() {
 
 	return (
 		<Drawer>
-			<div className="flex flex-col py-5 items-center bg-base-200 min-h-screen">
+			<div className="flex flex-col py-5 items-center bg-base-100 min-h-screen">
 				{Registrando ? (
 					<form
 						key="RegistroForm"
 						onSubmit={handleRegistro}
-						className="flex-col px-6 py-10 lg:p-10 bg-base-100 w-full md:w-1/3 rounded-lg shadow-lg">
+						className="flex-col px-6 py-10 lg:p-10 bg-base-100 w-full md:w-1/3 rounded-2xl shadow-lg">
 						<div className="grid grid-cols-2 gap-2 items-center justify-center w-full mb-5">
 							<button
 								type="button"
@@ -169,7 +169,7 @@ export default function Page() {
 					<form
 						key="LoginForm"
 						onSubmit={handleLogin}
-						className="flex-col px-6 py-10 lg:p-10 bg-base-100 w-full md:w-1/3 rounded-lg shadow-lg">
+						className="flex-col px-6 py-10 lg:p-10 bg-base-100 w-full md:w-1/3 rounded-lg shadow-2xl">
 						<div className="grid grid-cols-2 gap-2 items-center justify-center w-full mb-5">
 							<button
 								type="button"

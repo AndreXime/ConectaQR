@@ -16,7 +16,7 @@ const getCookie = (name: string) => {
 };
 
 export default function ThemeSwitcher({ className, text }: Props) {
-	const padrao = { light: 'bumblebee', dark: 'dark' };
+	const padrao = { light: 'corporate', dark: 'dark' };
 
 	const [theme, setTheme] = useState(getCookie('tema') || padrao.light);
 

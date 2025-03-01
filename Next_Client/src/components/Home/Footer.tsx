@@ -3,7 +3,7 @@ import { FaFacebookF, FaTwitter, FaInstagram } from 'react-icons/fa';
 
 export default function Footer() {
 	return (
-		<div className="bg-base-300 flex justify-center">
+		<div className="bg-base-100 flex justify-center">
 			<footer className="footer footer-vertical md:footer-horizontal  pt-10 pb-24 px-4 max-w-6xl text-base-content">
 				<div className="">
 					<p className="font-bold text-2xl">ConectaQR</p>

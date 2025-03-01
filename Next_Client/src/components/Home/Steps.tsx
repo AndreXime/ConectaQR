@@ -1,9 +1,16 @@
-import { FaUser, FaBuilding, FaBox } from 'react-icons/fa';
+import { FaUser, FaBuilding, FaBox, FaPaintBrush } from 'react-icons/fa';
 const generationStepData = [
-	{ icon: <FaBuilding className="w-10 h-10 inline-block mr-2" />, description: 'Faça o cadastro da sua empresa' },
+	{
+		icon: <FaBuilding className="w-10 h-10 inline-block mr-2" />,
+		description: 'Faça o cadastro da sua empresa',
+	},
+	{
+		icon: <FaPaintBrush className="w-10 h-10 inline-block mr-2" />,
+		description: 'Personalize sua loja com descricao, tema e meios de contato',
+	},
 	{
 		icon: <FaBox className="w-10 h-10 inline-block mr-2" />,
-		description: 'Adicione seu produtos e personalize sua pagina',
+		description: 'Adicione seu produtos com imagens e suas categorias',
 	},
 	{
 		icon: <FaUser className="w-10 h-10 inline-block mr-2" />,
@@ -17,7 +24,7 @@ export default function GenerationStep() {
 			<section className="grid place-items-center bg-base-100 w-full ">
 				<div className="max-w-6xl w-full py-24 px-4 content-center justify-center">
 					<h2 className="text-3xl  text-center font-bold">Tenha sua página em passos simples</h2>
-					<div className="grid mt-24 md:grid-cols-3 grid-cols-1 gap-8">
+					<div className="grid mt-24 md:grid-cols-4 grid-cols-1 gap-8">
 						{generationStepData.map((i, k) => {
 							return (
 								<div

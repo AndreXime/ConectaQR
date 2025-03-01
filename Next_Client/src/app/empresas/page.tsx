@@ -28,14 +28,14 @@ export default async function CompaniesPage() {
 
 	return (
 		<Drawer>
-			<div className="min-h-screen bg-base-200">
+			<div className="min-h-screen bg-base-100 border-t-1">
 				{Empresas?.length ? (
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 m-3">
 						<h1 className="text-2xl font-bold text-center col-span-full pt-5">Empresas na ConectaQR</h1>
 						{Empresas.map((company, index) => (
 							<div
 								key={index}
-								className="card w-full bg-base-100 shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-all">
+								className="card w-full bg-base-100 shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-all">
 								<div className="card-body">
 									<h3 className="card-title text-xl font-semibold justify-center capitalize">
 										{company.nome.split('-').join(' ')}

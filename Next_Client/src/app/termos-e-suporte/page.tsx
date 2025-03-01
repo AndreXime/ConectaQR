@@ -3,9 +3,9 @@ import Feedback from './Feedback';
 export default async function CompaniesPage() {
 	return (
 		<Drawer>
-			<div className="min-h-screen bg-base-200 py-7 px-4 flex flex-col justify-center gap-8">
+			<div className="min-h-screen bg-base-100 py-7 px-4 flex flex-col justify-center gap-8">
 				<Feedback />
-				<div className="card shadow-xl bg-base-100 mx-auto  lg:max-w-1/2">
+				<div className="card shadow-2xl bg-base-100 mx-auto  lg:max-w-1/2">
 					<div className="card-body">
 						<h1 className="text-3xl font-bold mb-4">Termos de Uso e Política de Privacidade</h1>
 
