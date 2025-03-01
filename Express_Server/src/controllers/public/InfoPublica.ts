@@ -1,5 +1,13 @@
 import type { Request, Response } from "express";
-import { Empresa, Produtos, Categoria } from "../database/models.js";
+import { Empresa, Produtos, Categoria } from "../../database/models.js";
+type ProdutoPublic = {
+  categoria: {
+    nome: string;
+  };
+  nome: string;
+  preco: string;
+  imagemUrl: string;
+}[];
 
 const getProdutos = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -12,38 +20,67 @@ const getProdutos = async (req: Request, res: Response): Promise<void> => {
       res.status(400).json({ message: "Query page deve ser numero positivo" });
       return;
     }
+
     const existe = await Empresa.findUnique({ where: { nome: empresa }, select: { tema: true } });
     if (!existe) {
       res.status(404).json({ message: "Não existe empresa com esse nome" });
       return;
     }
 
-    const [produtos, categorias, count] = await Promise.all([
-      Produtos.findMany({
-        where: {
-          empresa: { nome: empresa },
-          ...(categoria ? { categoria: { nome: categoria as string } } : {}),
-          ...(search ? { nome: { contains: search as string, mode: "insensitive" } } : {})
-        },
-        select: { nome: true, preco: true, imagemUrl: true, categoria: { select: { nome: true } } },
-        skip: (PaginaAtual - 1) * limitePorPagina,
-        take: limitePorPagina
-      }),
+    // Logica da paginação
 
-      Categoria.findMany({
-        where: {
-          Empresa: { nome: empresa }
-        },
-        select: { nome: true }
-      }),
+    const categorias = await Categoria.findMany({
+      where: {
+        Empresa: { nome: empresa }
+      },
+      select: { nome: true }
+    });
 
-      Produtos.count({
-        where: {
-          empresa: { nome: empresa },
-          ...(categoria ? { categoria: { nome: categoria as string } } : {})
-        }
-      })
-    ]);
+    let produtos: ProdutoPublic;
+    let count: number;
+
+    if (categoria || search) {
+      [produtos, count] = await Promise.all([
+        Produtos.findMany({
+          where: {
+            empresa: { nome: empresa },
+            ...(categoria ? { categoria: { nome: categoria as string } } : {}),
+            ...(search ? { nome: { contains: search as string, mode: "insensitive" } } : {})
+          },
+          select: { nome: true, preco: true, imagemUrl: true, categoria: { select: { nome: true } } },
+          skip: (PaginaAtual - 1) * limitePorPagina,
+          take: limitePorPagina
+        }),
+        Produtos.count({
+          where: {
+            empresa: { nome: empresa },
+            ...(categoria ? { categoria: { nome: categoria as string } } : {})
+          }
+        })
+      ]);
+    } else {
+      // Lógica de 5 produtos por categoria na tela inicial
+      const produtosPorCategoria = await Promise.all(
+        categorias.map(async (cat) => {
+          return Produtos.findMany({
+            where: {
+              empresa: { nome: empresa },
+              categoria: { nome: cat.nome }
+            },
+            select: {
+              nome: true,
+              preco: true,
+              imagemUrl: true,
+              categoria: { select: { nome: true } }
+            },
+            take: 5
+          });
+        })
+      );
+
+      produtos = produtosPorCategoria.flat();
+      count = 0;
+    }
 
     res.status(200).json({
       data: { produtos, categorias },

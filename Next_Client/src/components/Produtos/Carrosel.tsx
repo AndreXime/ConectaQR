@@ -18,17 +18,18 @@ export default function Slider({ data, categoria, urlCategoria }: Prop) {
 
 	useEffect(() => {
 		if (!sliderRef.current) return;
+		// Se o tamanho do array de produtos for menor q o esperado ajustar para o proprio tamanho
 		const slider = new Glide(sliderRef.current, {
 			type: 'slider',
 			gap: 10,
 			autoplay: 5000,
-			perView: 4,
+			perView: data.length + 1 < 4 ? data.length + 1 : 4,
 			rewind: false,
 			bound: true,
 			touchRatio: 1,
 			breakpoints: {
-				768: { perView: 2 },
-				1024: { perView: 3 },
+				768: { perView: data.length + 1 < 2 ? data.length + 1 : 2 },
+				1024: { perView: data.length + 1 < 3 ? data.length + 1 : 3 },
 			},
 		});
 

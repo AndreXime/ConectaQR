@@ -32,4 +32,4 @@ const Feedback = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export { Feedback };
+export default Feedback;

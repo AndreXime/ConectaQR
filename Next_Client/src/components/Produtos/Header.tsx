@@ -19,7 +19,7 @@ export default function Header({ EmpresaName, children, Categorias }: HeaderProp
 				className="drawer-toggle"
 			/>
 			<div className="drawer-content flex flex-col">
-				<nav className="navbar flex bg-primary text-primary-content w-full p-3 shadow relative justify-center">
+				<nav className="navbar flex bg-primary text-primary-content w-full p-3 relative justify-center">
 					<label
 						htmlFor="my-drawer"
 						className="btn btn-square btn-ghost left-3 absolute md:relative md:mr-5">

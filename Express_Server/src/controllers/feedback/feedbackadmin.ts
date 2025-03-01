@@ -59,4 +59,4 @@ const FeedbackAdmin = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export { FeedbackAdmin };
+export default FeedbackAdmin;

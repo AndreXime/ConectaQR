@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { Empresa } from "../database/models.js";
-import { generateToken } from "../middlewares/index.js";
+import { Empresa } from "../../database/models.js";
+import { generateToken } from "../../middlewares/index.js";
 
 const createEmpresa = async (req: Request, res: Response): Promise<void> => {
   try {
