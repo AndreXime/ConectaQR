@@ -39,7 +39,7 @@ export default function Slider({ data, categoria, urlCategoria }: Prop) {
 		return () => {
 			slider.destroy();
 		};
-	}, []);
+	}, [data.length]);
 
 	return (
 		<div

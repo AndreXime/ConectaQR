@@ -153,6 +153,7 @@ export default function Editar({ Data, setEmpresa }: Props) {
 								<div className="label">
 									<span className="label-text">Link do google maps</span>
 									<button
+										type="button"
 										className={`cursor-pointer`}
 										onClick={() => (document.getElementById('modal_maps')! as HTMLDialogElement).showModal()}>
 										<FaQuestionCircle
@@ -206,31 +207,6 @@ export default function Editar({ Data, setEmpresa }: Props) {
 				</div>
 			)}
 			<dialog
-				id={'modal_metadata'}
-				className="modal">
-				<div className="modal-box">
-					<h3 className="font-bold text-lg text-center">O que é metadata?</h3>
-					<div className="py-4">
-						<p>
-							<strong>Cartão de visita digital: </strong>
-							Quando alguém pesquisa seu site no Google, os metadados funcionam como um cartão de visita. Se você não
-							tiver um título e uma descrição bem feitos, é como se entregasse um cartão em branco.
-						</p>
-						<p>
-							<strong>Mensagem no WhatsApp: </strong>
-							Já percebeu que, quando você manda um link no WhatsApp, às vezes aparece uma prévia bonitinha com imagem e
-							descrição? Isso acontece por causa dos metadados. Sem eles, o link aparece seco e sem graça, e as pessoas
-							podem nem se interessar em clicar.
-						</p>
-					</div>
-					<div className="modal-action">
-						<form method="dialog">
-							<button className="btn">Fechar</button>
-						</form>
-					</div>
-				</div>
-			</dialog>
-			<dialog
 				id={'modal_maps'}
 				className="modal">
 				<div className="modal-box">
@@ -247,7 +223,11 @@ export default function Editar({ Data, setEmpresa }: Props) {
 					</div>
 					<div className="modal-action">
 						<form method="dialog">
-							<button className="btn">Fechar</button>
+							<button
+								role="button"
+								className="btn">
+								Fechar
+							</button>
 						</form>
 					</div>
 				</div>

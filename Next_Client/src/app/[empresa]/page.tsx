@@ -1,4 +1,4 @@
-import { Header, Footer } from '@/components/Empresa';
+import { Header, Footer, Maps } from '@/components/Empresa';
 import { FaInstagram, FaShoppingCart, FaWhatsapp } from 'react-icons/fa';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -45,7 +45,7 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 						className="btn btn-primary font-bold text-lg w-[90%] lg:w-1/2"
 						href={`/${nomeEmpresa}/produtos`}>
 						<FaShoppingCart />
-						Visitar produtos
+						Ver produtos
 					</Link>
 
 					<div className="flex flex-row gap-5">
@@ -79,18 +79,7 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 						)}
 					</div>
 
-					{info.maps && (
-						<iframe
-							rel="noopener noreferrer nofollow"
-							src={info.maps}
-							width="1000"
-							height="1000"
-							className="border-0 w-full h-full"
-							allowFullScreen={false}
-							loading="lazy"
-							referrerPolicy="no-referrer-when-downgrade"
-						/>
-					)}
+					{info.maps && <Maps url={info.maps} />}
 				</div>
 			</main>
 

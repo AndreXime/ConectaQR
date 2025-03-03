@@ -5,7 +5,7 @@ export default async function CompaniesPage() {
 		<Drawer>
 			<div className="min-h-screen bg-base-100 py-7 px-4 flex flex-col justify-center gap-8">
 				<Feedback />
-				<div className="card shadow-2xl bg-base-100 mx-auto  lg:max-w-1/2">
+				<div className="card shadow-2xl bg-base-100 mx-auto lg:max-w-1/2">
 					<div className="card-body">
 						<h1 className="text-3xl font-bold mb-4">Termos de Uso e Política de Privacidade</h1>
 
@@ -17,14 +17,7 @@ export default async function CompaniesPage() {
 						</section>
 
 						<section className="mb-6">
-							<h2 className="text-xl font-semibold mb-2">2. Coleta de Informações</h2>
-							<p className="text-base-content">
-								Coletamos dados para melhorar sua experiência. Isso pode incluir nome, e-mail e preferências de uso.
-							</p>
-						</section>
-
-						<section className="mb-6">
-							<h2 className="text-xl font-semibold mb-2">3. Uso das Informações</h2>
+							<h2 className="text-xl font-semibold mb-2">2. Uso das Informações</h2>
 							<p className="text-base-content">
 								Utilizamos suas informações apenas para fins de comunicação e personalização do serviço. Não vendemos
 								seus dados para terceiros.
@@ -32,7 +25,7 @@ export default async function CompaniesPage() {
 						</section>
 
 						<section className="mb-6">
-							<h2 className="text-xl font-semibold mb-2">4. Segurança dos Dados</h2>
+							<h2 className="text-xl font-semibold mb-2">3. Segurança dos Dados</h2>
 							<p className="text-base-content">
 								Implementamos medidas de segurança para proteger suas informações, mas não podemos garantir segurança
 								absoluta.
@@ -40,7 +33,7 @@ export default async function CompaniesPage() {
 						</section>
 
 						<section className="mb-6">
-							<h2 className="text-xl font-semibold mb-2">5. Alterações nos Termos</h2>
+							<h2 className="text-xl font-semibold mb-2">4. Alterações nos Termos</h2>
 							<p className="text-base-content">
 								Podemos modificar estes termos a qualquer momento. As alterações serão notificadas em nosso site.
 							</p>

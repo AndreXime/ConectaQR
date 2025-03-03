@@ -1,6 +1,6 @@
 'use client';
 
-import { Categoria } from '@/lib/types';
+import type { Categoria } from '@/lib/types';
 import { QRCodeCanvas } from 'qrcode.react';
 import { useRef, useState } from 'react';
 import { FaDownload } from 'react-icons/fa';
