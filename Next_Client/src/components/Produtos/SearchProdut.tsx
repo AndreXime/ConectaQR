@@ -16,7 +16,7 @@ export default function SearchProduto({ empresa, className }: Props) {
 		const inputValue = (event.target as HTMLFormElement).querySelector('input')?.value;
 
 		if (inputValue) {
-			router.push(`/${empresa}/produtos?s=${inputValue}`);
+			router.push(`/${empresa}/produtos?search=${inputValue}`);
 		} else {
 			router.push(`/${empresa}/produtos`);
 		}

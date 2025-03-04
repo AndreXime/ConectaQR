@@ -1,8 +1,9 @@
-import { Footer, Header, ProductCard, RedirectButton } from '@/components/Produtos';
+import { Footer, Header, ProductCard } from '@/components/Produtos';
 import { notFound } from 'next/navigation';
 import type { Produto, ProdutoPageProps } from '@/lib/types';
 import Carrosel from '@/components/Produtos/Carrosel';
 import { montarQueryURL, OrganizarProdutos } from '@/lib/index';
+import Link from 'next/link';
 
 async function getProps(nome: string, query: string): Promise<ProdutoPageProps> {
 	const URL = `${process.env.NEXT_PUBLIC_API_URL}/produto/${nome}${query}`;
@@ -20,7 +21,13 @@ async function getProps(nome: string, query: string): Promise<ProdutoPageProps> 
 		return { naoExiste: true };
 	}
 }
-
+/*
+	Se não ouver nenhum produto responde com uma mensagem
+	Se houver tem 2 opções
+	- Quando a nenhuma query que vai ser a tela inicial vai mostrar 
+	sliders de alguns produtos de todas as categorias
+	- Se ouver query vai mostrar em forma de Grid e com paginação
+**/
 export default async function Page({
 	params,
 	searchParams,
@@ -34,7 +41,7 @@ export default async function Page({
 	const queryUrl = await montarQueryURL(
 		(query?.page as string) || undefined,
 		(query?.categoria as string) || undefined,
-		(query?.s as string) || undefined
+		(query?.search as string) || undefined
 	);
 
 	const { naoExiste, data, pagination, tema } = await getProps(nomeEmpresa, queryUrl);
@@ -67,22 +74,22 @@ export default async function Page({
 					Categorias={data.categorias}
 					EmpresaName={nomeEmpresa}>
 					<main className="flex-grow container min-h-screen px-4 pb-4 mx-auto">
-						{!!query?.categoria || !!query?.s ? (
-							<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-5">
+						{!!query?.categoria || !!query?.search ? (
+							<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 my-5">
 								<div className="flex justify-center gap-4 mb-5 col-span-full">
 									{pagination.PaginasTotais > 1 && (
 										<>
 											{Array.from({ length: pagination.PaginasTotais }, async (_, index) => (
-												<RedirectButton
+												<Link
 													key={`${index + 1}`}
-													ClassName="btn btn-outline"
-													Url={`/${nomeEmpresa}/produtos${await montarQueryURL(
+													className="btn btn-outline"
+													href={`/${nomeEmpresa}/produtos${await montarQueryURL(
 														String(index + 1),
 														(query?.categoria as string) || undefined,
-														undefined
-													)}`}
-													buttonText={`${index + 1}`}
-												/>
+														(query?.search as string) || undefined
+													)}`}>
+													{`${index + 1}`}
+												</Link>
 											))}
 										</>
 									)}
