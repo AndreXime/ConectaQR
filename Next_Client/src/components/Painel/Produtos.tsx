@@ -13,7 +13,8 @@ type Props = {
 export default function Produtos({ Produtos, setProdutos, Categorias, setCategorias }: Props) {
 	const [Popup, setPopup] = useState(['', '']);
 	const [file, setFile] = useState<File | null>(null);
-	const [Editando, setEditando] = useState<Produto>();
+	const [EditandoProduto, setEditandoProduto] = useState<Produto>();
+	const [EditandoCategoria, setEditandoCategoria] = useState<Categoria>();
 	const [Carregando, setCarregando] = useState(false);
 
 	useEffect(() => {
@@ -65,6 +66,93 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 		} catch (err) {
 			setPopup(['error', 'Erro interno no servidor ' + err]);
 		}
+	};
+
+	const handleCategoriaUpdate = async (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		const form = event.currentTarget;
+		const formData = new FormData(form);
+		const nome = String(formData.get('nome'));
+		const categoriaId = String(formData.get('categoriaId'));
+
+		if (nome.length === 0 || !categoriaId) {
+			setPopup(['error', 'Um campo não foi fornecido']);
+			return;
+		}
+
+		setCarregando(true);
+		try {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categoria`, {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				credentials: 'include',
+				body: JSON.stringify({ nome, categoriaId }),
+			});
+			const { message, data } = await response.json();
+			setCarregando(false);
+
+			if (!response.ok) {
+				setPopup(['error', message]);
+			} else {
+				setPopup(['success', 'Categoria atualizado com sucesso!']);
+				setCategorias((prev) => prev.map((categoria) => (categoria.id === data.id ? { ...data } : categoria)));
+				setEditandoCategoria(data);
+				form.reset();
+			}
+		} catch (err) {
+			setPopup(['error', 'Erro interno no servidor ' + err]);
+		}
+	};
+
+	const handleCategoriaDelete = async (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		const form = event.currentTarget;
+		const formData = new FormData(form);
+		const id = String(formData.get('categoriaId'));
+		const newId = String(formData.get('newId'));
+
+		if (id == newId) {
+			setPopup(['error', 'Voce está o usando a mesma categoria que deseja apagar']);
+			return;
+		}
+
+		setCarregando(true);
+
+		try {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categoria`, {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				credentials: 'include',
+				body: JSON.stringify({ id, newId }),
+			});
+
+			const { message } = await response.json();
+
+			if (!response.ok) {
+				setPopup(['error', message]);
+			} else {
+				setPopup(['success', 'Categoria deletada com sucesso!']);
+				setCategorias((prev) => prev.filter((categoria) => categoria.id !== id));
+				const categoriaNova = Categorias.find((categoria) => categoria.id === newId);
+				const categoriaDeletada = Categorias.find((categoria) => categoria.id === id);
+
+				setProdutos((prev) =>
+					prev.map((product) =>
+						product.categoria.nome === categoriaDeletada!.nome
+							? { ...product, categoria: { nome: categoriaNova!.nome } }
+							: product
+					)
+				);
+				form.reset();
+			}
+		} catch (err) {
+			setPopup(['error', 'Erro interno no servidor' + err]);
+		}
+		setCarregando(false);
 	};
 
 	const handleProdutoSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -130,7 +218,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 			} else {
 				setPopup(['success', 'Produto atualizado com sucesso!']);
 				setProdutos((prev) => prev.map((product) => (product.id === data.id ? { ...data } : product)));
-				setEditando(data);
+				setEditandoProduto(data);
 				setFile(null);
 				form.reset();
 			}
@@ -195,11 +283,16 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 						)}
 					</form>
 
+					<span className="text-xs">Dica: clique no nome da categoria para altera-la</span>
 					<div className="flex flex-row flex-wrap gap-4">
 						{Categorias.map((value) => (
 							<p
-								className="badge badge-warning"
-								key={value.nome}>
+								className="badge badge-warning cursor-pointer"
+								key={value.nome}
+								onClick={() => {
+									setEditandoCategoria(value);
+									(document.getElementById('modal_editCategoria')! as HTMLDialogElement).showModal();
+								}}>
 								{value.nome}
 							</p>
 						))}
@@ -315,7 +408,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 										</button>
 										<button
 											onClick={() => {
-												setEditando(value);
+												setEditandoProduto(value);
 												(document.getElementById('modal_edit')! as HTMLDialogElement).showModal();
 											}}
 											className="btn btn-ghost btn-info">
@@ -340,7 +433,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 				className="modal">
 				<div className="modal-box">
 					<h3 className="font-bold text-lg text-center">Editando um produto</h3>
-					{Editando && (
+					{EditandoProduto && (
 						<div className="py-4">
 							<form
 								onSubmit={handleProdutoUpdate}
@@ -348,7 +441,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 								className="flex flex-col gap-4 mx-2">
 								<input
 									name="produtoId"
-									value={Editando.id}
+									value={EditandoProduto.id}
 									className="hidden"
 									readOnly
 								/>
@@ -370,7 +463,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 									<span>Nome do produto</span>
 									<input
 										name="nome"
-										defaultValue={Editando.nome}
+										defaultValue={EditandoProduto.nome}
 										type="text"
 										className="input w-full"
 									/>
@@ -380,7 +473,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 									<span>Preço</span>
 									<input
 										name="preco"
-										defaultValue={Editando.preco}
+										defaultValue={EditandoProduto.preco}
 										type="number"
 										className="input w-full"
 									/>
@@ -390,7 +483,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 									<span>Categoria</span>
 									<select
 										name="categoriaId"
-										defaultValue={Editando.categoria.nome}
+										defaultValue={EditandoProduto.categoria.nome}
 										className="select w-full">
 										<option disabled>Selecione categoria</option>
 										{Categorias.map((value) => (
@@ -415,6 +508,99 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 										type="submit"
 										className="btn btn-success">
 										<FaSave /> Salvar
+									</button>
+								)}
+							</form>
+						</div>
+					)}
+					<div className="modal-action">
+						<form method="dialog">
+							<button className="btn btn-accent">Fechar</button>
+						</form>
+					</div>
+				</div>
+			</dialog>
+			<dialog
+				id={'modal_editCategoria'}
+				className="modal">
+				<div className="modal-box">
+					<h3 className="font-bold text-lg text-center">Editando uma categoria</h3>
+					{EditandoCategoria && (
+						<div className="py-4">
+							<form
+								onSubmit={handleCategoriaUpdate}
+								className="flex flex-col gap-4 mx-2">
+								<input
+									name="categoriaId"
+									value={EditandoCategoria.id}
+									className="hidden"
+									readOnly
+								/>
+
+								<label className="floating-label flex-grow-1">
+									<span>Nome da categoria</span>
+									<input
+										name="nome"
+										defaultValue={EditandoCategoria.nome}
+										type="text"
+										className="input w-full"
+									/>
+								</label>
+
+								{Carregando ? (
+									<button
+										type="submit"
+										disabled
+										className="btn btn-success">
+										<span className="loading loading-spinner loading-lg"></span>
+									</button>
+								) : (
+									<button
+										type="submit"
+										className="btn btn-success">
+										<FaSave /> Salvar
+									</button>
+								)}
+							</form>
+							<form
+								onSubmit={handleCategoriaDelete}
+								className="flex flex-col gap-4 mx-2 mt-3">
+								<p>Selecione uma outra categoria para herdar os produtos dessa categoria ser deletada</p>
+								<input
+									name="categoriaId"
+									value={EditandoCategoria.id}
+									className="hidden"
+									readOnly
+								/>
+								<label className="floating-label flex-grow-1">
+									<span>Categoria</span>
+									<select
+										name="newId"
+										defaultValue={EditandoCategoria.nome}
+										className="select w-full">
+										<option disabled>Selecione categoria</option>
+										{Categorias.map((value) => (
+											<option
+												value={value.id}
+												key={value.nome}>
+												{value.nome}
+											</option>
+										))}
+									</select>
+								</label>
+
+								{Carregando ? (
+									<button
+										type="button"
+										disabled
+										className="btn btn-error">
+										<span className="loading loading-spinner loading-lg"></span>
+									</button>
+								) : (
+									<button
+										type="submit"
+										className="btn btn-error">
+										<FaTrash /> Excluir
 									</button>
 								)}
 							</form>
