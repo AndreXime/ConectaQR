@@ -37,7 +37,7 @@ type Produto = {
 };
 
 type ProdutoPageProps = {
-	naoExiste?: boolean;
+	error?: boolean;
 	data?: {
 		produtos: Produto[];
 		categorias: Categoria[];

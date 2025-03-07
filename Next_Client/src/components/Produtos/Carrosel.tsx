@@ -57,13 +57,14 @@ export default function Slider({ data, categoria, urlCategoria }: Prop) {
 								name={produto.nome}
 								price={produto.preco}
 								image={produto.imagemUrl}
+								className="cursor-grab border-1"
 							/>
 						</li>
 					))}
 					<li className="glide__slide">
 						<Link href={urlCategoria}>
-							<div className="bg-base-100 rounded-xl">
-								<div className="w-full h-85 overflow-hidden flex gap-10 flex-col items-center justify-center">
+							<div className="bg-base-100 rounded-xl border-1 h-85 flex flex-col items-center justify-center">
+								<div className="flex flex-col items-center gap-10">
 									<FaArrowRight size={50} />
 									<h6 className="text-lg text-center font-semibold leading-6 text-base-content h-12 line-clamp-2">
 										Ver mais de {categoria}

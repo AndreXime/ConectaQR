@@ -12,13 +12,13 @@ async function getProps(nome: string, query: string): Promise<ProdutoPageProps> 
 		const response = await fetch(URL, { method: 'get', cache: 'no-store' });
 		const status = response.status;
 		if (status >= 400) {
-			return { naoExiste: true };
+			return { error: true };
 		} else {
 			const { data, pagination, tema } = await response.json();
 			return { data, pagination, tema };
 		}
 	} catch {
-		return { naoExiste: true };
+		return { error: true };
 	}
 }
 /*
@@ -44,14 +44,17 @@ export default async function Page({
 		(query?.search as string) || undefined
 	);
 
-	const { naoExiste, data, pagination, tema } = await getProps(nomeEmpresa, queryUrl);
+	const { error, data, pagination, tema } = await getProps(nomeEmpresa, queryUrl);
 
-	if (naoExiste) {
+	if (error) {
 		notFound();
 	}
 
+	const hasNoData = !data || !pagination || data.produtos.length === 0;
+	const hasQueryFilter = !!query?.categoria || !!query?.search;
+
 	let ProdutoPorCategoria: Record<string, Produto[]> = {};
-	if (!query?.categoria && !!data) {
+	if (!query?.categoria && !hasNoData) {
 		ProdutoPorCategoria = await OrganizarProdutos(data);
 	}
 
@@ -59,70 +62,60 @@ export default async function Page({
 		<div
 			data-theme={tema}
 			className="flex flex-col min-h-screen">
-			{!data || !pagination || data.produtos.length == 0 ? (
-				<Header
-					Categorias={data?.categorias}
-					EmpresaName={nomeEmpresa}>
-					<main className="flex-grow container min-h-screen mx-auto p-4">
-						<h1 className="text-2xl font-bold text-center my-5">
-							Essa empresa não tem nenhum produto castrado no momento
-						</h1>
-					</main>
-				</Header>
-			) : (
-				<Header
-					Categorias={data.categorias}
-					EmpresaName={nomeEmpresa}>
-					<main className="flex-grow container min-h-screen px-4 pb-4 mx-auto">
-						{!!query?.categoria || !!query?.search ? (
-							<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 my-5">
+			<Header
+				Categorias={data?.categorias}
+				EmpresaName={nomeEmpresa}>
+				<main className="flex-grow container min-h-screen pb-4 px-4 mx-auto">
+					{hasNoData && (
+						<h1 className="text-2xl font-bold text-center my-7">Não temos nenhum produto castrado no momento</h1>
+					)}
+					{hasQueryFilter && !hasNoData && (
+						<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pt-7">
+							{pagination.PaginasTotais > 1 && (
 								<div className="flex justify-center gap-4 mb-5 col-span-full">
-									{pagination.PaginasTotais > 1 && (
-										<>
-											{Array.from({ length: pagination.PaginasTotais }, async (_, index) => (
-												<Link
-													key={`${index + 1}`}
-													className="btn btn-outline"
-													href={`/${nomeEmpresa}/produtos${await montarQueryURL(
-														String(index + 1),
-														(query?.categoria as string) || undefined,
-														(query?.search as string) || undefined
-													)}`}>
-													{`${index + 1}`}
-												</Link>
-											))}
-										</>
-									)}
+									{Array.from({ length: pagination.PaginasTotais }, async (_, index) => (
+										<Link
+											key={`${index + 1}`}
+											className="btn btn-outline"
+											href={`/${nomeEmpresa}/produtos${await montarQueryURL(
+												String(index + 1),
+												(query?.categoria as string) || undefined,
+												(query?.search as string) || undefined
+											)}`}>
+											{`${index + 1}`}
+										</Link>
+									))}
 								</div>
-								{data.produtos.map((product, index) => (
-									<ProductCard
-										key={index}
-										name={product.nome}
-										image={product.imagemUrl}
-										price={Number(product.preco).toFixed(2)}
-										className="col-span-1"
+							)}
+							{data.produtos.map((product, index) => (
+								<ProductCard
+									key={index}
+									name={product.nome}
+									image={product.imagemUrl}
+									price={Number(product.preco).toFixed(2)}
+									className="col-span-1 border-1"
+								/>
+							))}
+						</div>
+					)}
+					{!hasNoData && !hasQueryFilter && (
+						<>
+							{Object.entries(ProdutoPorCategoria).map(([categoria, produtos], index) => (
+								<div key={categoria}>
+									<h2 className="text-2xl py-10 font-bold text-center">{categoria}</h2>
+									<Carrosel
+										key={categoria + index}
+										categoria={categoria}
+										urlCategoria={`/${nomeEmpresa}/produtos?categoria=${categoria}`}
+										data={produtos}
 									/>
-								))}
-							</div>
-						) : (
-							<div>
-								{Object.entries(ProdutoPorCategoria).map(([categoria, produtos], index) => (
-									<div key={categoria}>
-										<h2 className="text-2xl font-bold p-10 text-center">{categoria}</h2>
-										<Carrosel
-											key={categoria + index}
-											categoria={categoria}
-											urlCategoria={`/${nomeEmpresa}/produtos?categoria=${categoria}`}
-											data={produtos}
-										/>
-									</div>
-								))}
-							</div>
-						)}
-					</main>
-					<Footer EmpresaName={nomeEmpresa.split('-').join(' ')} />
-				</Header>
-			)}
+								</div>
+							))}
+						</>
+					)}
+				</main>
+				<Footer EmpresaName={nomeEmpresa.split('-').join(' ')} />
+			</Header>
 		</div>
 	);
 }
