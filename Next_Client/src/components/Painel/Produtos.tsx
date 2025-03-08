@@ -1,7 +1,28 @@
 import Image from 'next/image';
 import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
-import { FaEdit, FaSave, FaTrash, FaUpload } from 'react-icons/fa';
+import {
+	FaArrowDown,
+	FaArrowLeft,
+	FaArrowRight,
+	FaArrowUp,
+	FaEdit,
+	FaSave,
+	FaSearch,
+	FaTrash,
+	FaUpload,
+} from 'react-icons/fa';
 import type { Produto, Categoria } from '@/lib/types';
+import {
+	ColumnDef,
+	useReactTable,
+	getCoreRowModel,
+	getSortedRowModel,
+	SortingState,
+	getFilteredRowModel,
+	flexRender,
+	getPaginationRowModel,
+	ColumnFiltersState,
+} from '@tanstack/react-table';
 
 type Props = {
 	Produtos: Produto[];
@@ -249,6 +270,88 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 		}
 	};
 
+	// Tabela dinamicas
+	const [sorting, setSorting] = useState<SortingState>([]);
+	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+
+	const columns: ColumnDef<Produto>[] = [
+		{
+			accessorKey: 'imagemUrl',
+			header: 'Imagem',
+			cell: ({ row }) => (
+				<div className="mask h-20 w-20 overflow-hidden">
+					<Image
+						width={300}
+						height={300}
+						src={row.original.imagemUrl}
+						alt={`Imagem do produto ${row.original.nome}`}
+						className="object-contain"
+					/>
+				</div>
+			),
+		},
+		{
+			accessorKey: 'nome',
+			header: 'Nome',
+			enableSorting: true,
+			enableColumnFilter: true,
+			filterFn: 'includesString',
+		},
+		{
+			accessorKey: 'preco',
+			header: 'Preço',
+			cell: ({ row }) => `R$ ${row.original.preco}`,
+			enableSorting: true,
+		},
+		{
+			accessorKey: 'categoria.nome',
+			header: 'Categoria',
+			enableSorting: true,
+		},
+		{
+			id: 'acoes',
+			header: 'Ações',
+			cell: ({ row }) => (
+				<div className="flex flex-row">
+					<button
+						onClick={() => handleProdutoDelete(row.original.id)}
+						className="btn btn-ghost btn-error mr-2">
+						<FaTrash size={18} />
+					</button>
+					<button
+						onClick={() => {
+							setEditandoProduto(row.original);
+							(document.getElementById('modal_edit') as HTMLDialogElement).showModal();
+						}}
+						className="btn btn-ghost btn-info">
+						<FaEdit size={18} />
+					</button>
+				</div>
+			),
+		},
+	];
+
+	const table = useReactTable({
+		data: Produtos,
+		columns,
+		initialState: {
+			pagination: {
+				pageIndex: 0,
+				pageSize: 15,
+			},
+		},
+		state: {
+			sorting,
+			columnFilters,
+		},
+		onColumnFiltersChange: setColumnFilters,
+		onSortingChange: setSorting,
+		getFilteredRowModel: getFilteredRowModel(),
+		getCoreRowModel: getCoreRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
+		getSortedRowModel: getSortedRowModel(),
+	});
+
 	return (
 		<div>
 			<div className="collapse collapse-arrow bg-base-200 border border-base-300 mb-8">
@@ -372,50 +475,83 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 				</form>
 			</div>
 			<div className="overflow-x-auto w-full">
+				{/* Paginação */}
+				<div className="flex items-center justify-between gap-5 py-5 px-5">
+					<label className="input w-full max-w-md">
+						<FaSearch />
+						<input
+							type="text"
+							placeholder="Pesquisar por nome..."
+							value={(table.getColumn('nome')?.getFilterValue() as string) ?? ''}
+							onChange={(e) => table.getColumn('nome')?.setFilterValue(e.target.value)}
+						/>
+					</label>
+					<div className="join">
+						<button
+							className="join-item btn"
+							onClick={() => table.previousPage()}
+							disabled={!table.getCanPreviousPage()}>
+							<FaArrowLeft />
+						</button>
+
+						{Array.from({ length: table.getPageCount() }).map((_, index) => (
+							<button
+								key={index}
+								className={`join-item btn ${index === table.getState().pagination.pageIndex ? 'btn-active' : ''}`}
+								onClick={() => table.setPageIndex(index)}>
+								{index + 1}
+							</button>
+						))}
+
+						<button
+							className="join-item btn"
+							onClick={() => table.nextPage()}
+							disabled={!table.getCanNextPage()}>
+							<FaArrowRight />
+						</button>
+					</div>
+				</div>
+
+				{/* Tabela */}
 				<table className="table table-zebra min-w-max">
 					<thead>
-						<tr>
-							<th>Imagem</th>
-							<th>Nome</th>
-							<th>Preco</th>
-							<th>Categoria</th>
-							<th>Ações</th>
-						</tr>
+						{table.getHeaderGroups().map((headerGroup) => (
+							<tr key={headerGroup.id}>
+								{headerGroup.headers.map((header) => (
+									<th
+										key={header.id}
+										onClick={header.column.getToggleSortingHandler()}
+										className="cursor-pointer hover:bg-base-200 whitespace-nowrap">
+										<div className="flex items-center gap-2">
+											{/* Texto do cabeçalho */}
+											<span className="inline-block">
+												{flexRender(header.column.columnDef.header, header.getContext())}
+											</span>
+
+											{/* Ícone de ordenação */}
+											<span className="inline-block">
+												{{
+													asc: <FaArrowUp className="text-sm" />,
+													desc: <FaArrowDown className="text-sm" />,
+												}[header.column.getIsSorted() as string] ?? null}
+											</span>
+										</div>
+									</th>
+								))}
+							</tr>
+						))}
 					</thead>
+
 					<tbody>
-						{Produtos.map((value, index) => (
-							<tr key={index}>
-								<td className="avatar flex items-center">
-									<div className="mask h-12 w-20">
-										<Image
-											width={300}
-											height={300}
-											src={value.imagemUrl}
-											alt={`Imagem do produto ${value.nome}`}
-											className="object-contain"
-										/>
-									</div>
-								</td>
-								<td>{value.nome}</td>
-								<td>R$ {value.preco}</td>
-								<td>{value.categoria.nome}</td>
-								<td>
-									<div className="flex flex-row">
-										<button
-											onClick={() => handleProdutoDelete(value.id)}
-											className="btn btn-ghost btn-error mr-2">
-											<FaTrash size={18} />
-										</button>
-										<button
-											onClick={() => {
-												setEditandoProduto(value);
-												(document.getElementById('modal_edit')! as HTMLDialogElement).showModal();
-											}}
-											className="btn btn-ghost btn-info">
-											<FaEdit size={18} />
-										</button>
-									</div>
-								</td>
+						{table.getRowModel().rows.map((row) => (
+							<tr key={row.id}>
+								{row.getVisibleCells().map((cell) => (
+									<td
+										key={cell.id}
+										className="align-middle">
+										{flexRender(cell.column.columnDef.cell, cell.getContext())}
+									</td>
+								))}
 							</tr>
 						))}
 					</tbody>
