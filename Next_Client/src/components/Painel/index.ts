@@ -1,7 +1,8 @@
 import Drawer from './Drawer';
-import Produtos from './Produtos';
-import Resumo from './Resumo';
-import Editar from './Editar';
-import QRCode from './QrCode';
+import Produtos from './TabProdutos';
+import Resumo from './TabResumo';
+import Editar from './TabEditar';
+import QRCode from './TabQrCode';
+import Tabela from './TabelaProdutos';
 
-export { Drawer, Produtos, Resumo, Editar, QRCode };
+export { Drawer, Produtos, Resumo, Editar, QRCode, Tabela };

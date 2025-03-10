@@ -1,7 +1,7 @@
 import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
 import { FaSave, FaTrash, FaUpload } from 'react-icons/fa';
 import type { Produto, Categoria } from '@/lib/types';
-import TabelaDinamica from './TabelaDinamica';
+import { Tabela } from './index';
 
 type Props = {
 	Produtos: Produto[];
@@ -371,7 +371,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 					)}
 				</form>
 			</div>
-			<TabelaDinamica
+			<Tabela
 				data={Produtos}
 				categorias={Categorias}
 				fucDeleteProduto={handleProdutoDelete}

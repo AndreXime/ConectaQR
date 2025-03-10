@@ -1,4 +1,5 @@
-import { Footer, Header, ProductCard } from '@/components/Produtos';
+import { Header, ProductCard } from '@/components/Produtos';
+import { Footer } from '@/components/Empresa';
 import { notFound } from 'next/navigation';
 import type { Produto, ProdutoPageProps } from '@/lib/types';
 import Carrosel from '@/components/Produtos/Carrosel';

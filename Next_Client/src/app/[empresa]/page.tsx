@@ -83,7 +83,7 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 				</div>
 			</main>
 
-			<Footer temaAtual={info.tema} />
+			<Footer EmpresaName={nomeEmpresa.split('-').join(' ')} />
 		</div>
 	);
 }

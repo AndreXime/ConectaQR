@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { FaBars } from 'react-icons/fa';
-import RedirectButton from './RedirectButton';
+import { FaArrowRight, FaBars } from 'react-icons/fa';
 import SearchProduto from './SearchProdut';
 import type { Categoria } from '@/lib/types';
 
@@ -57,13 +56,12 @@ export default function Header({ EmpresaName, children, Categorias }: HeaderProp
 							<h1 className="text-xl font-bold text-center my-4">Categorias</h1>
 							<div className="flex flex-col justify-center">
 								{Categorias.map((value) => (
-									<RedirectButton
-										Url={`/${EmpresaName}/produtos?categoria=${value.nome}`}
-										buttonText={value.nome}
+									<Link
 										key={value.nome}
-										ClassName="btn btn-primary mb-2 justify-between"
-										icon
-									/>
+										href={`/${EmpresaName}/produtos?categoria=${value.nome}`}
+										className="btn btn-primary mb-2 justify-between">
+										{value.nome} <FaArrowRight />
+									</Link>
 								))}
 							</div>
 						</>
