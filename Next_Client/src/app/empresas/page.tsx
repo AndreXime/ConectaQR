@@ -28,7 +28,7 @@ export default async function CompaniesPage() {
 
 	return (
 		<Drawer>
-			<div className="min-h-screen bg-base-100">
+			<div className="min-h-dvh bg-base-100">
 				{Empresas?.length ? (
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 m-3">
 						<h1 className="text-2xl font-bold text-center col-span-full pt-5">Empresas na ConectaQR</h1>
@@ -44,7 +44,7 @@ export default async function CompaniesPage() {
 									<div className="card-actions justify-center">
 										<Link
 											className="btn btn-primary btn-wide"
-											href={`/${company.nome.replace(/ /g, '-')}`}>
+											href={`/${company.nome}`}>
 											Visitar
 										</Link>
 									</div>

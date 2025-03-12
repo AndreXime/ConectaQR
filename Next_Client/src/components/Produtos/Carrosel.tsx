@@ -51,7 +51,7 @@ export default function Slider({ data, categoria, urlCategoria }: Prop) {
 				<ul className="glide__slides">
 					{data.map((produto) => (
 						<li
-							className="glide__slide"
+							className="glide__slide p-2"
 							key={produto.nome + produto.preco}>
 							<ProductCard
 								name={produto.nome}

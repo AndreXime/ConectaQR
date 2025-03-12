@@ -45,10 +45,7 @@ export default function PricingPlans() {
 					<div className="card lg:w-1/4 mt-6 shadow-xl hover:shadow-2xl">
 						<div className="card-body pt-12 pb-16 items-center  ">
 							<h2 className="card-title text-xl text-center">Doador </h2>
-							<h2 className="font-bold mt-4 text-4xl text-center inline-block">
-								R$ 10
-								<span className="text-xs align-middle font-light">/unico</span>
-							</h2>
+							<h2 className="font-bold mt-4 text-3xl text-center inline-block">Qualquer valor</h2>
 							<button className="btn btn-sm mt-8 btn-primary normal-case w-full">Torna-se doador</button>
 							<ul className="text-left mt-4">
 								{advancePointers.map((p, k) => {

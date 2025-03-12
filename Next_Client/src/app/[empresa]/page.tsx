@@ -31,7 +31,7 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 	return (
 		<div
 			data-theme={info.tema}
-			className="flex flex-col min-h-screen bg-base-100">
+			className="flex flex-col min-h-dvh bg-base-100">
 			<Header
 				Icon={false}
 				EmpresaName={nomeEmpresa.split('-').join(' ')}

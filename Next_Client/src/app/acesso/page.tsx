@@ -89,7 +89,7 @@ export default function Page() {
 
 	return (
 		<Drawer>
-			<div className="flex flex-col py-5 items-center bg-base-100 min-h-screen">
+			<div className="flex flex-col py-5 items-center bg-base-100 min-h-dvh">
 				{Registrando ? (
 					<form
 						key="RegistroForm"
