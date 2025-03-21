@@ -1,10 +1,9 @@
-import { Header, ProductCard } from '@/components/Produtos';
-import { Footer } from '@/components/Empresa';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import type { Produto, ProdutoPageProps } from '@/lib/types';
+import { Header, ProductCard } from '@/components/Produtos';
 import Carrosel from '@/components/Produtos/Carrosel';
 import { montarQueryURL, OrganizarProdutos } from '@/lib/index';
-import Link from 'next/link';
+import type { Produto, ProdutoPageProps } from '@/lib/types';
 
 async function getProps(nome: string, query: string): Promise<ProdutoPageProps> {
 	const URL = `${process.env.NEXT_PUBLIC_API_URL}/produto/${nome}${query}`;
@@ -13,13 +12,13 @@ async function getProps(nome: string, query: string): Promise<ProdutoPageProps> 
 		const response = await fetch(URL, { method: 'get', cache: 'no-store' });
 		const status = response.status;
 		if (status >= 400) {
-			return { error: true };
+			notFound();
 		} else {
 			const { data, pagination, tema } = await response.json();
 			return { data, pagination, tema };
 		}
 	} catch {
-		return { error: true };
+		notFound();
 	}
 }
 /*
@@ -45,11 +44,7 @@ export default async function Page({
 		(query?.search as string) || undefined
 	);
 
-	const { error, data, pagination, tema } = await getProps(nomeEmpresa, queryUrl);
-
-	if (error) {
-		notFound();
-	}
+	const { data, pagination, tema } = await getProps(nomeEmpresa, queryUrl);
 
 	const hasNoData = !data || !pagination || data.produtos.length === 0;
 	const hasQueryFilter = !!query?.categoria || !!query?.search;
@@ -101,13 +96,22 @@ export default async function Page({
 					)}
 					{!hasNoData && !hasQueryFilter && (
 						<>
+							<div className="text-center py-10">
+								<h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Descubra nossos preço</h1>
+							</div>
 							{Object.entries(ProdutoPorCategoria).map(([categoria, produtos], index) => (
 								<div key={categoria}>
-									<h2 className="text-2xl py-10 font-bold text-center">{categoria}</h2>
+									<div className="flex justify-between items-center px-2 pt-3">
+										<h2 className="text-xl py-4 font-bold">{categoria}</h2>
+										<Link
+											href={`/${nomeEmpresa}/produtos?categoria=${categoria}`}
+											className="text-xl py-4 font-bold">
+											Ver mais
+										</Link>
+									</div>
+
 									<Carrosel
 										key={categoria + index}
-										categoria={categoria}
-										urlCategoria={`/${nomeEmpresa}/produtos?categoria=${categoria}`}
 										data={produtos}
 									/>
 								</div>
@@ -115,7 +119,13 @@ export default async function Page({
 						</>
 					)}
 				</main>
-				<Footer EmpresaName={nomeEmpresa.split('-').join(' ')} />
+
+				<footer className="bg-primary text-primary-content p-4">
+					<div className="container mx-auto text-center">
+						<p className="capitalize">{nomeEmpresa.split('-').join(' ')}</p>
+						<p>ConectaQR - Todos os direitos reservados. &copy; {new Date().getFullYear()} </p>
+					</div>
+				</footer>
 			</Header>
 		</div>
 	);

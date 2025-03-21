@@ -17,8 +17,8 @@ export default function Header({ EmpresaName, children, Categorias }: HeaderProp
 				type="checkbox"
 				className="drawer-toggle"
 			/>
-			<div className="drawer-content flex flex-col">
-				<nav className="navbar flex bg-primary text-primary-content w-full p-3 relative justify-center">
+			<div className="drawer-content flex flex-col bg-gradient-to-r from-primary to-secondary">
+				<nav className="navbar flex text-primary-content w-full p-3 relative justify-center">
 					<label
 						htmlFor="my-drawer"
 						className="btn btn-square btn-ghost left-3 absolute md:relative md:mr-5">
@@ -38,7 +38,7 @@ export default function Header({ EmpresaName, children, Categorias }: HeaderProp
 						/>
 					</div>
 				</nav>
-				<div className="md:hidden bg-primary w-full px-5">
+				<div className="md:hidden w-full px-5">
 					<SearchProduto
 						className="input input-bordered gap-2 w-full my-2 text-base-content"
 						empresa={EmpresaName}
@@ -50,16 +50,16 @@ export default function Header({ EmpresaName, children, Categorias }: HeaderProp
 				<label
 					htmlFor="my-drawer"
 					className="drawer-overlay"></label>
-				<ul className="menu bg-base-200 min-h-full w-66 p-4">
+				<ul className="menu bg-base-200 min-h-full w-70 p-4">
 					{Categorias && (
 						<>
-							<h1 className="text-xl font-bold text-center my-4">Categorias</h1>
+							<h1 className="text-xl font-bold text-center my-3">Categorias</h1>
 							<div className="flex flex-col justify-center">
 								{Categorias.map((value) => (
 									<Link
 										key={value.nome}
 										href={`/${EmpresaName}/produtos?categoria=${value.nome}`}
-										className="btn btn-primary mb-2 justify-between">
+										className="btn btn-lg btn-ghost mb-2 justify-between">
 										{value.nome} <FaArrowRight />
 									</Link>
 								))}

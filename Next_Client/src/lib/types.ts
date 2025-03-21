@@ -1,27 +1,22 @@
-type EmpresaPublica = {
+interface EmpresaPublica {
 	nome: string;
 	descricao?: string;
 	tema: string;
-
 	maps?: string;
 	telefone?: string;
 	instagram?: string;
 	emailContato?: string;
-};
 
-type EmpresaPrivate = {
-	nome: string;
+	foto?: string;
+	cidade?: string;
+}
+
+interface EmpresaPrivate extends EmpresaPublica {
 	email?: string;
 
-	descricao?: string;
-	tema: string;
-	maps?: string;
-	telefone?: string;
-	instagram?: string;
-	emailContato?: string;
 	categorias: Categoria[];
 	produtos: Produto[];
-};
+}
 
 type Categoria = {
 	id?: string;
@@ -37,7 +32,6 @@ type Produto = {
 };
 
 type ProdutoPageProps = {
-	error?: boolean;
 	data?: {
 		produtos: Produto[];
 		categorias: Categoria[];

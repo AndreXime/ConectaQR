@@ -4,16 +4,8 @@ import { useEffect, useRef } from 'react';
 import ProductCard from './ProductCard';
 import Glide, { Swipe, Breakpoints, Autoplay } from '@glidejs/glide/dist/glide.modular.esm';
 import '@glidejs/glide/dist/css/glide.core.min.css';
-import Link from 'next/link';
-import { FaArrowRight } from 'react-icons/fa';
 
-type Prop = {
-	data: Produto[];
-	categoria: string;
-	urlCategoria: string;
-};
-
-export default function Slider({ data, categoria, urlCategoria }: Prop) {
+export default function Slider({ data }: { data: Produto[] }) {
 	const sliderRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -21,7 +13,7 @@ export default function Slider({ data, categoria, urlCategoria }: Prop) {
 		// Se o tamanho do array de produtos for menor q o esperado ajustar para o proprio tamanho
 		const slider = new Glide(sliderRef.current, {
 			type: 'slider',
-			gap: 10,
+			gap: 1,
 			autoplay: 5000,
 			perView: data.length + 1 < 4 ? data.length + 1 : 4,
 			rewind: false,
@@ -57,22 +49,10 @@ export default function Slider({ data, categoria, urlCategoria }: Prop) {
 								name={produto.nome}
 								price={produto.preco}
 								image={produto.imagemUrl}
-								className="cursor-grab border-1"
+								className="cursor-grab border-base-300 border-2"
 							/>
 						</li>
 					))}
-					<li className="glide__slide">
-						<Link href={urlCategoria}>
-							<div className="bg-base-100 rounded-xl border-1 h-85 flex flex-col items-center justify-center">
-								<div className="flex flex-col items-center gap-10">
-									<FaArrowRight size={50} />
-									<h6 className="text-lg text-center font-semibold leading-6 text-base-content h-12 line-clamp-2">
-										Ver mais de {categoria}
-									</h6>
-								</div>
-							</div>
-						</Link>
-					</li>
 				</ul>
 			</div>
 		</div>
