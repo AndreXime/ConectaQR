@@ -40,58 +40,56 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 							<p className="text-lg md:text-xl opacity-90 max-w-xl">
 								{info.descricao || 'Não foi informado nenhuma descrição'}
 							</p>
-							<div className="flex flex-wrap gap-5 pt-4 justify-center md:justify-start">
+							<div className="flex flex-col flex-wrap gap-3 pt-4 justify-center md:justify-start">
 								<Link
 									href={`/${nomeEmpresa}/produtos`}
 									className="btn btn-accent btn-lg">
 									<FaBagShopping className="mr-2" />
 									Ver produtos
 								</Link>
-								<div className="flex gap-3">
+								<div className="grid grid-cols-1 md:grid-cols-3 gap-3">
 									{info.instagram && (
 										<Link
 											rel="noopener noreferrer nofollow"
-											className="btn btn-ghost btn-lg"
+											className="btn btn-lg btn-ghost gap-3 bg-purple-500 text-white"
 											href={`https://www.instagram.com/${
 												info.instagram.startsWith('@') ? info.instagram.slice(1) : info.instagram
 											}`}>
 											<FaInstagram size={35} />
-											<span className="sr-only">Instagram</span>
+											Instagram
 										</Link>
 									)}
 									{info.telefone && (
 										<Link
 											rel="noopener noreferrer nofollow"
-											className="btn btn-ghost btn-lg"
+											className="btn btn-ghost btn-lg gap-3 bg-white text-black"
 											href={`tel:${info.telefone}`}>
 											<FaPhone size={33} />
-											<span className="sr-only">Telefone</span>
+											Telefone
 										</Link>
 									)}
 
 									{info.emailContato && (
 										<Link
 											rel="noopener noreferrer nofollow"
-											className="btn btn-ghost btn-lg"
+											className="btn btn-ghost btn-lg gap-3 bg-[#FF6347] text-white"
 											href={`mailto:${info.emailContato}`}>
 											<MdEmail size={35} />
-											<span className="sr-only">Email</span>
+											Email
 										</Link>
 									)}
 								</div>
 							</div>
 						</div>
 						<div className="md:w-1/2 flex justify-center">
-							<div className="relative w-50 h-50 md:w-80 md:h-80 bg-white/10 rounded-full p-2">
-								<div className="absolute inset-0 rounded-2xl overflow-hidden bg-white/5 backdrop-blur-sm">
-									<Image
-										src={!!info.foto ? info.foto : '/assets/blankpic.webp'}
-										alt="Foto dessa empresa"
-										width={500}
-										height={500}
-										className="object-cover"
-									/>
-								</div>
+							<div className="flex items-center justify-center w-full h-full rounded-full p-2">
+								<Image
+									src={!!info.foto ? info.foto : '/assets/blankpic.webp'}
+									alt="Foto dessa empresa"
+									width={500}
+									height={500}
+									className="object-contain w-full h-full"
+								/>
 							</div>
 						</div>
 					</div>
@@ -104,7 +102,7 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 						<div className="md:w-1/2 py-9">
 							<h2 className="text-3xl font-bold">Nossa Localização</h2>
 							{info.cidade && (
-								<div className="flex items-center gap-2 text-blue-600">
+								<div className="flex items-center gap-2 text-blue-600 mt-3">
 									<FaMapPin className="h-5 w-5" />
 									<span>{info.cidade}</span>
 								</div>

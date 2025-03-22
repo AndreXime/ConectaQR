@@ -13,7 +13,7 @@ router.post('/empresa/login', validateInput('LoginEmpresa'), Auth.loginEmpresa);
 router.post('/empresa/registro', validateInput('RegistrarEmpresa'), Auth.createEmpresa);
 
 /* Rotas que precisam de autenticação */
-router.patch('/empresa', verifyAuth, validateInput('UpdateEmpresa'), Empresa.updateEmpresa);
+router.patch('/empresa', verifyAuth, upload.single('imagem'), validateInput('UpdateEmpresa'), Empresa.updateEmpresa);
 router.delete('/empresa', verifyAuth, Empresa.deleteEmpresa);
 router.get('/empresa', verifyAuth, Empresa.getAllDataFromOwnEmpresa);
 

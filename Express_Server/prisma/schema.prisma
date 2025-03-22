@@ -17,8 +17,10 @@ model Empresa {
   telefone       String?
   emailContato   String?
   instagram      String?
-  tema           String? @default("bumblebee")
+  tema           String? @default("corporate")
   maps           String?
+  cidade         String?
+  foto           String?
 
   categorias Categoria[]
   produtos   Produto[]

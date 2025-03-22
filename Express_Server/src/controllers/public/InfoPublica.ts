@@ -121,6 +121,8 @@ const getAllEmpresasOrByName = async (req: Request, res: Response): Promise<void
 				telefone: true,
 				instagram: true,
 				emailContato: true,
+				cidade: true,
+				foto: true,
 			},
 		});
 
