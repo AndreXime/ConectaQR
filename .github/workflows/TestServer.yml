@@ -1,0 +1,29 @@
+name: Testar Servidor
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'Express_Server/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'Express_Server/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Instalar dependências
+        working-directory: server
+        run: npm ci
+
+      - name: Executar testes
+        working-directory: server
+        run: npm run build

@@ -1,0 +1,22 @@
+name: Deploy Server
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'Express_Server/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Conectar via SSH e executar deploy
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.AWS_HOST }}
+          username: ${{ secrets.AWS_USER }}
+          key: ${{ secrets.AWS_SSH_KEY }}
+          script: |
+            ./deploy.sh
