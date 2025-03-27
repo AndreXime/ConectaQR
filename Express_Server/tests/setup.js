@@ -1,12 +1,5 @@
-const { execSync } = require("child_process");
-const { PrismaClient } = require("@prisma/client");
-
-const prisma = new PrismaClient();
+const { execSync } = require('child_process');
 
 beforeAll(async () => {
-  execSync("npm run seed");
-});
-
-afterAll(async () => {
-  await prisma.$disconnect();
+	execSync('node tests/seed.js');
 });

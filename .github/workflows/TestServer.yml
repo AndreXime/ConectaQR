@@ -13,17 +13,31 @@ on:
       - 'Express_Server/**'
 
 jobs:
-  test:
+  Testando:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout do código
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Instalar dependências
-        working-directory: server
-        run: npm ci
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '21'
 
-      - name: Executar testes
-        working-directory: server
-        run: npm run build
+      - name: Iniciando containers
+        run: sudo docker compose up -d database server && sleep 20
+
+      - name: Copiar pasta de testes para o container
+        run: sudo docker cp Express_Server/tests connectqr-server-1:/app/tests
+
+      - name: Configurando ambiente de teste
+        run: docker compose exec -T server npm install --include=dev &&
+          docker compose exec -T server npx prisma migrate reset --force &&
+          docker compose exec -T server npx prisma migrate deploy
+
+      - name: Debug
+        run: docker compose exec -T server ls &&
+          docker compose exec -T server npm list &&
+          docker compose exec -T server cat package.json
+
+      - name: Executando testes
+        run: docker compose exec -T server npm test

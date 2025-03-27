@@ -1,57 +1,56 @@
 {
-  "name": "conectaqr",
-  "version": "1.5.0",
-  "type": "module",
-  "main": "server.js",
-  "private": true,
-  "engines": {
-    "node": ">=21.0.0"
-  },
-  "scripts": {
-    "start": "node dist/server.js",
-    "dev": "npm run lint -s && npm run build -s && node --require dotenv/config dist/server.js",
-    "build": "rm -rf ./dist && tsc && echo Build concluida",
-    "lint": "eslint ./src && echo Nenhum problema encontrado",
-    "test": "npx jest --verbose",
-    "seed": "npx prisma migrate reset --force && npx node tests/seed.js"
-  },
-  "keywords": [],
-  "author": "AndreXimenes",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "@prisma/client": "^6.5.0",
-    "argon2": "^0.41.1",
-    "cookie-parser": "^1.4.7",
-    "cors": "^2.8.5",
-    "express": "^5.0.0",
-    "jsonwebtoken": "^9.0.2",
-    "multer": "^1.4.5-lts.2",
-    "pg": "^8.14.1",
-    "sharp": "^0.33.5"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.22.0",
-    "@types/cookie-parser": "^1.4.8",
-    "@types/express": "^5.0.1",
-    "@types/jsonwebtoken": "^9.0.9",
-    "@types/multer": "^1.4.12",
-    "@types/node": "^22.13.10",
-    "dotenv": "^16.4.7",
-    "eslint": "^9.22.0",
-    "jest": "^29.7.0",
-    "jest-extended": "^4.0.2",
-    "prisma": "^6.5.0",
-    "supertest": "^7.1.0",
-    "typescript": "^5.8.2",
-    "typescript-eslint": "^8.27.0"
-  },
-  "jest": {
-    "testEnvironment": "node",
-    "transform": {},
-    "setupFilesAfterEnv": [
-      "<rootDir>/tests/setup.js",
-      "jest-extended/all"
-    ]
-  }
+	"name": "conectaqr",
+	"version": "1.5.0",
+	"type": "module",
+	"main": "server.js",
+	"private": true,
+	"engines": {
+		"node": ">=21.0.0"
+	},
+	"scripts": {
+		"start": "node dist/server.js",
+		"dev": "npm run build -s && node --require dotenv/config dist/server.js",
+		"build": "rm -rf ./dist && tsc",
+		"lint": "eslint ./src",
+		"test": "npx jest --verbose"
+	},
+	"keywords": [],
+	"author": "AndreXimenes",
+	"license": "ISC",
+	"description": "",
+	"dependencies": {
+		"@prisma/client": "^6.5.0",
+		"argon2": "^0.41.1",
+		"cookie-parser": "^1.4.7",
+		"cors": "^2.8.5",
+		"express": "^5.0.0",
+		"jsonwebtoken": "^9.0.2",
+		"multer": "^1.4.5-lts.2",
+		"pg": "^8.14.1",
+		"sharp": "^0.33.5"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.22.0",
+		"@types/cookie-parser": "^1.4.8",
+		"@types/express": "^5.0.1",
+		"@types/jsonwebtoken": "^9.0.9",
+		"@types/multer": "^1.4.12",
+		"@types/node": "^22.13.10",
+		"dotenv": "^16.4.7",
+		"eslint": "^9.22.0",
+		"jest": "^29.7.0",
+		"jest-extended": "^4.0.2",
+		"prisma": "^6.5.0",
+		"supertest": "^7.1.0",
+		"typescript": "^5.8.2",
+		"typescript-eslint": "^8.27.0"
+	},
+	"jest": {
+		"testEnvironment": "node",
+		"transform": {},
+		"setupFilesAfterEnv": [
+			"./tests/setup.js",
+			"jest-extended/all"
+		]
+	}
 }

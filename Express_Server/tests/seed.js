@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { execSync, exec } from 'child_process';
 
 const prisma = new PrismaClient();
 const { categoria, empresa, produto } = prisma;
@@ -42,9 +43,11 @@ async function main() {
 		})),
 	});
 }
-
-await main();
-
-console.log('Seed ocorreu com sucesso');
+try {
+	await main();
+	console.log('Seed ocorreu com sucesso');
+} catch {
+	console.log('Ocorreu um erro na seed mas o processo continuara');
+}
 
 await prisma.$disconnect();

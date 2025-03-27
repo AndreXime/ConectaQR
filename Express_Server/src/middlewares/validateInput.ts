@@ -1,9 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
+import type { SchemaNomes, SchemaType } from '../types/validateInput.js';
 import { validateExtraFields, validateEmail, validateString, validateNumber } from './validateFunctions.js';
-
-type SchemaNomes = 'RegistrarEmpresa' | 'Produtos' | 'LoginEmpresa' | 'UpdateEmpresa' | 'Categoria';
-
-type SchemaType = Record<string, (data: Record<string, unknown>) => string[]>;
 
 export default function validateInput(schemaNome: SchemaNomes) {
 	return (req: Request, res: Response, next: NextFunction): void => {

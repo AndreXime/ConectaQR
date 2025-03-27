@@ -1,15 +1,14 @@
 {
-  "compilerOptions": {
-    "target": "ES2023",
-    "module": "NodeNext",
-    "moduleResolution": "nodenext",
-    "strict": true,
-    "esModuleInterop": true,
-    "useUnknownInCatchVariables": false,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "types": ["node", "jest"]
-  },
-  "include": ["src/*.ts", "src/**/*.ts"],
-  "exclude": ["node_modules"]
+	"compilerOptions": {
+		"target": "ES2023",
+		"module": "NodeNext",
+		"moduleResolution": "nodenext",
+		"strict": true,
+		"esModuleInterop": true,
+		"useUnknownInCatchVariables": false,
+		"outDir": "./dist",
+		"rootDir": "./src",
+		"types": ["node", "jest"]
+	},
+	"exclude": ["node_modules"]
 }
