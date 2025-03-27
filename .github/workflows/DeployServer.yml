@@ -1,0 +1,35 @@
+name: Deploy Server AWS
+
+on:
+  workflow_run:
+    workflows: ['Testes - Servidor Express E2E']
+    types:
+      - completed
+
+jobs:
+  deploy:
+    name: Deploy na AWS
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+      - name: Configurar chave SSH
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.AWS_SSH_KEY }}
+
+      - name: Executar deploy
+        run: |
+          ssh -o StrictHostKeyChecking=no \
+             ${{ secrets.AWS_USER }}@${{ secrets.AWS_HOST }} \
+             "./deploy.sh"
+
+      - name: Verificar deploy
+        run: |
+          RESPONSE=$(curl -s ${{ secrets.IP_DOMAIN }})
+          echo "Resposta recebida: $RESPONSE"
+            
+          if [[ "$RESPONSE" != *'"message":"Pong"'* ]]; then
+             echo "❌ Resposta inesperada: $RESPONSE"
+             exit 1
+          fi
