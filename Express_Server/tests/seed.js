@@ -1,5 +1,4 @@
 import { PrismaClient } from '@prisma/client';
-import { execSync, exec } from 'child_process';
 
 const prisma = new PrismaClient();
 const { categoria, empresa, produto } = prisma;
