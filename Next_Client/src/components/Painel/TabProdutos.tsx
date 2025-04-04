@@ -251,19 +251,18 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 
 	return (
 		<div>
-			<div className="collapse collapse-arrow bg-base-200 border border-base-300 mb-8">
+			<div className="collapse collapse-arrow bg-primary text-primary-content border border-base-300 mb-8">
 				<input type="checkbox" />
 				<div className="collapse-title font-semibold">Adicionar categorias</div>
 				<div className="collapse-content grid grid-cols-1 gap-4 mx-1">
 					<form
 						onSubmit={handleCategoriaSubmit}
-						className="flex flex-col md:flex-row gap-4">
-						<label className="floating-label">
-							<span>Categorias</span>
+						className="flex flex-col md:flex-row gap-4 text-black">
+						<label className="input w-full md:w-1/2">
+							<span className="label">Nome da categoria</span>
 							<input
 								name="categoria"
 								type="text"
-								className="input w-full"
 							/>
 						</label>
 
@@ -299,7 +298,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 					</div>
 				</div>
 			</div>
-			<div className="collapse collapse-arrow bg-base-200 border border-base-300 mb-8">
+			<div className="collapse collapse-arrow bg-primary text-primary-content border border-base-300 mb-8">
 				<input type="checkbox" />
 				<div className="collapse-title font-semibold">Adicionar produto</div>
 				<form
@@ -320,7 +319,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 						/>
 					</label>
 
-					<label className="floating-label flex-grow-1">
+					<label className="floating-label flex-grow-1 text-black">
 						<span>Nome do produto</span>
 						<input
 							name="nome"
@@ -329,7 +328,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 						/>
 					</label>
 
-					<label className="floating-label flex-grow-1">
+					<label className="floating-label flex-grow-1 text-black">
 						<span>Preço</span>
 						<input
 							name="preco"
@@ -338,7 +337,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 						/>
 					</label>
 
-					<label className="floating-label flex-grow-1">
+					<label className="floating-label flex-grow-1 text-black">
 						<span>Categoria</span>
 						<select
 							name="categoriaId"
@@ -521,7 +520,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 							<form
 								onSubmit={handleCategoriaDelete}
 								className="flex flex-col gap-4 mx-2 mt-3">
-								<p>Selecione uma outra categoria para herdar os produtos dessa categoria ser deletada</p>
+								<p>Escolha outra categoria para mover os produtos antes de excluir esta</p>
 								<input
 									name="categoriaId"
 									value={EditandoCategoria.id}

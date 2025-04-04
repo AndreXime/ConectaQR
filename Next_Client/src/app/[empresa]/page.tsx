@@ -35,7 +35,7 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 			<header className="bg-gradient-to-r from-primary to-secondary ">
 				<div className="container mx-auto px-4 py-8 md:py-16">
 					<div className="flex flex-col md:flex-row items-center justify-between gap-8">
-						<div className="space-y-4 md:w-1/2 text-center md:text-left">
+						<div className="space-y-4 md:w-1/2 text-center md:text-left text-primary-content">
 							<h1 className="text-4xl md:text-5xl font-bold tracking-tight capitalize">{nomeEmpresa}</h1>
 							<p className="text-lg md:text-xl opacity-90 max-w-xl">
 								{info.descricao || 'Não foi informado nenhuma descrição'}
@@ -64,7 +64,7 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 											rel="noopener noreferrer nofollow"
 											className="btn btn-ghost btn-lg gap-3 bg-white text-black"
 											href={`tel:${info.telefone}`}>
-											<FaPhone size={33} />
+											<FaPhone size={30} />
 											Telefone
 										</Link>
 									)}

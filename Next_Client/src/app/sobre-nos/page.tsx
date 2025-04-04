@@ -16,7 +16,7 @@ export default async function CompaniesPage() {
 	return (
 		<Drawer>
 			<div className=" bg-base-100 py-7 px-4 flex justify-center">
-				<div className="card shadow-xl lg:max-w-1/2 bg-base-100">
+				<div className="card shadow-2xl lg:max-w-1/2 bg-base-100">
 					<div className="card-body ">
 						<h1 className="text-3xl font-bold mb-4">Sobre a plataforma</h1>
 						<div className="flex flex-row gap-2 font-bold">

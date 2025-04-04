@@ -105,7 +105,7 @@ export default async function Page({
 										<h2 className="text-xl py-4 font-bold">{categoria}</h2>
 										<Link
 											href={`/${nomeEmpresa}/produtos?categoria=${categoria}`}
-											className="text-xl py-4 font-bold">
+											className="text-xl py-4 font-bold underline">
 											Ver mais
 										</Link>
 									</div>

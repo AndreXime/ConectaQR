@@ -29,13 +29,13 @@ export default function Feedback() {
 	};
 
 	return (
-		<div className="card shadow-xl py-10 px-5 lg:max-w-1/2 mx-auto bg-base-100">
+		<div className="card shadow-2xl py-10 px-5 lg:max-w-1/2 mx-auto bg-base-100">
 			{/* Título */}
 			<h1 className="text-3xl font-bold text-center mb-6">Feedback e Suporte</h1>
 
 			{/* FAQ - Perguntas Frequentes */}
 			<div className="mb-10">
-				<h2 className="text-2xl font-semibold mb-4 p-2">Perguntas Frequentes</h2>
+				<h2 className="text-2xl font-semibold mb-4">Perguntas Frequentes</h2>
 
 				<div className="join join-vertical w-full">
 					<div className="collapse collapse-arrow bg-base-100">
