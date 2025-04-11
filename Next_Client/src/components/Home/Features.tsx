@@ -1,29 +1,5 @@
-const cards = [
-	{
-		title: 'Catálogo Digital',
-		description: 'Exiba seus produtos organizados por categorias com fotos e descrições detalhadas.',
-	},
-	{
-		title: 'QR Code Personalizado',
-		description: 'Gere QR Codes para sua loja que podem ser impressos e colocados em qualquer lugar.',
-	},
-	{
-		title: 'Temas Personalizáveis',
-		description: 'Escolha entre diversos temas ou personalize as cores para combinar com sua marca.',
-	},
-	{
-		title: 'Contato Direto',
-		description: 'Integração com WhatsApp, telefone e email para facilitar o contato dos clientes.',
-	},
-	{
-		title: 'Estatísticas de Acesso',
-		description: 'Acompanhe quantas pessoas visitam sua página e quais produtos mais interessam.',
-	},
-	{
-		title: 'Sem Comissões',
-		description: 'Diferente de marketplaces, não cobramos comissão sobre suas vendas.',
-	},
-];
+import { features } from '@/content';
+
 export default function FeaturesSection() {
 	return (
 		<section
@@ -41,7 +17,7 @@ export default function FeaturesSection() {
 					</div>
 				</div>
 				<div className="mx-auto grid max-w-5xl items-center gap-6 py-12 md:grid-cols-2 lg:grid-cols-3">
-					{cards.map((card, index) => (
+					{features.map((card, index) => (
 						<div
 							key={index}
 							className="card bg-base-100 shadow-xl h-full">

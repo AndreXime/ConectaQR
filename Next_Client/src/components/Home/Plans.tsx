@@ -1,20 +1,6 @@
+import { freeTier, advanceTier } from '@/content';
 import Link from 'next/link';
 import { FaCheck } from 'react-icons/fa';
-
-const freePointers = [
-	'Criação da empresa na plataforma',
-	'Até 50 produtos',
-	'100mb de armazenamento de foto de produtos',
-	'Suporte da equipe tecnica',
-];
-
-const advancePointers = [
-	'Produtos ilimitados',
-	'1gb de armazenamento de foto de produtos',
-	'Prioridade no suporte da equipe tecnica',
-	'Prioridade na sugestão de novas funcionalidades para plataforma',
-	'Ajudar a manter a plataforma',
-];
 
 export default function PricingPlans() {
 	return (
@@ -35,7 +21,7 @@ export default function PricingPlans() {
 							</Link>
 
 							<ul className="text-left mt-4">
-								{freePointers.map((p, k) => {
+								{freeTier.map((p, k) => {
 									return (
 										<li
 											key={k}
@@ -54,7 +40,7 @@ export default function PricingPlans() {
 							<h2 className="font-bold mt-4 text-3xl text-center inline-block">Qualquer valor</h2>
 							<button className="btn btn-sm mt-8 btn-primary normal-case w-full">Torna-se doador</button>
 							<ul className="text-left mt-4">
-								{advancePointers.map((p, k) => {
+								{advanceTier.map((p, k) => {
 									return (
 										<li
 											key={k}
