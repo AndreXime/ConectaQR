@@ -1,42 +1,50 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { FaSearch } from 'react-icons/fa';
 
 export default function hero() {
 	return (
-		<header className="hero py-10 bg-gradient-to-t from-blue-500 to-purple-700 min-h-[80dvh]">
-			<div className="hero-content px-4 max-w-6xl flex-col lg:flex-row">
-				<div className="w-full lg:w-1/2 md:h-100 text-center lg:text-left flex flex-col ">
-					<div className="flex flex-col space-y-4">
-						<div className="space-y-2">
-							<h2 className="font-bold text-slate-100 text-3xl tracking-tighter sm:text-4xl md:text-5xl">
+		<section className="w-full py-24 lg:py-32 bg-gradient-to-br from-purple-50 via-blue-50 to-teal-50 ">
+			<div className="px-4 md:px-12 relative">
+				<div className="absolute inset-0 bg-grid-black/[0.02]  -z-10" />
+				<div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
+					<div className="flex flex-col justify-center space-y-4">
+						<div className="space-y-2 ">
+							<h1 className="text-center md:text-left text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-teal-500">
 								Crie sua própria página e exponha seus produtos em minutos!
-							</h2>
-							<p className="max-w-[900px] text-slate-100 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed ">
+							</h1>
+							<p className="text-center md:text-left max-w-[600px] text-muted-foreground md:text-xl text-black">
 								Modernize seu negócio de forma gratuita! Com nossa plataforma, você cria sua vitrine online em poucos
 								cliques e facilita o acesso dos seus clientes aos seus produtos.
 							</p>
 						</div>
+						<div className="flex flex-col gap-2 min-[400px]:flex-row justify-center md:justify-start w-full">
+							<Link
+								href={'/acesso'}
+								className="btn btn-outline p-2 flex-1 w-full bg-gradient-to-r from-purple-600 to-teal-500 hover:from-purple-700 hover:to-teal-600 text-white border-0">
+								Acessar agora
+							</Link>
+							<Link
+								href={'/empresas'}
+								className="btn btn-outline p-2 flex-1 w-full text-black border-purple-200  hover:bg-purple-50 ">
+								<FaSearch className="mr-2 h-4 w-4 text-purple-500" />
+								Buscar empresas
+							</Link>
+						</div>
 					</div>
-
-					<div className="flex justify-center lg:justify-start flex-wrap gap-3 mt-5">
-						<Link href="/acesso">
-							<button className="btn text-lg px-12 whitespace-nowrap btn-warning">Começar agora</button>
-						</Link>
-
-						<Link href="/empresas">
-							<button className="btn text-lg px-12 whitespace-nowrap btn-warning">Buscar empresas</button>
-						</Link>
+					<div className="mx-auto lg:ml-auto relative mt-5">
+						<div className="absolute -inset-1 bg-gradient-to-r from-purple-500 to-teal-500 rounded-lg blur-md opacity-30"></div>
+						<Image
+							src="/assets/hero.jpg"
+							alt="Imagem do hero, uma pessoa olhando o celular dentro do supermercado"
+							width={550}
+							height={550}
+							className="rounded-lg object-contain relative"
+							priority
+						/>
 					</div>
 				</div>
-				<Image
-					width={800}
-					height={800}
-					priority={false}
-					alt="Imagem do hero, uma pessoa olhando o celular dentro do supermercado"
-					src={'/assets/hero.jpg'}
-					className="md:max-w-sm h-100 object-cover rounded-lg shadow-2xl mt-5"
-				/>
 			</div>
-		</header>
+		</section>
 	);
 }

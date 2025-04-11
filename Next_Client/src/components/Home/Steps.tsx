@@ -1,48 +1,59 @@
-import { FaUser, FaBuilding, FaBox, FaPaintBrush } from 'react-icons/fa';
+import { FaGear, FaQrcode, FaStore, FaUpload } from 'react-icons/fa6';
 const generationStepData = [
 	{
-		icon: <FaBuilding className="w-10 h-10 inline-block mr-2" />,
-		description: 'Faça o cadastro da sua empresa',
+		icon: <FaStore className="h-6 w-6 text-purple-600 " />,
+		bg: 'bg-purple-100',
+		title: '1. Cadastre sua empresa',
+		description: 'Registre sua loja com informações básicas para começar',
 	},
 	{
-		icon: <FaPaintBrush className="w-10 h-10 inline-block mr-2" />,
-		description: 'Personalize sua loja com descricao, tema e meios de contato',
+		icon: <FaGear className="h-6 w-6 text-blue-600 " />,
+		bg: 'bg-blue-100',
+		title: '2. Personalize sua loja',
+		description: 'Adicione descrição, escolha um tema e configure meios de contato',
 	},
 	{
-		icon: <FaBox className="w-10 h-10 inline-block mr-2" />,
-		description: 'Adicione seu produtos com imagens e suas categorias',
+		icon: <FaUpload className="h-6 w-6 text-teal-600 " />,
+		bg: 'bg-teal-100',
+		title: '3. Adicione seus produtos',
+		description: 'Cadastre produtos com imagens e organize em categorias',
 	},
 	{
-		icon: <FaUser className="w-10 h-10 inline-block mr-2" />,
-		description: 'Gere um QRCode e imprima na sua loja presencial',
+		icon: <FaQrcode className="h-6 w-6 text-amber-600 " />,
+		bg: 'bg-amber-100',
+		title: '4. Gere um QR Code',
+		description: 'Imprima e coloque na sua loja física para clientes acessarem',
 	},
 ];
 
 export default function GenerationStep() {
 	return (
-		<>
-			<section className="grid place-items-center bg-base-100 w-full ">
-				<div className="max-w-6xl w-full py-24 px-4 content-center justify-center">
-					<h2 className="text-3xl  text-center font-bold">Tenha sua página em passos simples</h2>
-					<div className="grid mt-24 md:grid-cols-4 grid-cols-1 gap-8">
-						{generationStepData.map((i, k) => (
-							<div
-								key={k}
-								className="card w-full shadow-xl hover:shadow-2xl">
-								<div className="grid -mt-4 place-items-center">
-									<div className="w-8 h-8  rounded-full  bg-amber-500 text-slate-100 flex font-bold justify-center items-center">
-										<p>{k + 1}</p>
-									</div>
-								</div>
-								<div className="card-body  items-center text-center">
-									<p className="text-primary">{i.icon}</p>
-									<p className="mt-2 font-bold"> {i.description}</p>
-								</div>
-							</div>
-						))}
+		<section
+			id="como-funciona"
+			className="w-full py-12 md:py-24 lg:py-32">
+			<div className="px-4 md:px-6">
+				<div className="flex flex-col items-center justify-center space-y-4 text-center">
+					<div className="space-y-2">
+						<h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
+							Tenha sua página em passos simples
+						</h2>
+						<p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
+							Comece a mostrar seus produtos online em apenas alguns minutos
+						</p>
 					</div>
 				</div>
-			</section>
-		</>
+				<div className="mx-auto grid px-10 items-center gap-6 py-12 md:grid-cols-2 lg:grid-cols-4">
+					{generationStepData.map((step) => (
+						<div
+							key={step.title}
+							className="flex flex-col items-center space-y-2 border rounded-lg p-6 shadow-sm h-full">
+							<div className={'flex h-12 w-12 items-center justify-center rounded-full ' + step.bg}>{step.icon}</div>
+							<h3 className="text-xl font-bold">{step.title}</h3>
+							<p className="text-sm text-muted-foreground text-center">{step.description}</p>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
 	);
 }

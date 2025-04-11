@@ -1,10 +1,16 @@
 import Link from 'next/link';
 import { FaCheck } from 'react-icons/fa';
 
-const freePointers = ['Acesso a plataforma toda e todos os seus recursos', 'Suporte da equipe tecnica'];
+const freePointers = [
+	'Criação da empresa na plataforma',
+	'Até 50 produtos',
+	'100mb de armazenamento de foto de produtos',
+	'Suporte da equipe tecnica',
+];
 
 const advancePointers = [
-	'Todos os beneficios do plano gratis',
+	'Produtos ilimitados',
+	'1gb de armazenamento de foto de produtos',
 	'Prioridade no suporte da equipe tecnica',
 	'Prioridade na sugestão de novas funcionalidades para plataforma',
 	'Ajudar a manter a plataforma',

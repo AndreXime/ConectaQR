@@ -1,11 +1,13 @@
-import { Footer, Hero, Drawer, Plans, Steps } from '@/components/Home';
+import { Footer, Hero, Drawer, Plans, Steps, FeaturesSection, CTASection } from '@/components/Home';
 
 export default async function Home() {
 	return (
-		<Drawer>
+		<Drawer absolute>
 			<Hero />
 			<Steps />
+			<FeaturesSection />
 			<Plans />
+			<CTASection />
 			<Footer />
 		</Drawer>
 	);

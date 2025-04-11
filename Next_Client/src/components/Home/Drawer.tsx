@@ -31,7 +31,7 @@ export default function Navbar({ children, absolute }: props) {
 						ConectaQR
 					</Link>
 					<div className="hidden flex-none lg:block">
-						<ul className="menu menu-horizontal divide-x divide-gray-500">
+						<ul className="menu menu-horizontal ">
 							<li className=" px-1">
 								<ThemeSwitcher />
 							</li>
