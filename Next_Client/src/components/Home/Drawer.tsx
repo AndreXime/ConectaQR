@@ -79,28 +79,28 @@ export default function Navbar({ children, absolute }: props) {
 					<li className="text-lg font-bold text-center mt-4 mb-7">Navegação do site</li>
 					<li>
 						<Link
-							className="btn btn-primary mb-3 flex justify-between"
+							className="btn btn-primary btn-ghost mb-3 flex justify-between"
 							href="/empresas">
 							Empresas parceiras <FaArrowRight />
 						</Link>
 					</li>
 					<li>
 						<Link
-							className="btn btn-primary mb-3 flex justify-between"
+							className="btn btn-primary btn-ghost mb-3 flex justify-between"
 							href="/acesso">
 							Painel da empresa <FaArrowRight />
 						</Link>
 					</li>
 					<li>
 						<Link
-							className="btn btn-primary mb-3 flex justify-between"
+							className="btn btn-primary btn-ghost mb-3 flex justify-between"
 							href="/termos-e-suporte">
 							Termos e Suporte <FaArrowRight />
 						</Link>
 					</li>
 					<li>
 						<Link
-							className="btn btn-primary mb-3 flex justify-between"
+							className="btn btn-primary btn-ghost mb-3 flex justify-between"
 							href="/sobre-nos">
 							Sobre a plataforma <FaArrowRight />
 						</Link>
@@ -108,7 +108,7 @@ export default function Navbar({ children, absolute }: props) {
 					<li>
 						<ThemeSwitcher
 							text
-							className="btn-outline flex justify-between"
+							className="btn btn-primary btn-ghost flex justify-between"
 						/>
 					</li>
 				</ul>

@@ -104,7 +104,7 @@ const getAllEmpresasOrByName = async (req: Request, res: Response): Promise<void
 
 		if (!nome) {
 			const data = await Empresa.findMany({
-				select: { nome: true, descricao: true },
+				select: { nome: true, descricao: true, foto: true },
 			});
 
 			res.status(200).json({ data: data });

@@ -204,7 +204,7 @@ export default function Editar({ Data, setEmpresa }: Props) {
 									className="flex justify-center items-center cursor-pointer rounded-2xl h-52 w-52 relative">
 									<Image
 										className="mask object-contain w-full h-full bg-base-200"
-										src={imagePreview || '/assets/blankpic.webp'}
+										src={imagePreview || '/assets/blankphoto.png'}
 										width={200}
 										height={200}
 										alt="Sua foto de perfil"

@@ -6,6 +6,33 @@ import { useState } from 'react';
 export default function CompaniesPage() {
 	const [activeTab, setActiveTab] = useState<'faq' | 'termos'>('faq');
 
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		const form = e.currentTarget;
+		const formData = new FormData(form);
+		const formInputs = Object.fromEntries(formData.entries());
+
+		try {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/feedback`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(formInputs),
+			});
+
+			if (!response.ok) {
+				alert('Erro ao enviar feedback');
+			} else {
+				alert('Feedback enviado com sucesso');
+
+				form.reset();
+			}
+		} catch {
+			alert('Erro ao enviar feedback');
+		}
+	};
+
 	return (
 		<Drawer>
 			<div className="min-h-dvh bg-base-100 flex flex-col">
@@ -65,15 +92,18 @@ export default function CompaniesPage() {
 										<div className="card-body">
 											<h2 className="card-title">Ainda tem dúvidas?</h2>
 											<p>Preencha o formulário abaixo e entraremos em contato o mais breve possível.</p>
-											<form className="space-y-4 mt-4">
+											<form
+												onSubmit={handleSubmit}
+												className="space-y-4 mt-4">
 												<div>
 													<label
-														htmlFor="name"
+														htmlFor="nome"
 														className="label">
 														Nome
 													</label>
 													<input
-														id="name"
+														id="nome"
+														name="nome"
 														type="text"
 														placeholder="Seu nome completo"
 														className="input input-bordered w-full"
@@ -87,32 +117,22 @@ export default function CompaniesPage() {
 													</label>
 													<input
 														id="email"
+														name="email"
 														type="email"
 														placeholder="seu@email.com"
 														className="input input-bordered w-full"
 													/>
 												</div>
+
 												<div>
 													<label
-														htmlFor="subject"
-														className="label">
-														Assunto
-													</label>
-													<input
-														id="subject"
-														type="text"
-														placeholder="Assunto da sua mensagem"
-														className="input input-bordered w-full"
-													/>
-												</div>
-												<div>
-													<label
-														htmlFor="message"
+														htmlFor="mensagem"
 														className="label">
 														Mensagem
 													</label>
 													<textarea
-														id="message"
+														id="mensagem"
+														name="mensagem"
 														placeholder="Descreva sua dúvida em detalhes"
 														className="textarea textarea-bordered w-full"
 														rows={4}></textarea>

@@ -1,5 +1,6 @@
 import { Drawer, Footer } from '@/components/Home';
 import Link from 'next/link';
+import Image from 'next/image';
 import type { EmpresaPublica } from '@/lib/types';
 
 async function getCompanies(): Promise<EmpresaPublica[] | null> {
@@ -29,22 +30,50 @@ export default async function CompaniesPage() {
 	return (
 		<Drawer>
 			<div className="min-h-dvh bg-base-100">
+				<section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-purple-50 via-blue-50 to-teal-50 ">
+					<div className="container mx-auto px-4">
+						<div className="flex flex-col items-center justify-center space-y-4 text-center">
+							<h1 className="text-3xl font-bold tracking-tighter sm:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-teal-500">
+								Empresas Cadastradas
+							</h1>
+							<p className="max-w-xl text-gray-600">Descubra lojas e serviços disponíveis na ConectaQR</p>
+							{/*<div className="flex w-full max-w-md space-x-2">
+								<input
+									type="text"
+									placeholder="Buscar por nome"
+									className="input input-bordered flex-1"
+								/>
+								<button
+									type="submit"
+									className="btn btn-primary">
+									Buscar
+								</button>
+							</div>*/}
+						</div>
+					</div>
+				</section>
+
 				{Empresas?.length ? (
-					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 m-3">
-						<h1 className="text-2xl font-bold text-center col-span-full pt-5">Empresas cadastradas na ConectaQR</h1>
+					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-10	 mb-15">
 						{Empresas.map((company, index) => (
 							<div
 								key={index}
-								className="card w-full bg-base-100 shadow-2xl rounded-lg overflow-hidden transition-all">
-								<div className="card-body">
-									<h3 className="card-title text-xl font-semibold justify-center capitalize">
-										{company.nome.split('-').join(' ')}
-									</h3>
-									<p className="text-base-content my-2 text-center">{company.descricao}</p>
-									<div className="card-actions justify-center">
+								className="card shadow-lg rounded-lg overflow-hidden flex flex-col">
+								<div className="relative h-48 w-full">
+									<Image
+										src={company.foto || '/assets/blankphoto.png'}
+										alt={company.nome}
+										className="object-contain w-full h-full"
+									/>
+								</div>
+								<div className="card-body flex flex-col flex-grow">
+									<h2 className="card-title">{company.nome}</h2>
+									<p className="text-sm text-gray-500">{company.cidade}</p>
+									<p className="text-gray-700 flex-grow">{company.descricao}</p>
+									<div className="card-actions justify-end">
 										<Link
-											className="btn btn-primary btn-wide"
-											href={`/${company.nome}`}>
+											href={`/${company.nome}`}
+											className="btn btn-secondary w-full">
 											Visitar
 										</Link>
 									</div>
@@ -53,7 +82,7 @@ export default async function CompaniesPage() {
 						))}
 					</div>
 				) : (
-					<div className="flex-grow m-10">
+					<div className="flex-grow p-10">
 						<h2 className="text-2xl text-center font-bold">Não foi possivel encontrar nenhuma empresa</h2>
 					</div>
 				)}

@@ -8,7 +8,7 @@ const equipe = [
 		nome: 'André',
 		cargo: 'Criador da plataforma',
 		descricao:
-			'Estudante de ciencias da computação, crie essa plataforma para ajudar meu pai na sua loja e escalei para mais do que isso',
+			'Estudante de ciencias da computação, criei essa plataforma para ajudar meu pai na sua loja e escalei para mais do que isso',
 		imagem: '/assets/andre.png',
 		redes: [
 			{ tipo: 'linkedin', url: '#' },
