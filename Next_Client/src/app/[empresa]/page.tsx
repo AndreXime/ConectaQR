@@ -37,23 +37,26 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 				<Image
 					src={info.foto || '/assets/blankphoto.png'}
 					alt={info.nome}
+					fill
 					className="object-contain w-full h-full"
 				/>
 				<div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
 				<div className="absolute bottom-0 left-0 p-4 md:p-8 w-full">
 					<div className="flex flex-col mt-2">
 						{info.cidade && (
-							<div className="flex items-center text-white text-sm mb-3">
+							<div className="flex items-center text-base-100 text-sm mb-3">
 								{/* Ícone React Icons substituindo MapPin */}
 								<FaMapMarkerAlt className="h-4 w-4 mr-1" />
 								{info.cidade}
 							</div>
 						)}
-						<h1 className="text-3xl md:text-5xl font-bold text-white capitalize">{info.nome}</h1>
+						<h1 className="text-3xl md:text-5xl font-bold text-base-100 capitalize">
+							{info.nome.split('-').join(' ')}
+						</h1>
 						<div className="mt-6">
 							<Link
 								href={`/${nomeEmpresa}/produtos`}
-								className="btn border-0 w-full bg-gradient-to-r text-white from-purple-600 to-teal-500 hover:from-purple-700 hover:to-teal-600 h-12 flex items-center justify-center">
+								className="btn border-0 w-full bg-gradient-to-r text-base-100 bg-primary hover:bg-accent h-12 flex items-center justify-center">
 								<FaShoppingCart className="mr-2 h-5 w-5" />
 								Ver Todos os Produtos
 							</Link>
@@ -64,14 +67,14 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 
 			{/* Conteúdo Principal */}
 			<section className="py-8 md:py-12">
-				<div className="container mx-auto px-4 md:px-6">
+				<div className=" 	 mx-auto px-4 md:px-6">
 					<div className="grid gap-8 lg:grid-cols-12">
 						{/* Coluna Esquerda – Sobre */}
 						<div className="lg:col-span-7 space-y-6">
 							<div className="card shadow">
 								<div className="card-body p-6">
 									<div className="flex items-center mb-4">
-										<FaInfoCircle className="h-5 w-5 mr-2 text-purple-600" />
+										<FaInfoCircle className="h-5 w-5 mr-2 text-primary" />
 										<h2 className="text-2xl font-bold">Sobre</h2>
 									</div>
 									<p className="text-gray-700 whitespace-pre-line">{info.descricao}</p>
@@ -82,7 +85,7 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 							<div className="card shadow">
 								<div className="card-body p-6">
 									<div className="flex items-center mb-4">
-										<FaMapMarkerAlt className="h-5 w-5 mr-2 text-purple-600" />
+										<FaMapMarkerAlt className="h-5 w-5 mr-2 text-primary" />
 										<h2 className="text-2xl font-bold">Localização</h2>
 									</div>
 									<div className="aspect-video bg-gray-200 rounded-md overflow-hidden">
@@ -126,7 +129,7 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 												className="flex items-start p-3 bg-white rounded-lg shadow-sm"
 												rel="noopener noreferrer nofollow"
 												href={`tel:${info.telefone}`}>
-												<FaPhone className="h-5 w-5 mr-3 text-purple-600 mt-1" />
+												<FaPhone className="h-5 w-5 mr-3 text-primary mt-1" />
 												<div>
 													<p className="font-medium">Telefone</p>
 													<p className="text-sm text-gray-500">{info.telefone}</p>
@@ -140,7 +143,7 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 												href={`https://www.instagram.com/${
 													info.instagram.startsWith('@') ? info.instagram.slice(1) : info.instagram
 												}`}>
-												<FaInstagram className="h-5 w-5 mr-3 text-purple-600 mt-1" />
+												<FaInstagram className="h-5 w-5 mr-3 text-primary mt-1" />
 												<div>
 													<p className="font-medium">Instagram</p>
 													<p className="text-sm text-gray-500">{info.instagram}</p>
@@ -152,7 +155,7 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 												className="flex items-start p-3 bg-white rounded-lg shadow-sm"
 												rel="noopener noreferrer nofollow"
 												href={`mailto:${info.emailContato}`}>
-												<MdEmail className="h-5 w-5 mr-3 text-purple-600 mt-1" />
+												<MdEmail className="h-5 w-5 mr-3 text-primary mt-1" />
 												<div>
 													<p className="font-medium">Email</p>
 													<p className="text-sm text-gray-500">{info.emailContato}</p>
@@ -177,7 +180,7 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 							<div className="card shadow">
 								<div className="card-body p-6">
 									<h3 className="text-xl font-bold mb-4 flex items-center">
-										<FaShoppingBag className="h-5 w-5 mr-2 text-purple-600" />
+										<FaShoppingBag className="h-5 w-5 mr-2 text-primary" />
 										Visite nossa loja
 									</h3>
 									<p className="text-gray-700 mb-4">
@@ -188,7 +191,6 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 										<ul className="text-sm text-gray-500 mt-2 space-y-1 list-disc list-inside">
 											<li>Ver todos os produtos disponíveis</li>
 											<li>Conhecer promoções exclusivas</li>
-											<li>Participar do programa de fidelidade</li>
 										</ul>
 									</div>
 								</div>

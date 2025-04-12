@@ -63,17 +63,18 @@ export default async function CompaniesPage() {
 									<Image
 										src={company.foto || '/assets/blankphoto.png'}
 										alt={company.nome}
+										fill
 										className="object-contain w-full h-full"
 									/>
 								</div>
 								<div className="card-body flex flex-col flex-grow">
-									<h2 className="card-title">{company.nome}</h2>
+									<h2 className="card-title capitalize">{company.nome.split('-').join(' ')}</h2>
 									<p className="text-sm text-gray-500">{company.cidade}</p>
 									<p className="text-gray-700 flex-grow">{company.descricao}</p>
-									<div className="card-actions justify-end">
+									<div className="card-actions justify-end mt-2">
 										<Link
 											href={`/${company.nome}`}
-											className="btn btn-secondary w-full">
+											className="btn btn-primary w-full">
 											Visitar
 										</Link>
 									</div>
