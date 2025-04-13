@@ -13,15 +13,15 @@ export default function Slider({ data }: { data: Produto[] }) {
 		// Se o tamanho do array de produtos for menor q o esperado ajustar para o proprio tamanho
 		const slider = new Glide(sliderRef.current, {
 			type: 'slider',
-			gap: 1,
-			autoplay: 5000,
-			perView: data.length + 1 < 4 ? data.length + 1 : 4,
+			gap: 0.0001,
+			autoplay: false,
+			perView: data.length < 4 ? data.length : 4,
 			rewind: false,
 			bound: true,
-			touchRatio: 1,
+			touchRatio: 0.9,
 			breakpoints: {
-				768: { perView: data.length + 1 < 2 ? data.length + 1 : 2 },
-				1024: { perView: data.length + 1 < 3 ? data.length + 1 : 3 },
+				768: { perView: data.length < 2 ? data.length : 2 },
+				1024: { perView: data.length < 3 ? data.length : 3 },
 			},
 		});
 

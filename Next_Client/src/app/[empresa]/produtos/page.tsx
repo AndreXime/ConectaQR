@@ -4,6 +4,8 @@ import { Header, ProductCard } from '@/components/Produtos';
 import Carrosel from '@/components/Produtos/Carrosel';
 import { montarQueryURL, OrganizarProdutos } from '@/lib/index';
 import type { Produto, ProdutoPageProps } from '@/lib/types';
+import SearchProduto from '@/components/Produtos/SearchProdut';
+import { FiChevronRight } from 'react-icons/fi';
 
 async function getProps(nome: string, query: string): Promise<ProdutoPageProps> {
 	const URL = `${process.env.NEXT_PUBLIC_API_URL}/produto/${nome}${query}`;
@@ -62,6 +64,16 @@ export default async function Page({
 				Categorias={data?.categorias}
 				EmpresaName={nomeEmpresa}>
 				<main className="flex-grow container min-h-screen pb-4 px-4 mx-auto">
+					<div className="space-y-4 py-10">
+						<h1 className="text-3xl font-bold sm:text-4xl md:text-5xl">Nossos Produtos</h1>
+						<p className="max-w-xl text-base md:text-lg">
+							Confira nossa variedade de produtos selecionados com qualidade.
+						</p>
+						<SearchProduto
+							className="input input-bordered gap-2 w-full my-2 text-base-content"
+							empresa={nomeEmpresa}
+						/>
+					</div>
 					{hasNoData && (
 						<h1 className="text-2xl font-bold text-center my-7">Não temos nenhum produto castrado no momento</h1>
 					)}
@@ -96,17 +108,18 @@ export default async function Page({
 					)}
 					{!hasNoData && !hasQueryFilter && (
 						<>
-							<div className="text-center py-10">
-								<h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Descubra nossos preço</h1>
-							</div>
 							{Object.entries(ProdutoPorCategoria).map(([categoria, produtos], index) => (
 								<div key={categoria}>
-									<div className="flex justify-between items-center px-2 pt-3">
-										<h2 className="text-xl py-4 font-bold">{categoria}</h2>
+									<div className="flex justify-between items-center px-2 pb-3 pt-10">
+										<h2 className="text-xl md:text-2xl font-bold">{categoria}</h2>
 										<Link
 											href={`/${nomeEmpresa}/produtos?categoria=${categoria}`}
-											className="text-xl py-4 font-bold underline">
+											className="text-lg md:text-xl text-primary font-bold flex flex-row items-center">
 											Ver mais
+											<FiChevronRight
+												className="ml-1"
+												size={22}
+											/>
 										</Link>
 									</div>
 

@@ -26,11 +26,11 @@ export default function SearchProduto({ empresa, className }: Props) {
 		<form
 			className={className}
 			onSubmit={handleSubmit}>
+			<FaSearch />
 			<input
 				type="text"
 				placeholder="Pesquisar produtos..."
 			/>
-			<FaSearch />
 		</form>
 	);
 }
