@@ -1,19 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FaEdit, FaQuestionCircle } from 'react-icons/fa';
 import themes from '@/lib/themes';
 import Image from 'next/image';
 import { useEmpresa } from './Context';
+import Popup, { MessageType } from '../common/Popup';
 
 export default function Editar() {
 	const { setEmpresa, Empresa } = useEmpresa();
 
-	const [Popup, setPopup] = useState(['', '']);
+	const [imagePreview, setImagePreview] = useState<string | undefined>(Empresa.foto);
+	const [messages, setMessages] = useState<MessageType[]>([]);
+
+	const addMessage = (msg: string, status: 'success' | 'error') => {
+		setMessages((prev) => [...prev, { id: Date.now(), text: msg, status: status }]);
+	};
 
 	const TemaDemo = async (value: string) => {
 		document.getElementById('root')?.setAttribute('data-theme', value);
 	};
-
-	const [imagePreview, setImagePreview] = useState<string | undefined>(Empresa.foto);
 
 	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];
@@ -27,16 +31,6 @@ export default function Editar() {
 			reader.readAsDataURL(file);
 		}
 	};
-
-	useEffect(() => {
-		if (Popup[0]) {
-			const timer = setTimeout(() => {
-				setPopup(['', '']);
-			}, 10000);
-
-			return () => clearTimeout(timer);
-		}
-	}, [Popup]);
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -52,14 +46,14 @@ export default function Editar() {
 
 			const { message, data } = await response.json();
 			if (!response.ok) {
-				setPopup(['error', message]);
+				addMessage('Erro no servidor:' + message, 'error');
 			} else {
-				setPopup(['success', 'Dados salvo com sucesso']);
+				addMessage('Dados salvo com sucesso', 'success');
 				setEmpresa(data);
 				form.reset();
 			}
 		} catch (err) {
-			setPopup(['error', 'Erro interno no servidor ' + err]);
+			addMessage('Erro no cliente:' + err, 'error');
 		}
 	};
 
@@ -224,16 +218,16 @@ export default function Editar() {
 							</div>
 						</div>
 
-						<span className="badge badge-sm badge-warning">35 temas para escolher!</span>
+						<span className="badge badge-sm badge-warning">21 temas para escolher!</span>
 						<h2 className="text-2xl font-bold">Mude o tema</h2>
-						<div className="mt-6 grid grid-cols-3 lg:grid-cols-12 gap-2 text-xs">
+						<div className="mt-6 grid grid-cols-3 lg:grid-cols-7 gap-2 text-xs">
 							{themes.map((value) => (
 								<input
 									data-theme={value}
 									key={value}
 									type="radio"
 									name="tema"
-									className="btn theme-controller col-span-1 capitalize"
+									className="btn btn-primary capitalize"
 									aria-label={value}
 									defaultChecked={value === Empresa.tema}
 									value={value}
@@ -251,13 +245,10 @@ export default function Editar() {
 					</form>
 				</div>
 			</div>
-			{Popup[0] && (
-				<div className="toast toast-top toast-start">
-					<div className={`alert alert-${Popup[0]}`}>
-						<span>{Popup[1]}</span>
-					</div>
-				</div>
-			)}
+			<Popup
+				messages={messages}
+				setMessages={setMessages}
+			/>
 			<dialog
 				id={'modal_maps'}
 				className="modal">

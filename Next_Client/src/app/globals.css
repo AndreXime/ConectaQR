@@ -15,3 +15,15 @@
 body {
 	font-family: 'Roboto', Arial, sans-serif;
 }
+.animate-slideIn {
+	animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+	from {
+		transform: translateX(-50%);
+	}
+	to {
+		transform: translateX(0);
+	}
+}

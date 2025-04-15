@@ -21,21 +21,6 @@ const themes = [
 	'retro',
 	'caramellatte',
 	'cyberpunk',
-	// Temas Escuros
-	'dark',
-	'aqua',
-	'sunset',
-	'synthwave',
-	'halloween',
-	'forest',
-	'black',
-	'luxury',
-	'dracula',
-	'business',
-	'night',
-	'coffee',
-	'dim',
-	'abyss',
 ];
 
 export default themes;

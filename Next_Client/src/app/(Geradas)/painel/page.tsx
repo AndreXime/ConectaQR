@@ -23,7 +23,7 @@ export default async function PageServer() {
 
 			return (
 				<EmpresaContext initialData={data.data}>
-					<Painel />;
+					<Painel />
 				</EmpresaContext>
 			);
 		} else {

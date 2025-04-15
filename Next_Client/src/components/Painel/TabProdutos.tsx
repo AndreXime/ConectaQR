@@ -1,26 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FaSave, FaTrash, FaUpload } from 'react-icons/fa';
 import type { Produto, Categoria } from '@/lib/types';
 import { Tabela } from './index';
 import { useEmpresa } from './Context';
+import Popup, { MessageType } from '../common/Popup';
 
 export default function Produtos() {
 	const { setProdutosData, Categorias, setCategorias } = useEmpresa();
-	const [Popup, setPopup] = useState(['', '']);
 	const [file, setFile] = useState<File | null>(null);
 	const [EditandoProduto, setEditandoProduto] = useState<Produto>();
 	const [EditandoCategoria, setEditandoCategoria] = useState<Categoria>();
 	const [Carregando, setCarregando] = useState(false);
+	const [messages, setMessages] = useState<MessageType[]>([]);
 
-	useEffect(() => {
-		if (Popup[0]) {
-			const timer = setTimeout(() => {
-				setPopup(['', '']);
-			}, 10000);
-
-			return () => clearTimeout(timer);
-		}
-	}, [Popup]);
+	const addMessage = (msg: string, status: 'success' | 'error') => {
+		setMessages((prev) => [...prev, { id: Date.now(), text: msg, status: status }]);
+	};
 
 	const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const selectedFile = event.target.files?.[0] || null;
@@ -34,7 +29,7 @@ export default function Produtos() {
 		const nome = String(formData.get('categoria'));
 
 		if (nome.length === 0) {
-			setPopup(['error', 'Nenhum nome foi fornecido']);
+			addMessage('Nenhum nome foi fornecido', 'error');
 			return;
 		}
 
@@ -52,14 +47,14 @@ export default function Produtos() {
 			setCarregando(false);
 
 			if (!response.ok) {
-				setPopup(['error', 'Erro no servidor ' + message]);
+				addMessage('Erro no servidor: ' + message, 'error');
 			} else {
-				setPopup(['success', 'Categoria salva com sucesso']);
+				addMessage('Categoria salva com sucesso: ', 'success');
 				setCategorias((prevItems) => [...prevItems, data]);
 				form.reset();
 			}
 		} catch (err) {
-			setPopup(['error', 'Erro no cliente ' + err]);
+			addMessage('Erro no cliente: ' + err, 'error');
 		}
 	};
 
@@ -71,7 +66,7 @@ export default function Produtos() {
 		const categoriaId = String(formData.get('categoriaId'));
 
 		if (nome.length === 0 || !categoriaId) {
-			setPopup(['error', 'Um campo não foi fornecido']);
+			addMessage('Um campo não foi fornecido', 'error');
 			return;
 		}
 
@@ -89,15 +84,15 @@ export default function Produtos() {
 			setCarregando(false);
 
 			if (!response.ok) {
-				setPopup(['error', 'Erro no servidor: ' + message]);
+				addMessage('Erro no servidor: ' + message, 'error');
 			} else {
-				setPopup(['success', 'Categoria atualizado com sucesso!']);
+				addMessage('Categoria atualizada com sucesso!', 'success');
 				setCategorias((prev) => prev.map((categoria) => (categoria.id === data.id ? { ...data } : categoria)));
 				setEditandoCategoria(data);
 				form.reset();
 			}
 		} catch (err) {
-			setPopup(['error', 'Erro no cliente: ' + err]);
+			addMessage('Erro no cliente: ' + err, 'error');
 		}
 	};
 
@@ -109,7 +104,7 @@ export default function Produtos() {
 		const newId = String(formData.get('newId'));
 
 		if (id == newId) {
-			setPopup(['error', 'Voce está o usando a mesma categoria que deseja apagar']);
+			addMessage('Você está usando a mesma categoria que deseja apagar', 'error');
 			return;
 		}
 
@@ -128,9 +123,9 @@ export default function Produtos() {
 			const { message } = await response.json();
 
 			if (!response.ok) {
-				setPopup(['error', message]);
+				addMessage(message, 'error');
 			} else {
-				setPopup(['success', 'Categoria deletada com sucesso!']);
+				addMessage('Categoria deletada com sucesso!', 'success');
 				setCategorias((prev) => prev.filter((categoria) => categoria.id !== id));
 				const categoriaNova = Categorias.find((categoria) => categoria.id === newId);
 				const categoriaDeletada = Categorias.find((categoria) => categoria.id === id);
@@ -145,7 +140,7 @@ export default function Produtos() {
 				form.reset();
 			}
 		} catch (err) {
-			setPopup(['error', 'Erro interno no servidor' + err]);
+			addMessage('Erro interno no servidor: ' + err, 'error');
 		}
 		setCarregando(false);
 	};
@@ -160,7 +155,7 @@ export default function Produtos() {
 		const imagem = formData.get('imagem') as File;
 
 		if (!nome || !preco || !categoria || !imagem) {
-			setPopup(['error', 'Um campo não foi fornecido']);
+			addMessage('Um campo não foi fornecido', 'error');
 			return;
 		}
 		setCarregando(true);
@@ -175,15 +170,15 @@ export default function Produtos() {
 			const { message, data } = await response.json();
 			setCarregando(false);
 			if (!response.ok) {
-				setPopup(['error', message]);
+				addMessage(message, 'error');
 			} else {
-				setPopup(['success', 'Produto salvo com sucesso!']);
+				addMessage('Produto salvo com sucesso!', 'success');
 				setProdutosData((prevItems) => [...prevItems, data]);
 				setFile(null);
 				form.reset();
 			}
 		} catch (err) {
-			setPopup(['error', 'Erro interno no servidor' + err]);
+			addMessage('Erro interno no servidor: ' + err, 'error');
 		}
 	};
 
@@ -209,16 +204,16 @@ export default function Produtos() {
 			setCarregando(false);
 
 			if (!response.ok) {
-				setPopup(['error', message]);
+				addMessage(message, 'error');
 			} else {
-				setPopup(['success', 'Produto atualizado com sucesso!']);
+				addMessage('Produto atualizado com sucesso!', 'success');
 				setProdutosData((prev) => prev.map((product) => (product.id === data.id ? { ...data } : product)));
 				setEditandoProduto(data);
 				setFile(null);
 				form.reset();
 			}
 		} catch (err) {
-			setPopup(['error', 'Erro interno no servidor' + err]);
+			addMessage('Erro interno no servidor: ' + err, 'error');
 		}
 	};
 
@@ -234,13 +229,13 @@ export default function Produtos() {
 			setCarregando(false);
 
 			if (!response.ok) {
-				setPopup(['error', message]);
+				addMessage(message, 'error');
 			} else {
-				setPopup(['success', 'Produto deletado com sucesso!']);
+				addMessage('Produto deletado com sucesso!', 'success');
 				setProdutosData((prev) => prev.filter((product) => product.id !== produtoId));
 			}
 		} catch (err) {
-			setPopup(['error', 'Erro interno no servidor' + err]);
+			addMessage('Erro interno no servidor: ' + err, 'error');
 		}
 	};
 
@@ -369,13 +364,10 @@ export default function Produtos() {
 				fucDeleteProduto={handleProdutoDelete}
 				fucEditProduto={setEditandoProduto}
 			/>
-			{Popup[0] && (
-				<div className="toast toast-top toast-start overflow-scroll">
-					<div className={`alert ${Popup[0] === 'success' ? 'alert-success' : 'alert-error'}`}>
-						<span>{Popup[1]}</span>
-					</div>
-				</div>
-			)}
+			<Popup
+				messages={messages}
+				setMessages={setMessages}
+			/>
 			<dialog
 				id={'modal_edit'}
 				className="modal">
