@@ -1,14 +1,15 @@
 import Link from 'next/link';
-import type { Dispatch, ReactNode, SetStateAction } from 'react';
+import type { ReactNode } from 'react';
 import { FaArrowRight, FaBars } from 'react-icons/fa';
+import { useEmpresa } from './Context';
 
 type DrawerProps = {
-	nomeEmpresa: string;
 	children: ReactNode;
-	setTab: Dispatch<SetStateAction<string>>;
 };
 
-export default function Drawer({ children, setTab, nomeEmpresa }: DrawerProps) {
+export default function Drawer({ children }: DrawerProps) {
+	const { setTab, EmpresaNome } = useEmpresa();
+
 	return (
 		<div className="drawer">
 			<input
@@ -62,7 +63,7 @@ export default function Drawer({ children, setTab, nomeEmpresa }: DrawerProps) {
 							<li>
 								<Link
 									className="btn btn-accent  mx-2"
-									href={'/' + nomeEmpresa}>
+									href={'/' + EmpresaNome}>
 									Ver sua loja
 								</Link>
 							</li>
@@ -109,7 +110,7 @@ export default function Drawer({ children, setTab, nomeEmpresa }: DrawerProps) {
 					<li>
 						<Link
 							className="btn btn-accent flex justify-between"
-							href={'/' + nomeEmpresa}>
+							href={'/' + EmpresaNome}>
 							Ver sua loja <FaArrowRight />
 						</Link>
 					</li>

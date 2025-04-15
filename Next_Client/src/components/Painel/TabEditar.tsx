@@ -1,21 +1,19 @@
-import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
-import type { EmpresaPrivate } from '@/lib/types';
+import { useEffect, useState } from 'react';
 import { FaEdit, FaQuestionCircle } from 'react-icons/fa';
 import themes from '@/lib/themes';
 import Image from 'next/image';
+import { useEmpresa } from './Context';
 
-type Props = {
-	Data: EmpresaPrivate;
-	setEmpresa: Dispatch<SetStateAction<EmpresaPrivate>>;
-};
-export default function Editar({ Data, setEmpresa }: Props) {
+export default function Editar() {
+	const { setEmpresa, Empresa } = useEmpresa();
+
 	const [Popup, setPopup] = useState(['', '']);
 
 	const TemaDemo = async (value: string) => {
 		document.getElementById('root')?.setAttribute('data-theme', value);
 	};
 
-	const [imagePreview, setImagePreview] = useState<string | undefined>(Data.foto);
+	const [imagePreview, setImagePreview] = useState<string | undefined>(Empresa.foto);
 
 	const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];
@@ -84,7 +82,7 @@ export default function Editar({ Data, setEmpresa }: Props) {
 									type="text"
 									name="nome"
 									className="input input-bordered w-full max-w-xs"
-									defaultValue={Data.nome.split('-').join(' ')}
+									defaultValue={Empresa.nome.split('-').join(' ')}
 								/>
 							</label>
 
@@ -96,7 +94,7 @@ export default function Editar({ Data, setEmpresa }: Props) {
 									name="email"
 									type="text"
 									className="input input-bordered w-full max-w-xs"
-									defaultValue={Data.email}
+									defaultValue={Empresa.email}
 								/>
 							</label>
 
@@ -121,7 +119,7 @@ export default function Editar({ Data, setEmpresa }: Props) {
 									type="text"
 									placeholder="@suaempresa"
 									className="input input-bordered w-full max-w-xs"
-									defaultValue={Data.instagram}
+									defaultValue={Empresa.instagram}
 								/>
 							</label>
 
@@ -134,7 +132,7 @@ export default function Editar({ Data, setEmpresa }: Props) {
 									type="text"
 									placeholder="(88) 98XXXXXX"
 									className="input input-bordered w-full max-w-xs"
-									defaultValue={Data.telefone}
+									defaultValue={Empresa.telefone}
 								/>
 							</label>
 
@@ -147,7 +145,7 @@ export default function Editar({ Data, setEmpresa }: Props) {
 									type="text"
 									placeholder="emaildecontato@email.com"
 									className="input input-bordered w-full max-w-xs"
-									defaultValue={Data.emailContato}
+									defaultValue={Empresa.emailContato}
 								/>
 							</label>
 
@@ -159,7 +157,7 @@ export default function Editar({ Data, setEmpresa }: Props) {
 									type="text"
 									name="descricao"
 									className="input input-bordered w-full max-w-xs"
-									defaultValue={Data.descricao}
+									defaultValue={Empresa.descricao}
 								/>
 							</label>
 
@@ -171,7 +169,7 @@ export default function Editar({ Data, setEmpresa }: Props) {
 									type="text"
 									name="cidade"
 									className="input input-bordered w-full max-w-xs"
-									defaultValue={Data.cidade}
+									defaultValue={Empresa.cidade}
 									placeholder="Fortaleza, Ceará"
 								/>
 							</label>
@@ -193,7 +191,7 @@ export default function Editar({ Data, setEmpresa }: Props) {
 									name="maps"
 									type="text"
 									className="input input-bordered w-full max-w-xs"
-									defaultValue={Data.maps}
+									defaultValue={Empresa.maps}
 									placeholder={'https://www.google.com/maps/embed....'}
 								/>
 							</label>
@@ -237,7 +235,7 @@ export default function Editar({ Data, setEmpresa }: Props) {
 									name="tema"
 									className="btn theme-controller col-span-1 capitalize"
 									aria-label={value}
-									defaultChecked={value === Data.tema}
+									defaultChecked={value === Empresa.tema}
 									value={value}
 									onClick={() => {
 										TemaDemo(value);

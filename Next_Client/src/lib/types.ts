@@ -1,3 +1,5 @@
+import type { Dispatch, SetStateAction } from 'react';
+
 interface EmpresaPublica {
 	nome: string;
 	descricao?: string;
@@ -40,4 +42,11 @@ type ProdutoPageProps = {
 	tema?: string;
 };
 
-export type { EmpresaPublica, Categoria, Produto, EmpresaPrivate, ProdutoPageProps };
+type TabProdutosProps = {
+	Produtos: Produto[];
+	Categorias: Categoria[];
+	setProdutos: Dispatch<SetStateAction<Produto[]>>;
+	setCategorias: Dispatch<SetStateAction<Categoria[]>>;
+};
+
+export type { EmpresaPublica, Categoria, Produto, EmpresaPrivate, ProdutoPageProps, TabProdutosProps };

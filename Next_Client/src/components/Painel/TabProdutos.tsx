@@ -1,16 +1,11 @@
-import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
+import { useEffect, useState } from 'react';
 import { FaSave, FaTrash, FaUpload } from 'react-icons/fa';
 import type { Produto, Categoria } from '@/lib/types';
 import { Tabela } from './index';
+import { useEmpresa } from './Context';
 
-type Props = {
-	Produtos: Produto[];
-	Categorias: Categoria[];
-	setProdutos: Dispatch<SetStateAction<Produto[]>>;
-	setCategorias: Dispatch<SetStateAction<Categoria[]>>;
-};
-
-export default function Produtos({ Produtos, setProdutos, Categorias, setCategorias }: Props) {
+export default function Produtos() {
+	const { setProdutosData, Categorias, setCategorias } = useEmpresa();
 	const [Popup, setPopup] = useState(['', '']);
 	const [file, setFile] = useState<File | null>(null);
 	const [EditandoProduto, setEditandoProduto] = useState<Produto>();
@@ -57,14 +52,14 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 			setCarregando(false);
 
 			if (!response.ok) {
-				setPopup(['error', message]);
+				setPopup(['error', 'Erro no servidor ' + message]);
 			} else {
 				setPopup(['success', 'Categoria salva com sucesso']);
 				setCategorias((prevItems) => [...prevItems, data]);
 				form.reset();
 			}
 		} catch (err) {
-			setPopup(['error', 'Erro interno no servidor ' + err]);
+			setPopup(['error', 'Erro no cliente ' + err]);
 		}
 	};
 
@@ -94,7 +89,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 			setCarregando(false);
 
 			if (!response.ok) {
-				setPopup(['error', message]);
+				setPopup(['error', 'Erro no servidor: ' + message]);
 			} else {
 				setPopup(['success', 'Categoria atualizado com sucesso!']);
 				setCategorias((prev) => prev.map((categoria) => (categoria.id === data.id ? { ...data } : categoria)));
@@ -102,7 +97,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 				form.reset();
 			}
 		} catch (err) {
-			setPopup(['error', 'Erro interno no servidor ' + err]);
+			setPopup(['error', 'Erro no cliente: ' + err]);
 		}
 	};
 
@@ -140,7 +135,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 				const categoriaNova = Categorias.find((categoria) => categoria.id === newId);
 				const categoriaDeletada = Categorias.find((categoria) => categoria.id === id);
 
-				setProdutos((prev) =>
+				setProdutosData((prev) =>
 					prev.map((product) =>
 						product.categoria.nome === categoriaDeletada!.nome
 							? { ...product, categoria: { nome: categoriaNova!.nome } }
@@ -183,7 +178,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 				setPopup(['error', message]);
 			} else {
 				setPopup(['success', 'Produto salvo com sucesso!']);
-				setProdutos((prevItems) => [...prevItems, data]);
+				setProdutosData((prevItems) => [...prevItems, data]);
 				setFile(null);
 				form.reset();
 			}
@@ -217,7 +212,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 				setPopup(['error', message]);
 			} else {
 				setPopup(['success', 'Produto atualizado com sucesso!']);
-				setProdutos((prev) => prev.map((product) => (product.id === data.id ? { ...data } : product)));
+				setProdutosData((prev) => prev.map((product) => (product.id === data.id ? { ...data } : product)));
 				setEditandoProduto(data);
 				setFile(null);
 				form.reset();
@@ -242,7 +237,7 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 				setPopup(['error', message]);
 			} else {
 				setPopup(['success', 'Produto deletado com sucesso!']);
-				setProdutos((prev) => prev.filter((product) => product.id !== produtoId));
+				setProdutosData((prev) => prev.filter((product) => product.id !== produtoId));
 			}
 		} catch (err) {
 			setPopup(['error', 'Erro interno no servidor' + err]);
@@ -371,13 +366,11 @@ export default function Produtos({ Produtos, setProdutos, Categorias, setCategor
 				</form>
 			</div>
 			<Tabela
-				data={Produtos}
-				categorias={Categorias}
 				fucDeleteProduto={handleProdutoDelete}
 				fucEditProduto={setEditandoProduto}
 			/>
 			{Popup[0] && (
-				<div className="toast toast-top toast-start">
+				<div className="toast toast-top toast-start overflow-scroll">
 					<div className={`alert ${Popup[0] === 'success' ? 'alert-success' : 'alert-error'}`}>
 						<span>{Popup[1]}</span>
 					</div>

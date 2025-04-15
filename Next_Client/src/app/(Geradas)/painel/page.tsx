@@ -1,11 +1,7 @@
 import { redirect } from 'next/navigation';
 import Painel from './Painel';
 import { cookies } from 'next/headers';
-import { EmpresaPrivate } from '@/lib/types';
-
-export type PropsPage = {
-	initialData: EmpresaPrivate;
-};
+import { EmpresaContext } from '@/components/Painel/Context';
 
 export default async function PageServer() {
 	const cookieStore = await cookies();
@@ -25,7 +21,11 @@ export default async function PageServer() {
 		if (response.ok) {
 			const data = await response.json();
 
-			return <Painel initialData={data.data} />;
+			return (
+				<EmpresaContext initialData={data.data}>
+					<Painel />;
+				</EmpresaContext>
+			);
 		} else {
 			throw Error;
 		}

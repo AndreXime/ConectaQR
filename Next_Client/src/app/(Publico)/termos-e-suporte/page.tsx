@@ -1,5 +1,5 @@
 'use client';
-import { Drawer, Footer } from '@/components/Home';
+import { Footer } from '@/components/Home';
 import { faqs, termos } from '@/content';
 import { useState } from 'react';
 
@@ -34,7 +34,7 @@ export default function CompaniesPage() {
 	};
 
 	return (
-		<Drawer>
+		<>
 			<div className="min-h-dvh bg-base-100 flex flex-col">
 				<section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-purple-50 via-blue-50 to-teal-50">
 					<div className="px-4 md:px-6">
@@ -166,6 +166,6 @@ export default function CompaniesPage() {
 				</section>
 			</div>
 			<Footer />
-		</Drawer>
+		</>
 	);
 }

@@ -1,13 +1,14 @@
 import Link from 'next/link';
-import type { ReactNode } from 'react';
 import { FaArrowRight, FaBars } from 'react-icons/fa';
 import ThemeSwitcher from '../common/themeSwitcher';
 
 interface props {
-	children: ReactNode;
+	children: React.ReactNode;
 	absolute?: boolean;
+	theme: string | undefined;
 }
-export default function Navbar({ children, absolute }: props) {
+
+export default async function Drawer({ children, absolute, theme }: props) {
 	return (
 		<div className="drawer">
 			<input
@@ -33,7 +34,7 @@ export default function Navbar({ children, absolute }: props) {
 					<div className="hidden flex-none lg:block">
 						<ul className="menu menu-horizontal ">
 							<li className=" px-1">
-								<ThemeSwitcher />
+								<ThemeSwitcher initialTheme={theme} />
 							</li>
 							<li className=" px-1">
 								<Link
@@ -107,6 +108,7 @@ export default function Navbar({ children, absolute }: props) {
 					</li>
 					<li>
 						<ThemeSwitcher
+							initialTheme={theme}
 							text
 							className="btn btn-primary btn-ghost flex justify-between"
 						/>

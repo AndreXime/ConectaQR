@@ -4,7 +4,7 @@ import { FaSearch } from 'react-icons/fa';
 
 export default function hero() {
 	return (
-		<section className="w-full py-24 lg:py-32 bg-gradient-to-br from-purple-50 via-blue-50 to-teal-50 ">
+		<section className="w-full pb-24 pt-12 lg:pb-32 lg:pt-16 bg-gradient-to-br from-purple-50 via-blue-50 to-teal-50 ">
 			<div className="px-4 md:px-12 relative">
 				<div className="absolute inset-0 bg-grid-black/[0.02]  -z-10" />
 				<div className="grid gap-6 lg:grid-cols-2 lg:gap-12">

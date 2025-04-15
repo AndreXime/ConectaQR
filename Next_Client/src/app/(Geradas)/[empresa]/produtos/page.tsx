@@ -63,7 +63,7 @@ export default async function Page({
 			<Header
 				Categorias={data?.categorias}
 				EmpresaName={nomeEmpresa}>
-				<main className="flex-grow container min-h-screen pb-4 px-4 mx-auto">
+				<main className="flex-grow container min-h-screen pb-4 px-2 mx-auto">
 					<div className="space-y-4 py-10">
 						<h1 className="text-3xl font-bold sm:text-4xl md:text-5xl">Nossos Produtos</h1>
 						<p className="max-w-xl text-base md:text-lg">
@@ -110,7 +110,7 @@ export default async function Page({
 						<>
 							{Object.entries(ProdutoPorCategoria).map(([categoria, produtos], index) => (
 								<div key={categoria}>
-									<div className="flex justify-between items-center px-2 pb-3 pt-10">
+									<div className="flex justify-between items-center pb-3 pt-10">
 										<h2 className="text-xl md:text-2xl font-bold">{categoria}</h2>
 										<Link
 											href={`/${nomeEmpresa}/produtos?categoria=${categoria}`}

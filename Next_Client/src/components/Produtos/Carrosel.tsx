@@ -13,12 +13,12 @@ export default function Slider({ data }: { data: Produto[] }) {
 		// Se o tamanho do array de produtos for menor q o esperado ajustar para o proprio tamanho
 		const slider = new Glide(sliderRef.current, {
 			type: 'slider',
-			gap: 0.0001,
-			autoplay: false,
-			perView: data.length < 4 ? data.length : 4,
-			rewind: false,
+			gap: 5,
+			autoplay: 3000,
+			perView: data.length < 5 ? data.length : 5,
+			rewind: true,
 			bound: true,
-			touchRatio: 0.9,
+			touchRatio: 1,
 			breakpoints: {
 				768: { perView: data.length < 2 ? data.length : 2 },
 				1024: { perView: data.length < 3 ? data.length : 3 },
@@ -43,7 +43,7 @@ export default function Slider({ data }: { data: Produto[] }) {
 				<ul className="glide__slides">
 					{data.map((produto) => (
 						<li
-							className="glide__slide p-2"
+							className="glide__slide"
 							key={produto.nome + produto.preco}>
 							<ProductCard
 								name={produto.nome}

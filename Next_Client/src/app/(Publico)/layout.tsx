@@ -1,3 +1,4 @@
+import { Drawer } from '@/components/Home';
 import '@Styles';
 import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
@@ -9,14 +10,15 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-	const cookieStore = await cookies();
-	const tema = cookieStore.get('tema');
+	const tema = (await cookies()).get('tema')?.value;
 
 	return (
 		<html
 			lang="pt-BR"
-			data-theme={tema?.value ?? 'bumblebee'}>
-			<body>{children}</body>
+			data-theme={tema ?? 'corporate'}>
+			<body>
+				<Drawer theme={tema}>{children} </Drawer>
+			</body>
 		</html>
 	);
 }

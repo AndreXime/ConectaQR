@@ -1,16 +1,18 @@
 'use client';
 
-import type { Categoria } from '@/lib/types';
 import { QRCodeCanvas } from 'qrcode.react';
 import { useRef, useState } from 'react';
 import { FaDownload } from 'react-icons/fa';
+import { useEmpresa } from './Context';
 
-export default function QRCode({ nomeEmpresa, categorias }: { nomeEmpresa: string; categorias: Categoria[] }) {
-	const baseURL = `${process.env.NEXT_PUBLIC_DOMAIN}/${nomeEmpresa}`;
+export default function QRCode() {
+	const { Categorias, EmpresaNome } = useEmpresa();
+
+	const baseURL = `${process.env.NEXT_PUBLIC_DOMAIN}/${EmpresaNome}`;
 	const QRcodes = [
 		{ title: 'Tela inicial', link: baseURL },
 		{ title: 'Produtos', link: `${baseURL}/produtos` },
-		...categorias.map((categoria) => ({
+		...Categorias.map((categoria) => ({
 			title: `Categoria - ${categoria.nome}`,
 			link: `${baseURL}/produtos?categoria=${categoria.nome}`,
 		})),
@@ -31,7 +33,7 @@ export default function QRCode({ nomeEmpresa, categorias }: { nomeEmpresa: strin
 			const url = canvasRef.current.toDataURL('image/png'); // Converte para URL base64
 			const a = document.createElement('a');
 			a.href = url;
-			a.download = `ConnectQR-${currentQr.title}-${nomeEmpresa}.png`;
+			a.download = `ConnectQR-${currentQr.title}-${EmpresaNome}.png`;
 			a.click();
 		}
 	};

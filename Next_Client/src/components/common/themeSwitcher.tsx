@@ -5,23 +5,27 @@ import { FaMoon, FaSun } from 'react-icons/fa';
 type Props = {
 	text?: boolean;
 	className?: string;
+	initialTheme: string | undefined;
 };
 
 const getCookie = (name: string) => {
-	if (typeof document === 'undefined') return null; // Para SSR
 	return document.cookie
 		.split('; ')
 		.find((row) => row.startsWith(`${name}=`))
 		?.split('=')[1];
 };
+/*
+	É recomendado usar dentro do um server component para ter cookies da requisição e não piscar trocando o tema
 
-export default function ThemeSwitcher({ className, text }: Props) {
+	Tambem é recomendado dentro do layout aplicar o tema direto no servidor para não piscar trocando de tema
+*/
+export default function ThemeSwitcher({ className, text, initialTheme }: Props) {
 	const padrao = { light: 'corporate', dark: 'dark' };
 
-	const [theme, setTheme] = useState(getCookie('tema') || padrao.light);
+	const [theme, setTheme] = useState(initialTheme || padrao.light);
 
 	useEffect(() => {
-		document.documentElement.setAttribute('data-theme', theme);
+		setTheme(getCookie('tema') || padrao.light);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 

@@ -1,4 +1,4 @@
-import { Drawer, Footer } from '@/components/Home';
+import { Footer } from '@/components/Home';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { EmpresaPublica } from '@/lib/types';
@@ -28,7 +28,7 @@ export default async function CompaniesPage() {
 	const Empresas = await getCompanies();
 
 	return (
-		<Drawer>
+		<>
 			<div className="min-h-dvh bg-base-100">
 				<section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-purple-50 via-blue-50 to-teal-50 ">
 					<div className="container mx-auto px-4">
@@ -89,6 +89,6 @@ export default async function CompaniesPage() {
 				)}
 			</div>
 			<Footer />
-		</Drawer>
+		</>
 	);
 }

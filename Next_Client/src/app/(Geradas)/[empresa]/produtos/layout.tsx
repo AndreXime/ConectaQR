@@ -25,15 +25,11 @@ export async function generateMetadata({ params }: { params: Promise<{ empresa: 
 	} catch {}
 
 	return {
-		title: capitalize,
+		title: `${capitalize} - Produtos`,
 		description: info?.descricao || `Página oficial de ${capitalize} na plataforma`,
 	};
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-	return (
-		<html lang="pt-BR">
-			<body>{children}</body>
-		</html>
-	);
+	return <>{children}</>;
 }

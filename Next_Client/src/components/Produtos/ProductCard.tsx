@@ -9,8 +9,8 @@ interface ProductCardProps {
 
 export default function ProductCard({ name, image, price, className }: ProductCardProps) {
 	return (
-		<div className={'bg-base-100 rounded-xl h-85' + className}>
-			<div className="w-full h-55 overflow-hidden flex items-center justify-center select-none pointer-events-none">
+		<div className={'bg-base-100 rounded-xl h-75 md:h-85' + className}>
+			<div className="w-full h-45 md:h-55 overflow-hidden flex items-center justify-center select-none pointer-events-none">
 				<Image
 					width={500}
 					height={500}

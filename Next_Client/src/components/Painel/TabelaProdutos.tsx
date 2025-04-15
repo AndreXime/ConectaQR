@@ -12,18 +12,19 @@ import {
 } from '@tanstack/react-table';
 import { useState } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
-import type { Categoria, Produto } from '@/lib/types';
+import type { Produto } from '@/lib/types';
 import Image from 'next/image';
 import { FaArrowDown, FaArrowLeft, FaArrowRight, FaArrowUp, FaEdit, FaSearch, FaTrash } from 'react-icons/fa';
+import { useEmpresa } from './Context';
 
 type Props = {
-	data: Produto[];
-	categorias: Categoria[];
 	fucDeleteProduto: (produtoId: string) => Promise<void>;
 	fucEditProduto: Dispatch<SetStateAction<Produto | undefined>>;
 };
 
-export default function Tabela({ data, categorias, fucDeleteProduto, fucEditProduto }: Props) {
+export default function Tabela({ fucDeleteProduto, fucEditProduto }: Props) {
+	const { ProdutosData, Categorias } = useEmpresa();
+
 	const [sorting, setSorting] = useState<SortingState>([]);
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -89,7 +90,7 @@ export default function Tabela({ data, categorias, fucDeleteProduto, fucEditProd
 	];
 
 	const table = useReactTable({
-		data,
+		data: ProdutosData,
 		columns,
 		initialState: {
 			pagination: {
@@ -131,7 +132,7 @@ export default function Tabela({ data, categorias, fucDeleteProduto, fucEditProd
 						table.getColumn('categoria')?.setFilterValue(e.target.value || undefined);
 					}}>
 					<option value="">Sem filtro de categoria</option>
-					{categorias.map((categoria) => (
+					{Categorias.map((categoria) => (
 						<option
 							key={categoria.id}
 							value={categoria.nome}>
