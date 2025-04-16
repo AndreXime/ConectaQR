@@ -92,7 +92,7 @@ export default function Page() {
 				<form
 					key="RegistroForm"
 					onSubmit={handleRegistro}
-					className="flex-col px-6 py-10 lg:p-10 bg-base-100 w-full md:w-1/3 rounded-2xl shadow-lg">
+					className="flex-col px-6 py-10 lg:p-10 bg-base-100 w-full md:w-1/3 rounded-2xl shadow-2xl">
 					<div className="grid grid-cols-2 gap-2 items-center justify-center w-full mb-5">
 						<button
 							type="button"
@@ -107,9 +107,10 @@ export default function Page() {
 							Login
 						</button>
 					</div>
-					<h1 className="text-2xl text-center font-semibold mb-5">Cadastra-se na ConnectQR</h1>
+					<h1 className="text-2xl font-semibold mb-1">Criar uma nova conta</h1>
+					<p className="text-sm mb-5">Preencha os dados para criar sua conta na plataforma</p>
 					<fieldset className="fieldset">
-						<legend className="fieldset-legend text-base">Qual é o nome da sua empresa?</legend>
+						<legend className="fieldset-legend text-base">Nome da sua empresa</legend>
 						<input
 							name="nome"
 							type="text"
@@ -119,7 +120,7 @@ export default function Page() {
 						{Errors.register[0] && <p className="fieldset-label text-error">{Errors.register[0]}</p>}
 					</fieldset>
 					<fieldset className="fieldset">
-						<legend className="fieldset-legend text-base">Descreva um pouco sobre sua empresa</legend>
+						<legend className="fieldset-legend text-base">Descreva um pouco sobre ela</legend>
 						<input
 							name="descricao"
 							type="text"
@@ -129,7 +130,7 @@ export default function Page() {
 						{Errors.register[3] && <p className="fieldset-label text-error">{Errors.register[3]}</p>}
 					</fieldset>
 					<fieldset className="fieldset">
-						<legend className="fieldset-legend text-base">Qual é o seu e-mail?</legend>
+						<legend className="fieldset-legend text-base">Email para login</legend>
 						<input
 							name="email"
 							type="email"
@@ -182,9 +183,10 @@ export default function Page() {
 							Login
 						</button>
 					</div>
-					<h1 className="text-2xl text-center font-semibold mb-5">Fazer login na ConnectQR</h1>
+					<h1 className="text-2xl font-semibold mb-1">Entrar na sua conta</h1>
+					<p className="text-sm mb-5">Digite seu email e senha para acessar seu painel administrativo</p>
 					<fieldset className="fieldset">
-						<legend className="fieldset-legend text-base">Seu e-mail registrado</legend>
+						<legend className="fieldset-legend text-base">Email</legend>
 						<input
 							name="email"
 							type="email"
@@ -193,7 +195,7 @@ export default function Page() {
 						/>
 					</fieldset>
 					<fieldset className="fieldset">
-						<legend className="fieldset-legend text-base">Sua senha</legend>
+						<legend className="fieldset-legend text-base">Senha</legend>
 						<input
 							name="senha"
 							type="password"

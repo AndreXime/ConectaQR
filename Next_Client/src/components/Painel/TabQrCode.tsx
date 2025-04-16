@@ -52,7 +52,7 @@ export default function QRCode() {
 	];
 
 	return (
-		<main className="flex-grow py-5 flex flex-col justify-center gap-4">
+		<main className="flex-grow py-5 md:px-3 flex flex-col justify-center gap-4">
 			<div className="mb-4">
 				<h2 className="text-3xl font-bold">Gerar QR Code</h2>
 				<p className="text-gray-500">Crie e personalize o QR Code da sua loja para compartilhar com seus clientes.</p>
