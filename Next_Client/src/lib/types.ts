@@ -18,6 +18,8 @@ interface EmpresaPrivate extends EmpresaPublica {
 
 	categorias: Categoria[];
 	produtos: Produto[];
+	updatedAt: string;
+	createdAt: string;
 }
 
 type Categoria = {

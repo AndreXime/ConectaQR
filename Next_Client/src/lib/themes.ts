@@ -20,7 +20,6 @@ const themes = [
 	'valentine',
 	'retro',
 	'caramellatte',
-	'cyberpunk',
 ];
 
 export default themes;

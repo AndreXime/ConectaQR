@@ -1,9 +1,20 @@
 import { useState } from 'react';
-import { FaEdit, FaQuestionCircle } from 'react-icons/fa';
+import {
+	FaEnvelope,
+	FaInstagram,
+	FaMapMarkerAlt,
+	FaMapSigns,
+	FaPhone,
+	FaQuestionCircle,
+	FaStore,
+	FaUpload,
+} from 'react-icons/fa';
 import themes from '@/lib/themes';
 import Image from 'next/image';
 import { useEmpresa } from './Context';
 import Popup, { MessageType } from '../common/Popup';
+import { TbFileDescription } from 'react-icons/tb';
+import { FaUserSecret } from 'react-icons/fa6';
 
 export default function Editar() {
 	const { setEmpresa, Empresa } = useEmpresa();
@@ -58,6 +69,368 @@ export default function Editar() {
 	};
 
 	return (
+		<div className="space-y-6 p-2 md:p-4">
+			<div>
+				<h2 className="text-3xl font-bold tracking-tight">Editar Perfil</h2>
+				<p className="text-gray-500">Atualize as informações da sua empresa.</p>
+			</div>
+
+			<form onSubmit={handleSubmit}>
+				<div className="grid gap-6">
+					{/* Card: Foto de Perfil */}
+					<div className="card bg-base-100 shadow-md">
+						<div className="card-body">
+							<div className="mb-4">
+								<h2 className="card-title">Foto de Perfil</h2>
+								<p className="text-sm text-gray-500">Esta imagem será exibida como logo da sua empresa.</p>
+							</div>
+							<div className="flex flex-col md:flex-row items-center gap-6">
+								<div className=" border-black border-1 max-h-[200px] max-w-[200px] overflow-hidden">
+									<Image
+										src={imagePreview || '/assets/blankphoto.png'}
+										alt="Avatar"
+										width={400}
+										height={400}
+										className=" w-full h-full"
+									/>
+								</div>
+								<div>
+									<input
+										name="imagem"
+										id="imagem"
+										type="file"
+										accept="image/*"
+										className="hidden"
+										onChange={handleImageChange}
+									/>
+									<label
+										htmlFor="imagem"
+										className="btn btn-outline mb-2">
+										<FaUpload className="mr-2 h-4 w-4" />
+										Carregar nova imagem
+									</label>
+
+									<p className="text-xs text-gray-500 text-center">JPG, PNG ou Webp. Tamanho máximo de 3MB.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					{/* Card: Informações Básicas */}
+					<div className="card bg-base-100 shadow-md">
+						<div className="card-body space-y-4">
+							<div>
+								<h2 className="card-title">Informações Básicas</h2>
+								<p className="text-sm text-gray-500">Atualize as informações principais da sua empresa.</p>
+							</div>
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+								<div>
+									<label
+										htmlFor="nome"
+										className="label">
+										<span className="label-text">Nome da Empresa</span>
+									</label>
+									<div>
+										<label className="input w-full">
+											<FaStore
+												size={18}
+												className="text-primary"
+											/>
+											<input
+												id="nome"
+												name="nome"
+												type="text"
+												className="grow"
+												defaultValue={Empresa.nome}
+											/>
+										</label>
+									</div>
+								</div>
+								<div>
+									<label
+										htmlFor="cidade"
+										className="label">
+										<span className="label-text">Endereço</span>
+									</label>
+									<div>
+										<label className="input w-full">
+											<FaMapSigns
+												size={18}
+												className="text-primary"
+											/>
+											<input
+												id="cidade"
+												name="cidade"
+												type="text"
+												className="grow"
+												defaultValue={Empresa.cidade}
+												placeholder="Cidade ou endereço da sua empresa"
+											/>
+										</label>
+									</div>
+								</div>
+								<div>
+									<label
+										htmlFor="descricao"
+										className="label">
+										<span className="label-text">Descrição da Empresa</span>
+									</label>
+									<div>
+										<label className="input w-full">
+											<TbFileDescription
+												size={18}
+												className="text-primary"
+											/>
+											<input
+												id="descricao"
+												name="descricao"
+												type="text"
+												className="grow "
+												defaultValue={Empresa.descricao}
+											/>
+										</label>
+									</div>
+								</div>
+								<div>
+									<label
+										htmlFor="maps"
+										className="label">
+										<span className="label-text flex items-center flex-row gap-2">
+											Link do Google Maps
+											<FaQuestionCircle
+												className="cursor-pointer"
+												size={15}
+												color="blue"
+												onClick={() => (document.getElementById('modal_maps')! as HTMLDialogElement).showModal()}
+											/>
+										</span>
+									</label>
+									<div>
+										<label className="input w-full">
+											<FaMapMarkerAlt
+												size={18}
+												className="text-primary"
+											/>
+											<input
+												id="maps"
+												name="maps"
+												type="text"
+												className="grow"
+												defaultValue={Empresa.maps}
+												placeholder="<iframe>...</iframe>"
+											/>
+										</label>
+									</div>
+									<p className="text-xs text-gray-500">Cole aqui o link do Google Maps para sua localização.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					{/* Card: Informações de Contato */}
+					<div className="card bg-base-100 shadow-md">
+						<div className="card-body space-y-4">
+							<div>
+								<h2 className="card-title">Informações de Contato</h2>
+								<p className="text-sm text-gray-500">Atualize os dados de contato da sua empresa.</p>
+							</div>
+							<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+								<div>
+									<label
+										htmlFor="telefone"
+										className="label">
+										<span className="label-text">Telefone</span>
+									</label>
+									<div>
+										<label className="input">
+											<FaPhone
+												size={18}
+												className="text-primary"
+											/>
+											<input
+												id="telefone"
+												name="telefone"
+												type="text"
+												className="grow"
+												defaultValue={Empresa.telefone}
+											/>
+										</label>
+									</div>
+								</div>
+								<div>
+									<label
+										htmlFor="emailContato"
+										className="label">
+										<span className="label-text">Email de Contato (Público)</span>
+									</label>
+									<div>
+										<label className="input">
+											<FaEnvelope
+												size={18}
+												className="text-primary"
+											/>
+											<input
+												id="emailContato"
+												name="emailContato"
+												type="text"
+												className="grow"
+												defaultValue={Empresa.emailContato}
+											/>
+										</label>
+									</div>
+								</div>
+								<div>
+									<label
+										htmlFor="instagram"
+										className="label">
+										<span className="label-text">Instagram</span>
+									</label>
+									<div>
+										<label className="input">
+											<FaInstagram
+												size={18}
+												className="text-primary"
+											/>
+											<input
+												id="instagram"
+												name="instagram"
+												type="text"
+												className="grow"
+												defaultValue={Empresa.instagram}
+											/>
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					{/* Card: Dados da Conta */}
+					<div className="card bg-base-100 shadow-md">
+						<div className="card-body space-y-4">
+							<div>
+								<h2 className="card-title">Dados da Conta</h2>
+								<p className="text-sm text-gray-500">Atualize seu email administrativo e senha.</p>
+							</div>
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+								<div>
+									<label
+										htmlFor="email"
+										className="label">
+										<span className="label-text">Email Administrativo</span>
+									</label>
+									<div>
+										<label className="input">
+											<FaEnvelope
+												size={18}
+												className="text-primary"
+											/>
+											<input
+												id="email"
+												name="email"
+												type="text"
+												className="grow"
+												defaultValue={Empresa.email}
+											/>
+										</label>
+									</div>
+								</div>
+								<div>
+									<label
+										htmlFor="senha"
+										className="label">
+										<span className="label-text">Senha</span>
+									</label>
+									<div>
+										<label className="input">
+											<FaUserSecret
+												size={18}
+												className="text-primary"
+											/>
+											<input
+												id="senha"
+												name="senha"
+												type="text"
+												className="grow"
+												placeholder="********"
+											/>
+										</label>
+									</div>
+									<p className="text-xs text-gray-500">Deixe em branco para manter a senha atual.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					{/* Card: Tema da Loja */}
+					<div className="card bg-base-100 shadow-md">
+						<div className="card-body">
+							<div className="mb-4">
+								<h2 className="card-title">Tema da Loja</h2>
+								<p className="text-sm text-gray-500">Escolha um tema para personalizar a aparência da sua loja.</p>
+							</div>
+							<div className="grid grid-cols-3 sm:grid-cols-5 gap-3">
+								{themes.map((value) => (
+									<input
+										key={value}
+										type="radio"
+										name="tema"
+										className="btn btn-primary capitalize relative cursor-pointer rounded-md p-2"
+										data-theme={value}
+										aria-label={value}
+										defaultChecked={value === Empresa.tema}
+										value={value}
+										onClick={() => TemaDemo(value)}
+									/>
+								))}
+							</div>
+						</div>
+					</div>
+
+					{/* Botão para salvar alterações */}
+					<div className="flex justify-center">
+						<button
+							type="submit"
+							className="btn p-5 btn-primary">
+							Salvar Alterações
+						</button>
+					</div>
+				</div>
+			</form>
+			<dialog
+				id={'modal_maps'}
+				className="modal">
+				<div className="modal-box">
+					<h3 className="font-bold text-lg text-center">Como eu consigo o link do google maps para minha pagina?</h3>
+					<div className="py-4">
+						<ul>
+							<li>Acesse Google Maps</li>
+							<li>Busque o local da sua loja</li>
+							<li>Clique em Compartilhar</li>
+							<li>Vá até a aba Incorporar um mapa</li>
+							<li>{'Copie o código <iframe>...</iframe>'}</li>
+							<li>Cole o codigo que damos conta de extrair o link</li>
+						</ul>
+					</div>
+					<div className="modal-action">
+						<form method="dialog">
+							<button
+								role="button"
+								className="btn">
+								Fechar
+							</button>
+						</form>
+					</div>
+				</div>
+			</dialog>
+			<Popup
+				messages={messages}
+				setMessages={setMessages}
+			/>
+		</div>
+	);
+}
+/*
 		<section className="flex flex-col">
 			<div className="card w-full bg-base-100 shadow-2xl">
 				<div className="card-body px-5">
@@ -223,11 +596,11 @@ export default function Editar() {
 						<div className="mt-6 grid grid-cols-3 lg:grid-cols-7 gap-2 text-xs">
 							{themes.map((value) => (
 								<input
-									data-theme={value}
-									key={value}
-									type="radio"
-									name="tema"
-									className="btn btn-primary capitalize"
+								key={value}
+								type="radio"
+								name="tema"
+								className="btn btn-primary capitalize"
+								data-theme={value}
 									aria-label={value}
 									defaultChecked={value === Empresa.tema}
 									value={value}
@@ -276,5 +649,4 @@ export default function Editar() {
 				</div>
 			</dialog>
 		</section>
-	);
-}
+		*/
