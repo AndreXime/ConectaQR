@@ -5,7 +5,10 @@ import multer from 'multer';
 import { Empresa, Produto, Categoria, PublicInfo, Auth, Feedback, FeedbackAdmin } from './controllers/index.js';
 import { validateInput, verifyAuth } from './middlewares/index.js';
 
-const upload = multer({ storage: multer.memoryStorage() });
+const upload = multer({
+	storage: multer.memoryStorage(),
+	limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+});
 const router = Router();
 
 /* Rotas para autenticar */
