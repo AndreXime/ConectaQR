@@ -112,8 +112,6 @@ export default function Tabela({ fucDeleteProduto, fucEditProduto }: Props) {
 
 	return (
 		<div className="w-full">
-			<span className="text-xs md:px-4">Dica: Você pode clicar do campo da tabela para ver em ordem alfabetica</span>
-
 			{/* Paginação */}
 			<div className="grid grid-cols-2 gap-3 py-5 md:px-4">
 				<label className="input w-full col-span-full md:col-span-1">

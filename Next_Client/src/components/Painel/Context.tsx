@@ -14,6 +14,8 @@ interface EmpresaPainelType {
 	EmpresaTema: string;
 	EmpresaNome: string;
 	ProdutoECategoriaQTD: { Pqtd: number; Cqtd: number };
+	setMobile: Dispatch<SetStateAction<boolean>>;
+	mobile: boolean;
 }
 
 interface Props {
@@ -29,6 +31,7 @@ export const EmpresaContext = ({ children, initialData }: Props) => {
 	const [ProdutosData, setProdutosData] = useState(initialData.produtos);
 	const [Categorias, setCategorias] = useState(initialData.categorias);
 	const ProdutoECategoriaQTD = { Pqtd: ProdutosData.length, Cqtd: Categorias.length };
+	const [mobile, setMobile] = useState(false);
 
 	return (
 		<EmpresaPainel.Provider
@@ -45,6 +48,8 @@ export const EmpresaContext = ({ children, initialData }: Props) => {
 				EmpresaTema: Empresa.tema,
 				EmpresaNome: Empresa.nome,
 				ProdutoECategoriaQTD,
+				mobile,
+				setMobile,
 			}}>
 			{children}
 		</EmpresaPainel.Provider>

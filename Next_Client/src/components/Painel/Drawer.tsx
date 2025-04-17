@@ -1,17 +1,91 @@
 import Link from 'next/link';
-import type { ReactNode } from 'react';
-import { FaArrowRight, FaBars } from 'react-icons/fa';
 import { useEmpresa } from './Context';
+import { BsBox, BsBuilding, BsPerson, BsQrCode } from 'react-icons/bs';
+import { BiLogOut } from 'react-icons/bi';
+import { FaStore, FaX } from 'react-icons/fa6';
 
-type DrawerProps = {
-	children: ReactNode;
-};
-
-export default function Drawer({ children }: DrawerProps) {
-	const { setTab, EmpresaNome } = useEmpresa();
+const navItems = [
+	{ icon: BsBuilding, label: 'Inicio', Tab: 'Inicio' },
+	{ icon: BsPerson, label: 'Editar perfil', Tab: 'Editar' },
+	{ icon: BsBox, label: 'Gerenciar produtos', Tab: 'Produtos' },
+	{ icon: BsQrCode, label: 'Gerar QRCode', Tab: 'QRCode' },
+];
+export default function Drawer() {
+	const { setTab, EmpresaNome, mobile, setMobile } = useEmpresa();
 
 	return (
-		<div className="drawer">
+		<>
+			<div className="hidden lg:block w-56 p-4 bg-base-100 h-screen">
+				<div className="flex items-center gap-2 p-4">
+					<span className="font-bold text-xl text-center">ConectaQR</span>
+				</div>
+				<nav className="space-y-2">
+					{navItems.map((item, index) => (
+						<button
+							key={index}
+							onClick={() => {
+								setTab(item.Tab);
+							}}
+							className={`w-full justify-start btn btn-ghost`}>
+							<item.icon className="mr-2 h-4 w-4" />
+							{item.label}
+						</button>
+					))}
+					<Link
+						href={'/' + EmpresaNome}
+						className="w-full justify-start btn btn-ghost">
+						<FaStore className="mr-2 h-4 w-4" />
+						Ver Loja
+					</Link>
+					<button className="w-full btn btn-ghost justify-start mt-auto">
+						<BiLogOut className="mr-2 h-4 w-4" />
+						Sair
+					</button>
+				</nav>
+			</div>
+
+			{/* Sidebar overlay para telas pequenas */}
+			{mobile && (
+				<div className="fixed inset-0 z-50 ">
+					<div
+						className="absolute top-0 left-0 w-full h-full bg-white p-4"
+						onClick={(e) => e.stopPropagation()}>
+						<div className="flex justify-between items-center flex-row w-full mb-8">
+							<div className="flex items-center gap-2 ">
+								<span className="font-semibold">ConectaQR</span>
+							</div>
+							<FaX
+								size={20}
+								onClick={() => setMobile(false)}
+							/>
+						</div>
+						<nav className="space-y-2 flex flex-col h-full">
+							{navItems.map((item, index) => (
+								<button
+									key={index}
+									onClick={() => {
+										setMobile(false);
+										setTab(item.Tab);
+									}}
+									className={`w-full justify-start btn btn-ghost`}>
+									<item.icon className="mr-2 h-4 w-4" />
+									{item.label}
+								</button>
+							))}
+							<button className="w-full justify-start mt-auto btn btn-ghost">
+								<BiLogOut className="mr-2 h-4 w-4" />
+								Sair
+							</button>
+						</nav>
+					</div>
+				</div>
+			)}
+		</>
+	);
+}
+
+/*
+<div className="drawer">
 			<input
 				id="drawer"
 				type="checkbox"
@@ -28,41 +102,24 @@ export default function Drawer({ children }: DrawerProps) {
 						</label>
 					</div>
 					<div className="mx-2 flex-1 px-2 text-primary-content text-center md:text-left text-xl font-semibold">
-						ConnectQR
+						ConectaQR
 					</div>
 					<div className="hidden flex-none md:block">
 						<ul className="menu menu-horizontal">
-							<li>
-								<button
-									className="btn btn-accent mx-2"
-									onClick={() => setTab('Inicio')}>
-									Visão geral
-								</button>
-							</li>
-							<li>
-								<button
-									className="btn btn-accent "
-									onClick={() => setTab('Editar')}>
-									Editar perfil
-								</button>
-							</li>
-							<li>
-								<button
-									className="btn btn-accent  mx-2"
-									onClick={() => setTab('Produtos')}>
-									Gerenciar Produtos
-								</button>
-							</li>
-							<li>
-								<button
-									className="btn btn-accent "
-									onClick={() => setTab('QRCode')}>
-									Gerar QRCode
-								</button>
-							</li>
+							{navItems.map((value) => (
+								<li>
+									<button
+										key={value.Tab}
+										className="btn mx-1"
+										onClick={() => setTab(value.Tab)}>
+										<value.icon />
+										{value.label}
+									</button>
+								</li>
+							))}
 							<li>
 								<Link
-									className="btn btn-accent  mx-2"
+									className="btn  mx-2"
 									href={'/' + EmpresaNome}>
 									Ver sua loja
 								</Link>
@@ -79,34 +136,18 @@ export default function Drawer({ children }: DrawerProps) {
 					className="drawer-overlay"></label>
 				<ul className="menu bg-base-200 min-h-full w-60 p-1">
 					<h1 className="text-xl font-bold text-center my-5">Painel</h1>
-					<li>
-						<button
-							className="btn btn-accent mb-2 flex justify-between"
-							onClick={() => setTab('Inicio')}>
-							Visão geral <FaArrowRight />
-						</button>
-					</li>
-					<li>
-						<button
-							className="btn btn-accent mb-2 flex justify-between"
-							onClick={() => setTab('Editar')}>
-							Editar perfil <FaArrowRight />
-						</button>
-					</li>
-					<li>
-						<button
-							className="btn btn-accent mb-2 flex justify-between"
-							onClick={() => setTab('Produtos')}>
-							Gerenciar Produtos <FaArrowRight />
-						</button>
-					</li>
-					<li>
-						<button
-							className="btn btn-accent mb-2 flex justify-between"
-							onClick={() => setTab('QRCode')}>
-							Gerar QRCode <FaArrowRight />
-						</button>
-					</li>
+					{navItems.map((value) => (
+						<li>
+							<button
+								key={value.Tab}
+								className="btn btn-accent mb-2 flex justify-between"
+								onClick={() => setTab(value.Tab)}>
+								{value.label}
+								<value.icon />
+							</button>
+						</li>
+					))}
+
 					<li>
 						<Link
 							className="btn btn-accent flex justify-between"
@@ -117,5 +158,4 @@ export default function Drawer({ children }: DrawerProps) {
 				</ul>
 			</div>
 		</div>
-	);
-}
+*/
