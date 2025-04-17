@@ -20,11 +20,12 @@ export default function App() {
 			<div className="flex-1 flex flex-col overflow-hidden">
 				<main className="flex-1 overflow-auto p-4 bg-base-200">
 					{!mobile && (
-						<BiMenu
-							className="lg:hidden fixed right-4 z-50 cursor-pointer"
-							size={29}
-							onClick={() => setMobile(true)}
-						/>
+						<nav className="p-2 bg-base-100 lg:hidden fixed right-2 top-2 z-50 cursor-pointer rounded-4xl">
+							<BiMenu
+								size={29}
+								onClick={() => setMobile(true)}
+							/>
+						</nav>
 					)}
 					{Tab === 'Inicio' && <Resumo />}
 					{Tab === 'Editar' && <Editar />}

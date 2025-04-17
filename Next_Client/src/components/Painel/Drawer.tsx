@@ -37,7 +37,7 @@ export default function Drawer() {
 						<FaStore className="mr-2 h-4 w-4" />
 						Ver Loja
 					</Link>
-					<button className="w-full btn btn-ghost justify-start mt-auto">
+					<button className="w-full btn btn-ghost justify-start">
 						<BiLogOut className="mr-2 h-4 w-4" />
 						Sair
 					</button>
@@ -48,14 +48,12 @@ export default function Drawer() {
 			{mobile && (
 				<div className="fixed inset-0 z-50 ">
 					<div
-						className="absolute top-0 left-0 w-full h-full bg-white p-4"
+						className="absolute top-0 right-0 w-[100%] md:w-[50%] h-full bg-white p-4"
 						onClick={(e) => e.stopPropagation()}>
 						<div className="flex justify-between items-center flex-row w-full mb-8">
-							<div className="flex items-center gap-2 ">
-								<span className="font-semibold">ConectaQR</span>
-							</div>
+							<span className="font-semibold text-lg ml-2">ConectaQR</span>
 							<FaX
-								size={20}
+								size={18}
 								onClick={() => setMobile(false)}
 							/>
 						</div>
@@ -72,7 +70,13 @@ export default function Drawer() {
 									{item.label}
 								</button>
 							))}
-							<button className="w-full justify-start mt-auto btn btn-ghost">
+							<Link
+								href={'/' + EmpresaNome}
+								className="w-full justify-start btn btn-ghost">
+								<FaStore className="mr-2 h-4 w-4" />
+								Ver Loja
+							</Link>
+							<button className="w-full justify-start btn btn-ghost">
 								<BiLogOut className="mr-2 h-4 w-4" />
 								Sair
 							</button>

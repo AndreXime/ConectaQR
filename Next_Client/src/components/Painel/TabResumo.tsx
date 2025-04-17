@@ -41,7 +41,6 @@ export default function Resumo() {
 								<div>
 									<p className="font-medium">Localização</p>
 									<p className="text-sm text-gray-500">{Empresa.cidade}</p>
-									<p className="text-sm text-gray-500">{Empresa.cidade}</p>
 									<div className="mt-1 flex items-center">
 										<span className={`badge text-xs ${Empresa.maps ? 'badge-success' : 'badge-error'}`}>
 											{Empresa.maps ? (

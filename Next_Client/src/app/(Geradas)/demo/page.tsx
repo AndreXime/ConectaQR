@@ -14,7 +14,8 @@ export default async function PageServer() {
 		foto: '',
 		cidade: 'São Paulo',
 		email: 'admin@cafecentral.com',
-
+		createdAt: '2023-11-05T14:23:00Z',
+		updatedAt: '2024-04-12T09:15:30Z',
 		categorias: [
 			{ id: '1', nome: 'Cafés' },
 			{ id: '2', nome: 'Bolos' },
