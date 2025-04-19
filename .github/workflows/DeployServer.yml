@@ -30,6 +30,5 @@ jobs:
           echo "Resposta recebida: $RESPONSE"
             
           if [[ "$RESPONSE" != *'"message":"Pong"'* ]]; then
-             echo "❌ Resposta inesperada: $RESPONSE"
              exit 1
           fi

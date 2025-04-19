@@ -36,12 +36,12 @@ type Produto = {
 };
 
 type ProdutoPageProps = {
-	data?: {
+	data: {
 		produtos: Produto[];
 		categorias: Categoria[];
 	};
-	pagination?: { PaginaAtual: number; limitePorPagina: number; ProdutosTotal: number; PaginasTotais: number };
-	tema?: string;
+	pagination: { PaginaAtual: number; limitePorPagina: number; ProdutosTotal: number; PaginasTotais: number };
+	tema: string;
 };
 
 type TabProdutosProps = {
