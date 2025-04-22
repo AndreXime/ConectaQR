@@ -30,6 +30,7 @@ jobs:
       - name: Configurando ambiente de teste
         run: |
           docker cp Express_Server/tests connectqr-server-1:/app/tests 
+          docker cp Express_Server/tsconfig.json connectqr-server-1:/app 
           docker compose exec -T server npm install --include=dev 
           docker compose exec -T server npx prisma migrate reset --force
           docker compose exec -T server npx prisma migrate deploy

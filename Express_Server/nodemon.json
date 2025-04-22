@@ -1,0 +1,8 @@
+{
+	"watch": ["src"],
+	"ext": "ts",
+	"delay": "5000",
+	"quiet": true,
+	"verbose": true,
+	"exec": "echo ================================================ && echo Iniciando servidor && echo && npx tsx src/server.ts"
+}

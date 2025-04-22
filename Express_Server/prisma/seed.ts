@@ -1,5 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import argon2 from 'argon2';
+import { config } from 'dotenv';
+
+config();
 
 const ARGON_SECRET = Buffer.from(process.env.ARGON2_KEY || '123');
 
@@ -7,6 +10,10 @@ const prisma = new PrismaClient();
 const { categoria, empresa, produto } = prisma;
 
 async function main() {
+	await produto.deleteMany({ where: {} });
+	await categoria.deleteMany({ where: {} });
+	await empresa.deleteMany({ where: {} });
+
 	/* Um exemplo de uma empresa completa e uma vazia */
 	const senha = await argon2.hash('senha123', {
 		type: argon2.argon2id,
@@ -56,7 +63,8 @@ async function main() {
 try {
 	await main();
 	console.log('Seed ocorreu com sucesso');
-} catch {
+} catch (err) {
+	console.log(err);
 	console.log('Ocorreu um erro na seed mas o processo continuara');
 }
 

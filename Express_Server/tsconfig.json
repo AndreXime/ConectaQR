@@ -1,14 +1,16 @@
 {
 	"compilerOptions": {
-		"target": "ES2023",
 		"module": "NodeNext",
+		"target": "ES2024",
 		"moduleResolution": "nodenext",
 		"strict": true,
 		"esModuleInterop": true,
-		"useUnknownInCatchVariables": false,
-		"outDir": "./dist",
-		"rootDir": "./src",
-		"types": ["node", "jest"]
+		"useUnknownInCatchVariables": true,
+		"forceConsistentCasingInFileNames": true,
+		"outDir": "dist",
+		"rootDir": "src",
+		"types": ["node"]
 	},
-	"exclude": ["node_modules"]
+	"include": ["tests", "src", "prisma/seed.ts"],
+	"exclude": ["node_modules", "tests", "prisma/seed.ts"]
 }

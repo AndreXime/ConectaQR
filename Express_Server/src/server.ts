@@ -1,10 +1,12 @@
 import express from 'express';
+import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import routes from './routes.js';
 import middlewareTempo from './middlewares/logger.js';
 import path from 'path';
 import cors from 'cors';
 
+dotenv.config();
 const app = express();
 
 app.use(
