@@ -1,10 +1,9 @@
 /node_modules
 /dist
-/swagger/node_modules
 .env
 generated/*.json
 generated/*.log
 generated/uploads/*
-
+logs
 !generated/uploads/placeholder
 

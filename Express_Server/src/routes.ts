@@ -1,9 +1,19 @@
 import type { Response, Request } from 'express';
 import { Router } from 'express';
 import multer from 'multer';
-
-import { Empresa, Produto, Categoria, PublicInfo, Auth, Feedback, FeedbackAdmin } from './controllers/index.js';
 import { validateInput, verifyAuth } from './middlewares/index.js';
+
+import {
+	Empresa,
+	Produto,
+	Categoria,
+	Auth,
+	Feedback,
+	FeedbackAdmin,
+	getAllEmpresas,
+	getProdutos,
+	getEmpresaByName,
+} from './controllers/index.js';
 
 const upload = multer({
 	storage: multer.memoryStorage(),
@@ -29,8 +39,9 @@ router.patch('/categoria', verifyAuth, validateInput('Categoria'), Categoria.upd
 router.delete('/categoria', verifyAuth, Categoria.deleteCategoria);
 
 /* Rotas publicas */
-router.get('/empresas', PublicInfo.getAllEmpresasOrByName);
-router.get('/produto/:empresa', PublicInfo.getProdutos);
+router.get('/empresas', getAllEmpresas);
+router.get('/empresas/:id', getEmpresaByName);
+router.get('/produto/:empresa', getProdutos);
 router.post('/feedback', Feedback);
 
 /* Rotas para admins */

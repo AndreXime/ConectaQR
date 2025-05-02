@@ -1,11 +1,14 @@
-import Empresa from "./private/Empresa.js";
-import Categoria from "./private/Categoria.js";
-import Produto from "./private/Produto.js";
-import PublicInfo from "./public/InfoPublica.js";
-import Auth from "./auth/AuthController.js";
-import Feedback from "./feedback/feedback.js";
-import FeedbackAdmin from "./feedback/feedbackadmin.js";
+import Empresa from './private/Empresa.js';
+import Categoria from './private/Categoria.js';
+import Produto from './private/Produto.js';
+import getEmpresaByName from './public/getEmpresaByName.js';
+import getAllEmpresas from './public/getAllEmpresas.js';
+import getProdutos from './public/getProdutos.js';
 
-export default { Empresa, Produto, PublicInfo, Auth, Categoria, Feedback, FeedbackAdmin };
+import Auth from './auth/AuthController.js';
+import Feedback from './feedback/feedback.js';
+import FeedbackAdmin from './feedback/feedbackadmin.js';
 
-export { Empresa, Produto, PublicInfo, Auth, Categoria, Feedback, FeedbackAdmin };
+export default { Empresa, Produto, Auth, Categoria, Feedback, FeedbackAdmin };
+
+export { Empresa, Produto, Auth, Categoria, Feedback, FeedbackAdmin, getEmpresaByName, getAllEmpresas, getProdutos };

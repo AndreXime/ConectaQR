@@ -1,5 +1,6 @@
 import type { Request, Response } from 'express';
 import { Empresa, Produtos, Categoria } from '../../database/models.js';
+
 type ProdutoPublic = {
 	categoria: {
 		nome: string;
@@ -98,43 +99,4 @@ const getProdutos = async (req: Request, res: Response): Promise<void> => {
 	}
 };
 
-const getAllEmpresasOrByName = async (req: Request, res: Response): Promise<void> => {
-	try {
-		const nome = typeof req.query.nome === 'string' ? req.query.nome : undefined;
-
-		if (!nome) {
-			const data = await Empresa.findMany({
-				select: { nome: true, descricao: true, foto: true },
-			});
-
-			res.status(200).json({ data: data });
-			return;
-		}
-
-		const empresa = await Empresa.findUnique({
-			where: { nome },
-			select: {
-				nome: true,
-				descricao: true,
-				tema: true,
-				maps: true,
-				telefone: true,
-				instagram: true,
-				emailContato: true,
-				cidade: true,
-				foto: true,
-			},
-		});
-
-		if (!empresa) {
-			res.status(404).json({ message: 'Nenhuma empresa encontrada' });
-			return;
-		}
-
-		res.status(200).json(empresa);
-	} catch {
-		res.status(500).json({ message: 'Erro interno no servidor' });
-	}
-};
-
-export default { getProdutos, getAllEmpresasOrByName };
+export default getProdutos;
