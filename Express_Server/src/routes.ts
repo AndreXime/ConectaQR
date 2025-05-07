@@ -40,7 +40,7 @@ router.delete('/categoria', verifyAuth, Categoria.deleteCategoria);
 
 /* Rotas publicas */
 router.get('/empresas', getAllEmpresas);
-router.get('/empresas/:id', getEmpresaByName);
+router.get('/empresas/:nome', getEmpresaByName);
 router.get('/produto/:empresa', getProdutos);
 router.post('/feedback', Feedback);
 

@@ -26,6 +26,7 @@ jobs:
 
       - name: Verificar deploy
         run: |
+          sleep 5
           RESPONSE=$(curl -s ${{ secrets.IP_DOMAIN }})
           echo "Resposta recebida: $RESPONSE"
             

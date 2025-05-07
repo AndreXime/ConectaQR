@@ -16,7 +16,7 @@ export default function Header({ EmpresaName, children, Categorias }: HeaderProp
 				type="checkbox"
 				className="drawer-toggle"
 			/>
-			<div className="drawer-content flex flex-col bg-gradient-to-r from-primary via-primary to-secondary">
+			<div className="drawer-content flex flex-col bg-primary">
 				<nav className="navbar flex text-primary-content w-full p-3 relative justify-center">
 					<label
 						htmlFor="my-drawer"

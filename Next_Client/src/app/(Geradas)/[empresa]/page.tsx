@@ -8,7 +8,7 @@ import { FaInfoCircle, FaMapMarkerAlt, FaShoppingBag, FaShoppingCart } from 'rea
 
 async function getCompanyInfo(nomeEmpresa: string): Promise<EmpresaPublica | null> {
 	try {
-		const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/empresas?nome=${nomeEmpresa}`, {
+		const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/empresas/${nomeEmpresa}`, {
 			method: 'get',
 			cache: 'no-store',
 		});
