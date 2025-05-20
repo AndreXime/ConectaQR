@@ -5,10 +5,12 @@ import getEmpresaByName from './public/getEmpresaByName.js';
 import getAllEmpresas from './public/getAllEmpresas.js';
 import getProdutos from './public/getProdutos.js';
 
-import Auth from './auth/AuthController.js';
-import Feedback from './feedback/feedback.js';
-import FeedbackAdmin from './feedback/feedbackadmin.js';
+import loginEmpresa from './auth/loginEmpresa.js';
+import registerEmpresa from './auth/registerEmpresa.js';
+import postFeedback from './feedback/postFeedback.js';
+import getFeedback from './feedback/getFeedback.js';
 
-export default { Empresa, Produto, Auth, Categoria, Feedback, FeedbackAdmin };
-
-export { Empresa, Produto, Auth, Categoria, Feedback, FeedbackAdmin, getEmpresaByName, getAllEmpresas, getProdutos };
+export const Feedback = { postFeedback, getFeedback };
+export const Auth = { loginEmpresa, registerEmpresa };
+export const Public = { getEmpresaByName, getAllEmpresas, getProdutos };
+export const Private = { Empresa, Categoria, Produto };

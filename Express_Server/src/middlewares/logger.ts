@@ -26,7 +26,7 @@ const logger = (req: Request, res: Response, next: NextFunction) => {
 			duration: Number((seconds + nanoseconds / 1e9).toFixed(3)),
 		};
 
-		if (process.env.NODE_ENV !== 'production') {
+		if (process.env.NODE_ENV === 'dev') {
 			console.log(logData);
 		}
 

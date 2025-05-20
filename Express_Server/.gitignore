@@ -1,9 +1,19 @@
+# Node modules
 /node_modules
+
+# Build output
 /dist
+
+# Environment
 .env
+
+# Generated files (ignore everything except placeholder images)
 generated/*.json
 generated/*.log
 generated/uploads/*
-logs
-!generated/uploads/placeholder
+!generated/uploads/placeholder/
+!generated/uploads/placeholder/**
+
+# Logs
+logs/
 

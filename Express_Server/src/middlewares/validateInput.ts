@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
 import type { SchemaNomes, SchemaType } from '../types/validateInput.js';
-import { validateExtraFields, validateEmail, validateString, validateNumber } from './validateFunctions.js';
+import { validateExtraFields, validateEmail, validateString, validateNumber } from '../lib/validateFunctions.js';
 
 export default function validateInput(schemaNome: SchemaNomes) {
 	return (req: Request, res: Response, next: NextFunction): void => {

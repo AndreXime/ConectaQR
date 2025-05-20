@@ -10,9 +10,10 @@
 	"scripts": {
 		"start": "node dist/server.js",
 		"dev": "npx nodemon",
+		"dev:silent": "NODE_ENV=test npx nodemon > /dev/null 2>&1",
 		"build": "rm -rf ./dist && tsc",
 		"lint": "eslint ./src",
-		"test": "npx jest --verbose"
+		"test": "npx jest --verbose "
 	},
 	"keywords": [],
 	"author": "AndreXimenes",

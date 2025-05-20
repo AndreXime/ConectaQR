@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
-import { Empresa } from '../../database/models.js';
+import { Empresa, Categoria, Produtos } from '../../database/models.js';
 import fs from 'fs/promises';
 import sharp from 'sharp';
 import { apagarImagemporURL, FilePath_Url_Maker } from '../../lib/gerenciarImagens.js';
 
-const getAllDataFromOwnEmpresa = async (req: Request, res: Response): Promise<void> => {
+const getEmpresa = async (req: Request, res: Response): Promise<void> => {
 	try {
 		const data = await Empresa.findUnique({
 			where: { id: req.userId },
@@ -102,9 +102,12 @@ const updateEmpresa = async (req: Request, res: Response): Promise<void> => {
 
 const deleteEmpresa = async (req: Request, res: Response): Promise<void> => {
 	try {
+		// Remove related categories and products first to avoid FK constraint errors
+		await Categoria.deleteMany({ where: { empresaId: req.userId } });
+		await Produtos.deleteMany({ where: { empresaId: req.userId } });
 		const empresa = await Empresa.delete({
 			where: { id: req.userId },
-			select: { nome: true, produtos: { select: { imagemUrl: true } } },
+			select: { nome: true },
 		});
 		await fs.rm('./generated/uploads/' + empresa.nome, { recursive: true, force: true });
 		res.status(200).json({ message: 'Sucesso' });
@@ -114,7 +117,7 @@ const deleteEmpresa = async (req: Request, res: Response): Promise<void> => {
 };
 
 export default {
-	getAllDataFromOwnEmpresa,
+	getEmpresa,
 	updateEmpresa,
 	deleteEmpresa,
 };

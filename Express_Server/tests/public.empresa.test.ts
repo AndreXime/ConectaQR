@@ -16,8 +16,8 @@ describe('Testando pegar informações de empresas publicas', () => {
 		});
 	});
 
-	it('Deve responder com objeto de uma unica empresa se passar query', async () => {
-		const response = await request('http://localhost:4000').get('/empresas?nome=amazon');
+	it('Deve responder com objeto de uma unica empresa se passar nome na rota', async () => {
+		const response = await request('http://localhost:4000').get('/empresas/amazon');
 
 		expect(response.status).toBe(200);
 		expect(response.body).toEqual(
@@ -34,7 +34,7 @@ describe('Testando pegar informações de empresas publicas', () => {
 	});
 
 	it('Deve responder que não existe empresa se invalido', async () => {
-		const response = await request('http://localhost:4000').get('/empresas?nome=naoexiste');
+		const response = await request('http://localhost:4000').get('/empresas/naoexiste');
 
 		expect(response.status).toBe(404);
 	});
