@@ -1,13 +1,10 @@
-import { PrismaClient } from '@prisma/client';
-import argon2 from 'argon2';
+import Database from '../src/config/Database';
+import HashManager from '../src/lib/security/HashManager';
 import { config } from 'dotenv';
 
 config();
 
-const ARGON_SECRET = Buffer.from(process.env.ARGON2_KEY || '123');
-
-const prisma = new PrismaClient();
-const { categoria, empresa, produto } = prisma;
+const { categoria, empresa, produto } = Database;
 
 async function main() {
 	await produto.deleteMany({ where: {} });
@@ -15,13 +12,7 @@ async function main() {
 	await empresa.deleteMany({ where: {} });
 
 	/* Um exemplo de uma empresa completa e uma vazia */
-	const senha = await argon2.hash('senha123', {
-		type: argon2.argon2id,
-		memoryCost: 3 * 1024,
-		timeCost: 3,
-		parallelism: 1,
-		secret: ARGON_SECRET,
-	});
+	const senha = await HashManager.Hash('senha123');
 
 	const [empresaCriada] = await empresa.createManyAndReturn({
 		data: [
@@ -68,4 +59,4 @@ try {
 	console.log('Ocorreu um erro na seed mas o processo continuara');
 }
 
-await prisma.$disconnect();
+await Database.$disconnect();

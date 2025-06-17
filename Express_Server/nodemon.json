@@ -4,5 +4,5 @@
 	"delay": "5000",
 	"quiet": true,
 	"verbose": true,
-	"exec": "echo ================================================ && echo Iniciando servidor && echo && npx tsx src/server.ts"
+	"exec": "clear && echo \"\\033[1;32m=====================================\" && echo \"Iniciando servidor...\" && echo \"=====================================\\033[0m\" && echo && npx tsx src/server.ts"
 }
