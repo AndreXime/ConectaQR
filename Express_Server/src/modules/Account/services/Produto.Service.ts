@@ -1,71 +1,72 @@
 import { HTTPError } from '../../../lib/errors/HTTPError.js';
 import ImageManager from '../../../lib/utils/ImageManager.js';
+import { CreateProdutoDTO, UpdateProdutoDTO } from '../dto/ProdutoDTO.js';
 import ProdutoRepository from '../repositories/Produto.Repository.js';
 
 export default class ProdutoService {
-	private repository: ProdutoRepository;
+    private repository: ProdutoRepository;
 
-	constructor() {
-		this.repository = new ProdutoRepository();
-	}
-	async createProduto(empresaId: string, body: any, file?: Express.Multer.File) {
-		const { nome, preco, categoriaId } = body;
+    constructor() {
+        this.repository = new ProdutoRepository();
+    }
 
-		if (!file) {
-			throw new HTTPError(400, 'Não foi fornecido uma imagem');
-		}
+    async createProduto(empresaId: string, body: CreateProdutoDTO, file?: Express.Multer.File) {
+        const { nome, preco, categoriaId } = body;
 
-		const empresa = await this.repository.getEmpresaNome(empresaId);
-		if (!empresa) {
-			throw new HTTPError(400, 'Empresa não encontrada');
-		}
+        if (!file) {
+            throw new HTTPError(400, 'Não foi fornecido uma imagem');
+        }
 
-		const newImagemUrl = await ImageManager.GenerateImageFileAndUrl(empresa.nome, file.buffer);
+        const empresa = await this.repository.getEmpresaNome(empresaId);
+        if (!empresa) {
+            throw new HTTPError(400, 'Empresa não encontrada');
+        }
 
-		const produto = await this.repository.create({
-			nome,
-			preco,
-			imagemUrl: newImagemUrl,
-			categoria: { connect: { id: categoriaId } },
-			empresa: { connect: { id: empresaId } },
-		});
+        const imagemUrl = await ImageManager.GenerateImageFileAndUrl(empresa.nome, file.buffer);
 
-		return produto;
-	}
+        const produto = await this.repository.create(empresaId, {
+            nome,
+            preco,
+            imagemUrl,
+            categoriaId,
+        });
 
-	async updateProduto(empresaId: string, body: any, file?: Express.Multer.File) {
-		const { produtoId, nome, preco, categoriaId } = body;
+        return produto;
+    }
 
-		const produto = await this.repository.findById(produtoId, empresaId);
-		if (!produto) {
-			throw new Error('Produto não encontrado');
-		}
+    async updateProduto(empresaId: string, body: UpdateProdutoDTO, file?: Express.Multer.File) {
+        const { produtoId, nome, preco, categoriaId } = body;
 
-		let imagemUrl = produto.imagemUrl;
+        const produto = await this.repository.findById(produtoId, empresaId);
+        if (!produto) {
+            throw new Error('Produto não encontrado');
+        }
 
-		if (file) {
-			ImageManager.apagarImagemporURL(imagemUrl);
+        let imagemUrl = produto.imagemUrl;
 
-			const newImagemUrl = await ImageManager.GenerateImageFileAndUrl(produto.empresa.nome, file.buffer);
+        if (file) {
+            ImageManager.apagarImagemporURL(imagemUrl);
 
-			imagemUrl = newImagemUrl;
-		}
+            const newImagemUrl = await ImageManager.GenerateImageFileAndUrl(produto.empresa.nome, file.buffer);
 
-		const produtoAtualizado = await this.repository.update(produtoId, empresaId, {
-			nome,
-			preco,
-			imagemUrl,
-			categoria: { connect: { id: categoriaId } },
-		});
+            imagemUrl = newImagemUrl;
+        }
 
-		return produtoAtualizado;
-	}
+        const produtoAtualizado = await this.repository.update(produtoId, empresaId, {
+            nome,
+            preco,
+            imagemUrl,
+            categoria: { connect: { id: categoriaId } },
+        });
 
-	async deleteProduto(produtoId: string, empresaId: string) {
-		const produto = await this.repository.delete(produtoId, empresaId);
-		if (produto.imagemUrl) {
-			ImageManager.apagarImagemporURL(produto.imagemUrl);
-		}
-		return { message: 'Produto removido com sucesso' };
-	}
+        return produtoAtualizado;
+    }
+
+    async deleteProduto(produtoId: string, empresaId: string) {
+        const produto = await this.repository.delete(produtoId, empresaId);
+        if (produto.imagemUrl) {
+            ImageManager.apagarImagemporURL(produto.imagemUrl);
+        }
+        return { message: 'Produto removido com sucesso' };
+    }
 }

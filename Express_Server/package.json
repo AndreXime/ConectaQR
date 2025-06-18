@@ -1,76 +1,76 @@
 {
-	"name": "conectaqr",
-	"version": "2.1.0",
-	"type": "module",
-	"main": "server.js",
-	"private": true,
-	"engines": {
-		"node": ">=21.0.0"
-	},
-	"scripts": {
-		"start": "node dist/server.js",
-		"dev": "npx nodemon",
-		"dev:silent": "npx nodemon",
-		"build": "rm -rf ./dist && tsc",
-		"lint": "eslint ./src",
-		"test": "npx jest --verbose "
-	},
-	"keywords": [],
-	"author": "AndreXimenes",
-	"license": "ISC",
-	"description": "",
-	"dependencies": {
-		"@prisma/client": "^6.6.0",
-		"argon2": "^0.41.1",
-		"cookie-parser": "^1.4.7",
-		"cors": "^2.8.5",
-		"dotenv": "^16.5.0",
-		"express": "^5.1.0",
-		"jsonwebtoken": "^9.0.2",
-		"multer": "^1.4.5-lts.2",
-		"pg": "^8.15.0",
-		"sharp": "^0.34.1"
-	},
-	"devDependencies": {
-		"@eslint/js": "^9.25.1",
-		"@types/cookie-parser": "^1.4.8",
-		"@types/cors": "^2.8.17",
-		"@types/express": "^5.0.1",
-		"@types/jest": "^29.5.14",
-		"@types/jsonwebtoken": "^9.0.9",
-		"@types/multer": "^1.4.12",
-		"@types/node": "^22.14.1",
-		"@types/supertest": "^6.0.3",
-		"eslint": "^9.25.1",
-		"jest": "^29.7.0",
-		"jest-extended": "^4.0.2",
-		"nodemon": "^3.1.9",
-		"prisma": "^6.6.0",
-		"supertest": "^7.1.0",
-		"ts-jest": "^29.3.2",
-		"tsx": "^4.19.3",
-		"typescript": "^5.8.3",
-		"typescript-eslint": "^8.31.0"
-	},
-	"jest": {
-		"preset": "ts-jest/presets/default-esm",
-		"globalSetup": "<rootDir>/tests/jest.setup.ts",
-		"globalTeardown": "<rootDir>/tests/jest.teardown.ts",
-		"testEnvironment": "node",
-		"extensionsToTreatAsEsm": [
-			".ts"
-		],
-		"transform": {
-			"^.+\\.(t|j)sx?$": [
-				"ts-jest",
-				{
-					"tsconfig": "tests/tsconfig.test.json",
-					"useESM": true
-				}
-			]
-		},
-		"setupFilesAfterEnv": [
-			"jest-extended/all"
-		]
-	}
+    "name": "conectaqr",
+    "version": "2.1.0",
+    "type": "module",
+    "main": "server.js",
+    "private": true,
+    "engines": {
+        "node": ">=21.0.0"
+    },
+    "scripts": {
+        "start": "node dist/server.js",
+        "dev": "npx nodemon",
+        "dev:silent": "npx nodemon",
+        "build": "rm -rf ./dist && tsc",
+        "lint": "eslint ./src",
+        "test": "npx jest --verbose "
+    },
+    "keywords": [],
+    "author": "AndreXimenes",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "@prisma/client": "^6.6.0",
+        "argon2": "^0.41.1",
+        "cookie-parser": "^1.4.7",
+        "cors": "^2.8.5",
+        "dotenv": "^16.5.0",
+        "express": "^5.1.0",
+        "jsonwebtoken": "^9.0.2",
+        "multer": "^1.4.5-lts.2",
+        "pg": "^8.15.0",
+        "sharp": "^0.34.1"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.25.1",
+        "@types/cookie-parser": "^1.4.8",
+        "@types/cors": "^2.8.17",
+        "@types/express": "^5.0.1",
+        "@types/jest": "^29.5.14",
+        "@types/jsonwebtoken": "^9.0.9",
+        "@types/multer": "^1.4.12",
+        "@types/node": "^22.15.32",
+        "@types/supertest": "^6.0.3",
+        "eslint": "^9.25.1",
+        "jest": "^29.7.0",
+        "jest-extended": "^4.0.2",
+        "nodemon": "^3.1.9",
+        "prisma": "^6.6.0",
+        "supertest": "^7.1.0",
+        "ts-jest": "^29.3.2",
+        "tsx": "^4.19.3",
+        "typescript": "^5.8.3",
+        "typescript-eslint": "^8.31.0"
+    },
+    "jest": {
+        "preset": "ts-jest/presets/default-esm",
+        "globalSetup": "<rootDir>/tests/config/jest.setup.ts",
+        "globalTeardown": "<rootDir>/tests/config/jest.teardown.ts",
+        "testEnvironment": "node",
+        "extensionsToTreatAsEsm": [
+            ".ts"
+        ],
+        "transform": {
+            "^.+\\.(t|j)sx?$": [
+                "ts-jest",
+                {
+                    "tsconfig": "tests/tsconfig.test.json",
+                    "useESM": true
+                }
+            ]
+        },
+        "setupFilesAfterEnv": [
+            "jest-extended/all"
+        ]
+    }
 }
