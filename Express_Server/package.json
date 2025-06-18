@@ -15,6 +15,9 @@
         "lint": "eslint ./src",
         "test": "npx jest --verbose "
     },
+    "prisma": {
+        "seed": "tsx prisma/seed.ts"
+    },
     "keywords": [],
     "author": "AndreXimenes",
     "license": "ISC",

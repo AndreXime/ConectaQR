@@ -1,43 +1,43 @@
 name: Testes - Servidor Express E2E
 
 on:
-  push:
-    branches: [main]
-    paths: ['Express_Server/**']
-  pull_request:
-    branches: [main]
-    paths: ['Express_Server/**']
+    push:
+        branches: [main]
+        paths: ['Express_Server/**']
+    pull_request:
+        branches: [main]
+        paths: ['Express_Server/**']
 
 jobs:
-  testar-servidor:
-    name: Testar Servidor
-    runs-on: ubuntu-latest
+    testar-servidor:
+        name: Testar Servidor
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Setup checkout
-        uses: actions/checkout@v4
+        steps:
+            - name: Setup checkout
+              uses: actions/checkout@v4
 
-      - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '21'
+            - name: Setup node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '21'
 
-      - name: Iniciando containers
-        run: |
-          docker compose up -d database server
-          sleep 10
+            - name: Iniciando containers
+              run: |
+                  docker compose up -d database server
+                  sleep 10
 
-      - name: Configurando ambiente de teste
-        run: |
-          docker cp Express_Server/tests conectaqr-server-1:/app/tests 
-          docker cp Express_Server/tsconfig.json conectaqr-server-1:/app 
-          docker compose exec -T server npm install --include=dev 
-          docker compose exec -T server npx prisma migrate reset --force
-          docker compose exec -T server npx prisma migrate deploy
+            - name: Configurando ambiente de teste
+              run: |
+                  docker cp Express_Server/tests conectaqr-server-1:/app/tests 
+                  docker cp Express_Server/tsconfig.json conectaqr-server-1:/app 
+                  docker cp Express_Server/src conectaqr-server-1:/app/src
+                  docker compose exec -T server npm install --include=dev
+                  docker compose exec -T server npx prisma generate
 
-      - name: Executando testes
-        run: docker compose exec -T server npm test
+            - name: Executando testes
+              run: docker compose exec -T server npm test
 
-      - name: Limpando containers
-        if: always()
-        run: docker compose down --volumes --remove-orphans
+            - name: Limpando containers
+              if: always()
+              run: docker compose down --volumes --remove-orphans
