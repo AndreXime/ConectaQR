@@ -1,5 +1,6 @@
 import EmpresaService from '../services/Empresa.Service.js';
 import { HTTPError } from '../../../lib/errors/HTTPError.js';
+import { validateUpdateEmpresa } from '../dto/EmpresaDTO.js';
 
 export default class EmpresaController {
 	private EmpresaService = new EmpresaService();
@@ -14,7 +15,9 @@ export default class EmpresaController {
 	public updateEmpresa = async (req: ExRequest, res: ExResponse) => {
 		if (!req.userId) throw new HTTPError(400, 'Não autenticado');
 
-		const empresa = await this.EmpresaService.updateEmpresa(req.userId, req.body, req.file);
+		const body = validateUpdateEmpresa(req.body);
+
+		const empresa = await this.EmpresaService.updateEmpresa(req.userId, body, req.file);
 		res.status(200).json({ message: 'Atualizado com sucesso', data: empresa });
 	};
 

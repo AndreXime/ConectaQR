@@ -1,11 +1,12 @@
 import CategoriaService from '../services/Categoria.Service.js';
 import { HTTPError } from '../../../lib/errors/HTTPError.js';
+import { validateCreateCategoria, validateDeleteCategoria, validateUpdateCategoria } from '../dto/CategoriaDTO.js';
 
 export default class AuthController {
 	private CategoriaService = new CategoriaService();
 
 	public createCategoria = async (req: ExRequest, res: ExResponse) => {
-		const { nome } = req.body;
+		const { nome } = validateCreateCategoria(req.body);
 		if (!req.userId) throw new HTTPError(400, 'Não autenticado');
 
 		const categoria = await this.CategoriaService.create(nome, req.userId);
@@ -14,7 +15,7 @@ export default class AuthController {
 	};
 
 	public updateCategoria = async (req: ExRequest, res: ExResponse) => {
-		const { categoriaId, nome } = req.body;
+		const { categoriaId, nome } = validateUpdateCategoria(req.body);
 		if (!req.userId) throw new HTTPError(400, 'Não autenticado');
 
 		const categoria = await this.CategoriaService.update(categoriaId, nome, req.userId);
@@ -22,7 +23,7 @@ export default class AuthController {
 	};
 
 	public deleteCategoria = async (req: ExRequest, res: ExResponse) => {
-		const { id, newId } = req.body;
+		const { id, newId } = validateDeleteCategoria(req.body);
 		if (!req.userId) throw new HTTPError(400, 'Não autenticado');
 
 		const categoria = await this.CategoriaService.delete(id, newId, req.userId);

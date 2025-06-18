@@ -9,12 +9,10 @@ export default class CategoriaService {
 	}
 
 	async create(nome: string, empresaId: string) {
-		if (!nome) throw new Error('Nome da categoria é obrigatório');
 		return this.repository.create(nome, empresaId);
 	}
 
 	async update(categoriaId: string, nome: string, empresaId: string) {
-		if (!nome) throw new Error('Nome da categoria é obrigatório');
 		return this.repository.update(categoriaId, nome, empresaId);
 	}
 
