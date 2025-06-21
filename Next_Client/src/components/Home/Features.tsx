@@ -1,34 +1,67 @@
-import { features } from '@/content';
+import { BookOpen, Settings2, Paintbrush, LinkIcon, BarChart2, Share2 } from 'lucide-react';
 
 export default function FeaturesSection() {
-	return (
-		<section
-			id="recursos"
-			className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-br from-purple-50 via-blue-50 to-teal-50 ">
-			<div className="px-4 md:px-6">
-				<div className="flex flex-col items-center justify-center space-y-4 text-center">
-					<div className="space-y-2">
-						<h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-							Recursos que transformam seu negócio
-						</h2>
-						<p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-							Tudo o que você precisa para criar uma presença digital eficiente
-						</p>
-					</div>
-				</div>
-				<div className="mx-auto grid max-w-5xl items-center gap-6 py-12 md:grid-cols-2 lg:grid-cols-3">
-					{features.map((card, index) => (
-						<div
-							key={index}
-							className="card bg-base-100 shadow-xl h-full">
-							<div className="card-body">
-								<h2 className="card-title">{card.title}</h2>
-								<p>{card.description}</p>
-							</div>
-						</div>
-					))}
-				</div>
-			</div>
-		</section>
-	);
+    return (
+        <section id="features" className="py-20 px-6 bg-base-100">
+            <div className="text-center mb-16">
+                <h3 className="text-3xl md:text-4xl font-bold">Recursos que transformam seu negócio</h3>
+                <p className="text-lg text-gray-600 mt-2">
+                    Tudo o que você precisa para criar uma presença digital de sucesso.
+                </p>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mx-auto max-w-[1300px]">
+                <FeatureCard
+                    icon={<BookOpen />}
+                    title="Catálogo Digital"
+                    colors="bg-indigo-100 text-indigo-600"
+                    description="Exponha seus produtos de forma organizada e atraente."
+                />
+                <FeatureCard
+                    icon={<Settings2 />}
+                    title="Gestão de Produtos"
+                    colors="bg-pink-100 text-pink-600"
+                    description="Adicione, edite, e remova produtos facilmente."
+                />
+                <FeatureCard
+                    icon={<Paintbrush />}
+                    title="Loja Personalizada"
+                    colors="bg-emerald-100 text-emerald-600"
+                    description="Altere cores, banners e layout da sua marca."
+                />
+                <FeatureCard
+                    icon={<LinkIcon />}
+                    title="Domínio Próprio"
+                    colors="bg-orange-100 text-orange-600"
+                    description="Utilize seu próprio domínio para mais credibilidade."
+                />
+                <FeatureCard
+                    icon={<BarChart2 />}
+                    title="Relatório de Acessos"
+                    colors="bg-purple-100 text-purple-600"
+                    description="Acompanhe quantas pessoas acessam sua página."
+                />
+                <FeatureCard
+                    icon={<Share2 />}
+                    title="Fácil Compartilhamento"
+                    colors="bg-green-100 text-green-600"
+                    description="Divulgue sua loja em redes sociais e WhatsApp."
+                />
+            </div>
+        </section>
+    );
 }
+
+const FeatureCard: React.FC<{ icon: React.ReactNode; title: string; description: string; colors: string }> = ({
+    icon,
+    title,
+    colors,
+    description,
+}) => (
+    <div className="bg-base-100 p-8 rounded-2xl shadow-md border border-gray-100 hover:shadow-xl transition-shadow duration-300 feature-card">
+        <div className="flex items-center gap-4 mb-4">
+            <div className={colors + ' p-3 rounded-lg'}>{icon}</div>
+            <h4 className="text-xl font-semibold">{title}</h4>
+        </div>
+        <p className="text-gray-600">{description}</p>
+    </div>
+);

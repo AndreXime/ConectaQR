@@ -1,29 +1,43 @@
 @font-face {
-	font-family: 'Roboto';
-	src: url('/fonts/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
-	font-weight: 100 900; /* Faixa de pesos disponível */
-	font-stretch: 75% 100%; /* Define a variação de largura */
-	font-style: normal;
+    font-family: 'Roboto';
+    src: url('/fonts/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
+    font-weight: 100 900; /* Faixa de pesos disponível */
+    font-stretch: 75% 100%; /* Define a variação de largura */
+    font-style: normal;
 }
 
 @import 'tailwindcss';
 @plugin "daisyui" {
-	themes: corporate --default;
-	themes: all;
+    themes: corporate --default;
+    themes: all;
 }
 
 body {
-	font-family: 'Roboto', Arial, sans-serif;
+    font-family: 'Roboto', Arial, sans-serif;
 }
 .animate-slideIn {
-	animation: slideIn 0.3s ease-out;
+    animation: slideIn 0.3s ease-out;
 }
 
 @keyframes slideIn {
-	from {
-		transform: translateX(-50%);
-	}
-	to {
-		transform: translateX(0);
-	}
+    from {
+        transform: translateX(-50%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.gradient-bg {
+    background: linear-gradient(45deg, #4f46e5, #ec4899);
+    color: white;
+}
+.gradient-text {
+    background: -webkit-linear-gradient(45deg, #4f46e5, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
