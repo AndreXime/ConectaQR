@@ -1,14 +1,12 @@
 import Link from 'next/link';
 import { FaArrowRight, FaBars } from 'react-icons/fa';
-import ThemeSwitcher from '../common/themeSwitcher';
 
 interface props {
     children: React.ReactNode;
     absolute?: boolean;
-    theme: string | undefined;
 }
 
-export default async function Drawer({ children, absolute, theme }: props) {
+export default async function Drawer({ children, absolute }: props) {
     return (
         <div className="drawer">
             <input id="drawer" type="checkbox" className="drawer-toggle" />
@@ -26,9 +24,6 @@ export default async function Drawer({ children, absolute, theme }: props) {
                     </Link>
                     <div className="hidden flex-none lg:block">
                         <ul className="menu menu-horizontal ">
-                            <li className=" px-1">
-                                <ThemeSwitcher initialTheme={theme} />
-                            </li>
                             <li className=" px-1">
                                 <Link className="btn btn-primary btn-ghost " href="/empresas">
                                     Empresas parceiras
@@ -70,13 +65,6 @@ export default async function Drawer({ children, absolute, theme }: props) {
                         <Link className="btn btn-primary btn-ghost mb-3 flex justify-between" href="/sobre-nos">
                             Sobre a plataforma <FaArrowRight />
                         </Link>
-                    </li>
-                    <li>
-                        <ThemeSwitcher
-                            initialTheme={theme}
-                            text
-                            className="btn btn-primary btn-ghost flex justify-between"
-                        />
                     </li>
                 </ul>
             </div>

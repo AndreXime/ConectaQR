@@ -1,4 +1,4 @@
-import PageCLient from './pageClient';
+import PageClient from './pageClient';
 
 export default async function page() {
     let status = false;
@@ -17,5 +17,5 @@ export default async function page() {
         version: '1.8',
     };
 
-    return <PageCLient serverStatus={serverStatus} />;
+    return <PageClient serverStatus={serverStatus} />;
 }

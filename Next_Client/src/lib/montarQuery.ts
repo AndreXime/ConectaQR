@@ -1,17 +1,18 @@
-export default async function montarQueryURL(
-	page: string | undefined,
-	categoria: string | undefined,
-	search: string | undefined
-) {
-	const params: string[] = [];
+import { NextQueryType } from './types';
 
-	if (page) params.push(`page=${page}`);
-	if (categoria) params.push(`categoria=${categoria}`);
-	if (search) params.push(`search=${search}`);
+export default async function montarQueryURL(queryRaw: NextQueryType) {
+    if (!queryRaw) {
+        return '';
+    }
+    const params: string[] = [];
 
-	if (params.length > 0) {
-		return `?${params.join('&')}`;
-	}
+    if (queryRaw.page) params.push(`page=${queryRaw.page}`);
+    if (queryRaw.categoria) params.push(`categoria=${queryRaw.categoria}`);
+    if (queryRaw.search) params.push(`search=${queryRaw.search}`);
 
-	return '';
+    if (params.length > 0) {
+        return `?${params.join('&')}`;
+    }
+
+    return '';
 }

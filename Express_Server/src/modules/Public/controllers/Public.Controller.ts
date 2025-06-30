@@ -35,8 +35,6 @@ export default class PublicController {
 
         const data = await this.PublicService.GetProdutos(params);
 
-        console.log(data);
-
         res.status(200).json(data);
     };
 }

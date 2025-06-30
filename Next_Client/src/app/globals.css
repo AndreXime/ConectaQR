@@ -1,11 +1,3 @@
-@font-face {
-    font-family: 'Roboto';
-    src: url('/fonts/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
-    font-weight: 100 900; /* Faixa de pesos disponível */
-    font-stretch: 75% 100%; /* Define a variação de largura */
-    font-style: normal;
-}
-
 @import 'tailwindcss';
 @plugin "daisyui" {
     themes: corporate --default;
@@ -13,7 +5,7 @@
 }
 
 body {
-    font-family: 'Roboto', Arial, sans-serif;
+    font-family: var(--font-roboto), sans-serif;
 }
 .animate-slideIn {
     animation: slideIn 0.3s ease-out;
