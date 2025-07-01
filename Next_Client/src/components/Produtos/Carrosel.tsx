@@ -1,60 +1,65 @@
 'use client';
-import type { Produto } from '@/lib/types';
-import { useEffect, useRef } from 'react';
-import ProductCard from './ProductCard';
-import Glide, { Swipe, Breakpoints, Autoplay } from '@glidejs/glide/dist/glide.modular.esm';
-import '@glidejs/glide/dist/css/glide.core.min.css';
+import { useRef } from 'react';
+import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
+import Link from 'next/link';
 
-export default function Slider({ data }: { data: Produto[] }) {
-	const sliderRef = useRef<HTMLDivElement>(null);
+interface ProductCarouselProps {
+    title: string;
+    children: React.ReactNode;
+    categoryHref: string;
+}
 
-	useEffect(() => {
-		if (!sliderRef.current) return;
-		// Se o tamanho do array de produtos for menor q o esperado ajustar para o proprio tamanho
-		const slider = new Glide(sliderRef.current, {
-			type: 'slider',
-			gap: 5,
-			autoplay: 3000,
-			perView: data.length < 5 ? data.length : 5,
-			rewind: true,
-			bound: true,
-			touchRatio: 1,
-			breakpoints: {
-				768: { perView: data.length < 2 ? data.length : 2 },
-				1024: { perView: data.length < 3 ? data.length : 3 },
-			},
-		});
+export default function Carrosel({ title, children, categoryHref }: ProductCarouselProps) {
+    const carouselRef = useRef<HTMLDivElement>(null);
 
-		slider.mount({ Swipe, Breakpoints, Autoplay });
+    const scrollLeft = () => {
+        if (carouselRef.current) {
+            // Pega a largura do primeiro card para saber o quanto rolar
+            const scrollAmount = carouselRef.current.firstElementChild?.clientWidth || 300;
+            carouselRef.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        }
+    };
 
-		// Limpeza ao desmontar o componente
-		return () => {
-			slider.destroy();
-		};
-	}, [data.length]);
+    const scrollRight = () => {
+        if (carouselRef.current) {
+            const scrollAmount = carouselRef.current.firstElementChild?.clientWidth || 300;
+            carouselRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        }
+    };
+    return (
+        <section className="mb-16">
+            <div className="flex flex-wrap justify-between items-center mb-6 gap-4">
+                <h2 className="text-3xl font-extrabold text-gray-900 border-b-2 border-indigo-500 pb-2">{title}</h2>
+                <div className="flex items-center gap-3">
+                    <Link
+                        href={categoryHref}
+                        className="text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition"
+                    >
+                        Ver mais
+                    </Link>
+                    <button
+                        onClick={scrollLeft}
+                        className="p-2 rounded-full bg-white shadow-md hover:bg-gray-100 transition-colors duration-200 focus:outline-none"
+                        aria-label={`Scroll left in ${title}`}
+                    >
+                        <ChevronLeftIcon />
+                    </button>
+                    <button
+                        onClick={scrollRight}
+                        className="p-2 rounded-full bg-white shadow-md hover:bg-gray-100 transition-colors duration-200 focus:outline-none"
+                        aria-label={`Scroll right in ${title}`}
+                    >
+                        <ChevronRightIcon />
+                    </button>
+                </div>
+            </div>
 
-	return (
-		<div
-			ref={sliderRef}
-			className="glide">
-			<div
-				className="glide__track"
-				data-glide-el="track">
-				<ul className="glide__slides">
-					{data.map((produto) => (
-						<li
-							className="glide__slide"
-							key={produto.nome + produto.preco}>
-							<ProductCard
-								name={produto.nome}
-								price={produto.preco}
-								image={produto.imagemUrl}
-								className="cursor-grab border-base-300 border-2"
-							/>
-						</li>
-					))}
-				</ul>
-			</div>
-		</div>
-	);
+            <div
+                ref={carouselRef}
+                className="flex items-stretch overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide -mx-4 px-4"
+            >
+                {children}
+            </div>
+        </section>
+    );
 }

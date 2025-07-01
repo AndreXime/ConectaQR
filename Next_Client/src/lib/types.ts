@@ -1,54 +1,60 @@
 import type { Dispatch, SetStateAction } from 'react';
 
 interface EmpresaPublica {
-	nome: string;
-	descricao?: string;
-	tema: string;
-	maps?: string;
-	telefone?: string;
-	instagram?: string;
-	emailContato?: string;
+    nome: string;
+    descricao?: string;
+    tema: string;
+    maps?: string;
+    telefone?: string;
+    instagram?: string;
+    emailContato?: string;
 
-	foto?: string;
-	cidade?: string;
+    foto?: string;
+    cidade?: string;
 }
 
 interface EmpresaPrivate extends EmpresaPublica {
-	email?: string;
+    email?: string;
 
-	categorias: Categoria[];
-	produtos: Produto[];
-	updatedAt: string;
-	createdAt: string;
+    categorias: Categoria[];
+    produtos: Produto[];
+    updatedAt: string;
+    createdAt: string;
 }
 
 type Categoria = {
-	id?: string;
-	nome: string;
+    id?: string;
+    nome: string;
 };
 
 type Produto = {
-	id: string;
-	nome: string;
-	preco: string;
-	categoria: { nome: string };
-	imagemUrl: string;
+    id: string;
+    nome: string;
+    preco: string;
+    categoria: { nome: string };
+    imagemUrl: string;
 };
 
 type ProdutoPageProps = {
-	data: {
-		produtos: Produto[];
-		categorias: Categoria[];
-	};
-	pagination: { PaginaAtual: number; limitePorPagina: number; ProdutosTotal: number; PaginasTotais: number };
-	tema: string;
+    data: {
+        produtos: Produto[];
+        categorias: Categoria[];
+    };
+    pagination: { PaginaAtual: number; limitePorPagina: number; ProdutosTotal: number; PaginasTotais: number };
+    tema: string;
 };
 
 type TabProdutosProps = {
-	Produtos: Produto[];
-	Categorias: Categoria[];
-	setProdutos: Dispatch<SetStateAction<Produto[]>>;
-	setCategorias: Dispatch<SetStateAction<Categoria[]>>;
+    Produtos: Produto[];
+    Categorias: Categoria[];
+    setProdutos: Dispatch<SetStateAction<Produto[]>>;
+    setCategorias: Dispatch<SetStateAction<Categoria[]>>;
 };
 
 export type { EmpresaPublica, Categoria, Produto, EmpresaPrivate, ProdutoPageProps, TabProdutosProps };
+
+export type NextQueryType =
+    | {
+          [key: string]: string | string[] | undefined;
+      }
+    | undefined;

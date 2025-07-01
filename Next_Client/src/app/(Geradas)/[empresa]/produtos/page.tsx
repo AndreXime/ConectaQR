@@ -1,145 +1,185 @@
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import { Header, ProductCard } from '@/components/Produtos';
-import Carrosel from '@/components/Produtos/Carrosel';
-import { montarQueryURL, OrganizarProdutos } from '@/lib/index';
-import type { Produto, ProdutoPageProps } from '@/lib/types';
-import SearchProduto from '@/components/Produtos/SearchProdut';
-import { FiChevronRight } from 'react-icons/fi';
+import { SearchProduto, ProductCard, Carrosel } from '@/components/Produtos';
+import { montarQueryURL, OrganizarProdutos } from '@/lib';
+import type { NextQueryType } from '@/lib/types';
+import getProdutosPaginated from '@/lib/data/getProductsPaginated';
 
-async function getProps(nome: string, query: string): Promise<ProdutoPageProps> {
-	const URL = `${process.env.NEXT_PUBLIC_API_URL}/produto/${nome}${query}`;
-
-	try {
-		const response = await fetch(URL, { method: 'get', cache: 'no-store' });
-		const status = response.status;
-		if (status >= 400) {
-			notFound();
-		} else {
-			const { data, pagination, tema } = await response.json();
-			return { data, pagination, tema };
-		}
-	} catch {
-		notFound();
-	}
-}
 /*
 	Se não ouver nenhum produto responde com uma mensagem
 	Se houver tem 2 opções
-	- Quando a nenhuma query que vai ser a tela inicial vai mostrar 
-	sliders de alguns produtos de todas as categorias
+	- Quando a nenhuma query que vai ser a tela inicial com sliders de alguns produtos de todas as categorias
 	- Se ouver query vai mostrar em forma de Grid e com paginação
 **/
 export default async function Page({
-	params,
-	searchParams,
+    params,
+    searchParams,
 }: {
-	params: Promise<{ empresa: string }>;
-	searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+    params: Promise<{ empresa: string }>;
+    searchParams?: Promise<NextQueryType>;
 }) {
-	const nomeEmpresa = (await params).empresa;
-	const query = await searchParams;
+    const nomeEmpresa = (await params).empresa;
+    const query = await searchParams;
 
-	const queryUrl = await montarQueryURL(
-		(query?.page as string) || undefined,
-		(query?.categoria as string) || undefined,
-		(query?.search as string) || undefined
-	);
+    const { data, pagination, tema } = await getProdutosPaginated(nomeEmpresa, query);
 
-	const { data, pagination, tema } = await getProps(nomeEmpresa, queryUrl);
+    const hasNoData = !data || !pagination || data.produtos.length === 0;
+    const hasQueryFilter = !!query?.categoria || !!query?.search;
 
-	const hasNoData = !data || !pagination || data.produtos.length === 0;
-	const hasQueryFilter = !!query?.categoria || !!query?.search;
+    const renderContent = async () => {
+        if (hasNoData) {
+            return (
+                <div className="text-center py-16">
+                    <h3 className="text-2xl font-semibold text-gray-700">Nenhum produto encontrado</h3>
+                    <p className="text-gray-500 mt-2">Tente ajustar sua busca ou filtro.</p>
+                </div>
+            );
+        }
+        if (hasQueryFilter && !hasNoData) {
+            return (
+                <>
+                    <div className="block mb-4">
+                        <h2 className="text-2xl font-semibold text-gray-800">
+                            Resultados para:{' '}
+                            <span className="text-indigo-600 font-bold">
+                                &quot;{query?.categoria || query?.search}&quot;
+                            </span>
+                        </h2>
+                    </div>
+                    {pagination.PaginasTotais > 1 && (
+                        <div className="bg-white rounded-lg shadow-md p-4 flex justify-center mb-5 w-full col-span-full">
+                            <div className="flex justify-center items-center gap-2 w-full">
+                                <Link
+                                    href={`/${nomeEmpresa}/produtos${await montarQueryURL({
+                                        ...query,
+                                        page: String(Number(query?.page || 1) - 1),
+                                    })}`}
+                                    passHref
+                                >
+                                    <button
+                                        className="pagination-btn px-4"
+                                        disabled={Number(query?.page) <= 1 || !query?.page}
+                                    >
+                                        « Anterior
+                                    </button>
+                                </Link>
+                                {Array.from({ length: pagination.PaginasTotais }, async (_, index) => {
+                                    const pageNumber = index + 1;
+                                    const isCurrentPage = (Number(query?.page) || 1) === pageNumber;
 
-	let ProdutoPorCategoria: Record<string, Produto[]> = {};
-	if (!query?.categoria && !hasNoData) {
-		ProdutoPorCategoria = await OrganizarProdutos(data);
-	}
+                                    return (
+                                        <Link
+                                            key={pageNumber}
+                                            className={`pagination-btn ${isCurrentPage ? 'active' : ''}`}
+                                            href={`/${nomeEmpresa}/produtos${await montarQueryURL({
+                                                ...query,
+                                                page: String(pageNumber),
+                                            })}`}
+                                        >
+                                            {pageNumber}
+                                        </Link>
+                                    );
+                                })}
+                                <Link
+                                    href={`/${nomeEmpresa}/produtos${await montarQueryURL({
+                                        ...query,
+                                        page: String(Number(query?.page || 1) + 1),
+                                    })}`}
+                                    passHref
+                                >
+                                    <button
+                                        className="pagination-btn px-4"
+                                        disabled={Number(query?.page) >= pagination.PaginasTotais}
+                                    >
+                                        Próximo »
+                                    </button>
+                                </Link>
+                            </div>
+                        </div>
+                    )}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        {data.produtos.map((product, index) => (
+                            <ProductCard
+                                key={index}
+                                name={product.nome}
+                                image={product.imagemUrl}
+                                price={Number(product.preco).toFixed(2)}
+                            />
+                        ))}
+                    </div>
+                </>
+            );
+        }
+        return (
+            <div id="product-sections">
+                {Object.entries(await OrganizarProdutos(data)).map(([categoria, produtos]) => (
+                    <Carrosel
+                        key={categoria}
+                        title={categoria}
+                        categoryHref={`/${nomeEmpresa}/produtos?categoria=${categoria}`}
+                    >
+                        {produtos.map((produto) => (
+                            <ProductCard
+                                key={produto.nome}
+                                name={produto.nome}
+                                image={produto.imagemUrl}
+                                price={Number(produto.preco).toFixed(2)}
+                            />
+                        ))}
+                    </Carrosel>
+                ))}
+            </div>
+        );
+    };
 
-	return (
-		<div
-			data-theme={tema}
-			className="flex flex-col min-h-screen">
-			<Header
-				Categorias={data?.categorias}
-				EmpresaName={nomeEmpresa}>
-				<main className="flex-grow container min-h-screen pb-4 px-2 mx-auto">
-					<div className="space-y-4 py-10">
-						<h1 className="text-3xl font-bold sm:text-4xl md:text-5xl">Nossos Produtos</h1>
-						<p className="max-w-xl text-base md:text-lg">
-							Confira nossa variedade de produtos selecionados com qualidade.
-						</p>
-						<SearchProduto
-							className="input input-bordered gap-2 w-full my-2 text-base-content"
-							empresa={nomeEmpresa}
-						/>
-					</div>
-					{hasNoData && (
-						<h1 className="text-2xl font-bold text-center my-7">Não temos nenhum produto castrado no momento</h1>
-					)}
-					{hasQueryFilter && !hasNoData && (
-						<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pt-7">
-							{pagination.PaginasTotais > 1 && (
-								<div className="flex justify-center gap-4 mb-5 col-span-full">
-									{Array.from({ length: pagination.PaginasTotais }, async (_, index) => (
-										<Link
-											key={`${index + 1}`}
-											className="btn btn-outline"
-											href={`/${nomeEmpresa}/produtos${await montarQueryURL(
-												String(index + 1),
-												(query?.categoria as string) || undefined,
-												(query?.search as string) || undefined
-											)}`}>
-											{`${index + 1}`}
-										</Link>
-									))}
-								</div>
-							)}
-							{data.produtos.map((product, index) => (
-								<ProductCard
-									key={index}
-									name={product.nome}
-									image={product.imagemUrl}
-									price={Number(product.preco).toFixed(2)}
-									className="col-span-1 border-1"
-								/>
-							))}
-						</div>
-					)}
-					{!hasNoData && !hasQueryFilter && (
-						<>
-							{Object.entries(ProdutoPorCategoria).map(([categoria, produtos], index) => (
-								<div key={categoria}>
-									<div className="flex justify-between items-center pb-3 pt-10">
-										<h2 className="text-xl md:text-2xl font-bold">{categoria}</h2>
-										<Link
-											href={`/${nomeEmpresa}/produtos?categoria=${categoria}`}
-											className="text-lg md:text-xl text-primary font-bold flex flex-row items-center">
-											Ver mais
-											<FiChevronRight
-												className="ml-1"
-												size={22}
-											/>
-										</Link>
-									</div>
+    return (
+        <div data-theme={tema} className="min-h-screen">
+            <header className="bg-white shadow-md py-5">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+                        <Link href={`/${nomeEmpresa}`}>
+                            <h1 className="text-3xl font-bold text-indigo-600 capitalize">
+                                {nomeEmpresa.split('-').join(' ')}
+                            </h1>
+                        </Link>
 
-									<Carrosel
-										key={categoria + index}
-										data={produtos}
-									/>
-								</div>
-							))}
-						</>
-					)}
-				</main>
+                        <div className="w-full md:w-1/4">
+                            <SearchProduto
+                                className="input input-bordered gap-2 w-full my-2 text-base-content border-2"
+                                empresa={nomeEmpresa}
+                            />
+                        </div>
+                    </div>
 
-				<footer className="bg-primary text-primary-content p-4">
-					<div className="container mx-auto text-center">
-						<p className="capitalize">{nomeEmpresa.split('-').join(' ')}</p>
-						<p>ConectaQR - Todos os direitos reservados. &copy; {new Date().getFullYear()} </p>
-					</div>
-				</footer>
-			</Header>
-		</div>
-	);
+                    <div className="mt-4 flex flex-wrap justify-center gap-2">
+                        <Link
+                            href={`/${nomeEmpresa}/produtos`}
+                            className={`px-4 py-2 text-sm rounded-full border border-gray-300 bg-gray-100 hover:bg-gray-200 transition ${
+                                !!query?.categoria ? '' : 'tag-active'
+                            }`}
+                        >
+                            Todos
+                        </Link>
+                        {data.categorias.map((value) => (
+                            <Link
+                                key={value.nome}
+                                href={`/${nomeEmpresa}/produtos?categoria=${value.nome}`}
+                                className={`px-4 py-2 text-sm rounded-full border border-gray-300 bg-gray-100 hover:bg-gray-200 transition ${
+                                    query?.categoria == value.nome ? 'tag-active' : ''
+                                }`}
+                            >
+                                {value.nome}
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            </header>
+            <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">{await renderContent()}</main>
+            <footer className="bg-white border-t border-gray-200">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center">
+                    <p className="capitalize mb-2">{nomeEmpresa.split('-').join(' ')}</p>
+                    <p className="text-gray-500">&copy; 2025 ConectaQR. Todos os direitos reservados.</p>
+                </div>
+            </footer>
+        </div>
+    );
 }

@@ -1,59 +1,53 @@
-import { FaGear, FaQrcode, FaStore, FaUpload } from 'react-icons/fa6';
-const generationStepData = [
-	{
-		icon: <FaStore className="h-6 w-6 text-purple-600 " />,
-		bg: 'bg-purple-100',
-		title: '1. Cadastre sua empresa',
-		description: 'Registre sua loja com informações básicas para começar',
-	},
-	{
-		icon: <FaGear className="h-6 w-6 text-blue-600 " />,
-		bg: 'bg-blue-100',
-		title: '2. Personalize sua loja',
-		description: 'Adicione descrição, escolha um tema e configure meios de contato',
-	},
-	{
-		icon: <FaUpload className="h-6 w-6 text-teal-600 " />,
-		bg: 'bg-teal-100',
-		title: '3. Adicione seus produtos',
-		description: 'Cadastre produtos com imagens e organize em categorias',
-	},
-	{
-		icon: <FaQrcode className="h-6 w-6 text-amber-600 " />,
-		bg: 'bg-amber-100',
-		title: '4. Gere um QR Code',
-		description: 'Imprima e coloque na sua loja física para clientes acessarem',
-	},
-];
+import { Building, PackagePlus, Palette, QrCode } from 'lucide-react';
 
 export default function GenerationStep() {
-	return (
-		<section
-			id="como-funciona"
-			className="w-full py-12 md:py-24 lg:py-32">
-			<div className="px-4 md:px-6">
-				<div className="flex flex-col items-center justify-center space-y-4 text-center">
-					<div className="space-y-2">
-						<h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">
-							Tenha sua página em passos simples
-						</h2>
-						<p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-							Comece a mostrar seus produtos online em apenas alguns minutos
-						</p>
-					</div>
-				</div>
-				<div className="mx-auto grid px-10 items-center gap-6 py-12 md:grid-cols-2 lg:grid-cols-4">
-					{generationStepData.map((step) => (
-						<div
-							key={step.title}
-							className="flex flex-col items-center space-y-2 border rounded-lg p-6 shadow-sm h-full">
-							<div className={'flex h-12 w-12 items-center justify-center rounded-full ' + step.bg}>{step.icon}</div>
-							<h3 className="text-xl font-bold">{step.title}</h3>
-							<p className="text-sm text-muted-foreground text-center">{step.description}</p>
-						</div>
-					))}
-				</div>
-			</div>
-		</section>
-	);
+    return (
+        <section id="how-it-works" className="py-20 bg-base-200">
+            <div className="container mx-auto px-6 text-center mb-16">
+                <h3 className="text-3xl md:text-4xl font-bold">Tenha sua página em 4 passos simples</h3>
+                <p className="text-lg text-gray-600 mt-2">Comece a vender online de forma rápida e intuitiva.</p>
+            </div>
+            <div className="container mx-auto px-6 grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <StepCard
+                    icon={<Building className="w-8 h-8 text-purple-600" />}
+                    bg="bg-purple-100"
+                    title="1. Cadastre sua empresa"
+                    description="Preencha as informações básicas do seu negócio."
+                />
+                <StepCard
+                    icon={<Palette className="w-8 h-8 text-blue-600" />}
+                    title="2. Personalize sua loja"
+                    bg="bg-blue-100"
+                    description="Escolha cores, adicione seu logo e deixe com a sua cara."
+                />
+                <StepCard
+                    icon={<PackagePlus className="w-8 h-8 text-teal-600" />}
+                    title="3. Adicione seus produtos"
+                    bg="bg-teal-100"
+                    description="Inclua fotos, descrições e preços dos seus itens."
+                />
+                <StepCard
+                    icon={<QrCode className="w-8 h-8 text-amber-600" />}
+                    title="4. Gere seu QR Code"
+                    bg="bg-amber-100"
+                    description="Compartilhe o QR Code e o link da sua página."
+                />
+            </div>
+        </section>
+    );
 }
+
+const StepCard: React.FC<{ icon: React.ReactNode; title: string; description: string; bg: string }> = ({
+    icon,
+    title,
+    bg,
+    description,
+}) => (
+    <div className="p-8 border border-gray-200 rounded-2xl text-center bg-base-100">
+        <div className={bg + ' text-indigo-600 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6'}>
+            {icon}
+        </div>
+        <h4 className="text-xl font-semibold mb-2">{title}</h4>
+        <p className="text-gray-600">{description}</p>
+    </div>
+);
