@@ -33,3 +33,26 @@ body {
     transform: translateY(-5px);
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
+
+.tag-active {
+    background-color: #4f46e5; /* Indigo 600 */
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.pagination-btn {
+    @apply inline-flex items-center justify-center font-medium border rounded-md p-2 min-w-10;
+}
+.pagination-btn.active {
+    @apply bg-indigo-600 border-indigo-600 text-white;
+}
+.pagination-btn:not(.active) {
+    @apply bg-white border-gray-300 text-gray-600 hover:bg-gray-50;
+}
+.pagination-btn:disabled {
+    @apply bg-gray-100 text-gray-400 cursor-not-allowed;
+}
+
+.custom-shadow {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}

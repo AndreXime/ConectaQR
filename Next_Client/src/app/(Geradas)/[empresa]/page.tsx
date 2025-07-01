@@ -31,38 +31,21 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
 
     return (
         <div data-theme={info.tema} className="flex flex-col min-h-dvh bg-base-100">
-            <div className="relative h-64 md:h-96 w-full">
-                <Image
-                    src={info.foto || '/assets/blankphoto.png'}
-                    alt={info.nome}
-                    fill
-                    className="object-contain w-full h-full"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                <div className="absolute bottom-0 left-0 p-4 md:p-8 w-full">
-                    <div className="flex flex-col mt-2">
-                        {info.cidade && (
-                            <div className="flex items-center text-base-100 text-sm mb-3">
-                                {/* Ícone React Icons substituindo MapPin */}
-                                <FaMapMarkerAlt className="h-4 w-4 mr-1" />
-                                {info.cidade}
-                            </div>
-                        )}
-                        <h1 className="text-3xl md:text-5xl font-bold text-base-100 capitalize">
-                            {info.nome.split('-').join(' ')}
-                        </h1>
-                        <div className="mt-6">
-                            <Link
-                                href={`/${nomeEmpresa}/produtos`}
-                                className="btn border-0 w-full bg-gradient-to-r text-base-100 bg-primary hover:bg-accent h-12 flex items-center justify-center"
-                            >
-                                <FaShoppingCart className="mr-2 h-5 w-5" />
-                                Ver Todos os Produtos
-                            </Link>
-                        </div>
-                    </div>
+            <header className="text-center my-8">
+                <div className="w-56 h-56 mx-auto bg-gray-200 rounded-full flex items-center justify-center mb-4 overflow-hidden border-4 border-white custom-shadow">
+                    <Image src={info.foto || '/assets/blankphoto.png'} alt={info.nome} width={800} height={800} />
                 </div>
-            </div>
+
+                <div className="text-4xl sm:text-5xl font-bold flex flex-col mt-2">
+                    {info.cidade && (
+                        <div className="flex items-center text-base-100 text-sm mb-3">
+                            <FaMapMarkerAlt className="h-4 w-4 mr-1" />
+                            {info.cidade}
+                        </div>
+                    )}
+                    <h1 className="capitalize">{info.nome.split('-').join(' ')}</h1>
+                </div>
+            </header>
 
             {/* Conteúdo Principal */}
             <section className="py-8 md:py-12">
@@ -79,7 +62,15 @@ export default async function Page({ params }: { params: Promise<{ empresa: stri
                                     <p className="text-gray-700 whitespace-pre-line">{info.descricao}</p>
                                 </div>
                             </div>
-
+                            <div className="card shadow">
+                                <Link
+                                    href={`/${nomeEmpresa}/produtos`}
+                                    className="btn border-0 w-full text-lg bg-gradient-to-r text-base-100 bg-primary hover:bg-accent h-12 flex items-center justify-center"
+                                >
+                                    <FaShoppingCart className="mr-2 h-5 w-5" />
+                                    Ver Todos os Produtos
+                                </Link>
+                            </div>
                             {/* Card de Localização – Google Maps */}
                             <div className="card shadow">
                                 <div className="card-body p-6">
