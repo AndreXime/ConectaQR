@@ -1,4 +1,4 @@
-import { Categoria, Produto } from './types';
+import { Categoria, Produto } from '@/types/global';
 
 type data = {
     produtos: Produto[];

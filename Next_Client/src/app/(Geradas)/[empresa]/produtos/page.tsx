@@ -1,8 +1,9 @@
 import Link from 'next/link';
-import { SearchProduto, ProductCard, Carrosel } from '@/components/Produtos';
-import { montarQueryURL, OrganizarProdutos } from '@/lib';
-import type { NextQueryType } from '@/lib/types';
-import getProdutosPaginated from '@/lib/data/getProductsPaginated';
+import { SearchProduto, ProductCard, Carrosel } from '@/module/Empresa/components';
+import montarQueryURL from '@/module/Empresa/lib/montarQuery';
+import OrganizarProdutos from '@/module/Empresa/lib/organizarProdutos';
+import type { NextQueryType } from '@/types/global';
+import getProdutosPaginated from '@/module/Empresa/lib/getProductsPaginated';
 
 /*
 	Se não ouver nenhum produto responde com uma mensagem

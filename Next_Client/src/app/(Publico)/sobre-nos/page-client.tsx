@@ -1,6 +1,6 @@
 'use client';
-import { Footer } from '@/components/Home';
-import { faqs, termos } from '@/content';
+import { Footer } from '@/module/Home/components';
+import { faqs, termos } from '@/module/Home/lib/content';
 import { useState } from 'react';
 
 interface serverStatus {

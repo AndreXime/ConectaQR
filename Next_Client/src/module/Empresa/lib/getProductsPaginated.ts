@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
-import { NextQueryType, ProdutoPageProps } from '../types';
-import montarQueryURL from '../montarQuery';
+import { NextQueryType, ProdutoPageProps } from '../../../types/global';
+import montarQueryURL from './montarQuery';
 
 export default async function getProdutosPaginated(nome: string, queryraw: NextQueryType): Promise<ProdutoPageProps> {
     const query = await montarQueryURL(queryraw);

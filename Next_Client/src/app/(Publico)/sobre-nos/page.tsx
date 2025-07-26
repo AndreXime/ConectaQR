@@ -1,4 +1,11 @@
-import PageClient from './pageClient';
+import { Metadata } from 'next';
+import PageClient from './page-client';
+
+export const metadata: Metadata = {
+    title: 'Sobre a plataforma',
+    description: 'Conheça nossa equipe e tecnologias usadas',
+    keywords: ['Conectar', 'Produtos', 'Vitrine', 'Lojas', 'Vendas', 'Empresas'],
+};
 
 export default async function page() {
     let status = false;

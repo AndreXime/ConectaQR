@@ -1,4 +1,4 @@
-import { Drawer } from '@/components/Home';
+import { Drawer } from '@/module/Home/components';
 import '@Styles';
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
@@ -20,7 +20,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     return (
         <html lang="pt-BR" data-theme={'corporate'} className={roboto.variable}>
             <body>
-                <Drawer>{children} </Drawer>
+                <Drawer />
+                {children}
             </body>
         </html>
     );

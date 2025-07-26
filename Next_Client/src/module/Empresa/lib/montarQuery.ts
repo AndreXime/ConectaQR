@@ -1,4 +1,4 @@
-import { NextQueryType } from './types';
+import { NextQueryType } from '../../../types/global';
 
 export default async function montarQueryURL(queryRaw: NextQueryType) {
     if (!queryRaw) {

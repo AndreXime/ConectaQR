@@ -1,7 +1,14 @@
-import { Footer } from '@/components/Home';
+import { Footer } from '@/module/Home/components';
 import Link from 'next/link';
 import Image from 'next/image';
-import type { EmpresaPublica } from '@/lib/types';
+import type { EmpresaPublica } from '@/types/global';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'ConnectQR - Empresas',
+    description: 'Todas as empresas parceiras que estão presentes na nossa plataforma',
+    keywords: ['Conectar', 'Produtos', 'Vitrine', 'Lojas', 'Vendas', 'Empresas'],
+};
 
 async function getCompanies(): Promise<EmpresaPublica[] | null> {
     try {

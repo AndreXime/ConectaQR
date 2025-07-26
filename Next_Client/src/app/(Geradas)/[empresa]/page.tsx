@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { FaInstagram, FaPhone } from 'react-icons/fa6';
 import { MdEmail } from 'react-icons/md';
-import type { EmpresaPublica } from '@/lib/types';
+import type { EmpresaPublica } from '@/types/global';
 import { FaInfoCircle, FaMapMarkerAlt, FaShoppingBag, FaShoppingCart } from 'react-icons/fa';
 
 async function getCompanyInfo(nomeEmpresa: string): Promise<EmpresaPublica | null> {
@@ -13,7 +13,7 @@ async function getCompanyInfo(nomeEmpresa: string): Promise<EmpresaPublica | nul
             cache: 'no-store',
         });
         if (!response.ok) {
-            throw Error;
+            return null;
         } else {
             return await response.json();
         }
